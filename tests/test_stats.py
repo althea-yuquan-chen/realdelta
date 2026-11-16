@@ -121,3 +121,47 @@ def test_population_delta_is_not_public_in_v0_1():
         compare(outcomes, outcomes, scope="population")
     with pytest.raises(NotImplementedError):
         plan_trials(10, 0.1, trials_options=(3,), scope="population", n_sim=2, seed=0)
+
+
+def test_suite_delta_is_mover_over_wilson_arms():
+    """Pins the shipped suite delta (docs/calibration_protocol.md: MOVER over Wilson arm intervals).
+
+    When every case in an arm has the same count k of n, that arm's effective sample size is m * n
+    and its suite interval is the Wilson interval for m * k of m * n trials, so the expected delta
+    interval follows from the public wilson_interval and Newcombe's hybrid score formula.
+    Formula pin, not a calibration gate: added after mutation checks (Wilson arms survived every
+    other test); the expected value comes from the public wilson_interval and does not depend on
+    the grid.
+    """
+    from realdelta import delta_interval
+
+    m, n, k_a, k_b = 12, 5, 4, 2
+    baseline = {f"c{i}": [True] * k_a + [False] * (n - k_a) for i in range(m)}
+    candidate = {f"c{i}": [True] * k_b + [False] * (n - k_b) for i in range(m)}
+    a, b = wilson_interval(m * k_a, m * n), wilson_interval(m * k_b, m * n)
+    d = b.estimate - a.estimate
+    want_low = d - math.sqrt((b.estimate - b.low) ** 2 + (a.high - a.estimate) ** 2)
+    want_high = d + math.sqrt((b.high - b.estimate) ** 2 + (a.estimate - a.low) ** 2)
+    iv = delta_interval(baseline, candidate)
+    assert iv.low == pytest.approx(want_low, abs=1e-12)
+    assert iv.high == pytest.approx(want_high, abs=1e-12)
+
+
+def test_population_pass_rate_hull_includes_the_t_interval():
+    """Pins the t term of the population hull (protocol: hull of suite, t and case-level floor).
+
+    Ten cases with one trial each, five failing and five passing: the t interval (about 0.123 to
+    0.877) is wider than the suite and floor terms (Clopper-Pearson 5 of 10, about 0.187 to 0.813)
+    on both sides and is not clipped at 0 or 1. Formula pin, not a calibration gate: added after
+    mutation checks (dropping the t term survived every other test); the expected value is an
+    independent scipy computation and does not depend on the grid.
+    """
+    from scipy import stats as st
+
+    outcomes = {f"c{i}": [i >= 5] for i in range(10)}
+    rates = np.array([0.0] * 5 + [1.0] * 5)
+    half = st.t.ppf(0.975, 9) * rates.std(ddof=1) / math.sqrt(10)
+    iv = pass_rate_interval(outcomes, scope="population")
+    assert 0.0 < iv.low and iv.high < 1.0
+    assert iv.low == pytest.approx(0.5 - half, abs=1e-12)
+    assert iv.high == pytest.approx(0.5 + half, abs=1e-12)
