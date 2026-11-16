@@ -20,3 +20,6 @@ htmlcov/
 .idea/
 .DS_Store
 Thumbs.db
+
+# Grid smoke runs (not evidence)
+smoke_results/

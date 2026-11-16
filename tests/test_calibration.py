@@ -17,6 +17,7 @@ import pytest
 from realdelta import delta_interval, pass_rate_interval, wilson_interval
 
 REPS = 1000
+GATE = 0.93
 
 # (cases, trials per case, Beta(a, b) of true per-case pass rates)
 SETTINGS = [
@@ -51,19 +52,26 @@ def test_pass_rate_interval_coverage(scope, m, spec, ab):
         rates = rng.beta(*ab, size=m)
         iv = pass_rate_interval(_outcomes(rng, rates, _trials(rng, m, spec)), scope=scope)
         hits += iv.contains(rates.mean() if scope == "suite" else pop_truth)
-    cov = hits / REPS
-    assert 0.93 <= cov <= 0.995, f"coverage {cov:.3f}"
+    _check(hits / REPS, scope)
+
+
+def _check(cov, scope):
+    # Gate from docs/calibration_protocol.md: lower bound everywhere; the 0.995 upper
+    # bound only for the suite scope (the population scope is conservative by design).
+    assert cov >= GATE, f"coverage {cov:.3f}"
+    if scope == "suite":
+        assert cov <= 0.995, f"coverage {cov:.3f} (over-conservative)"
 
 
 def test_pooled_binomial_interval_under_covers_population():
-    """Fault injection: the coverage check must reject the naive pooled interval."""
+    """Fault injection: the same gate must reject the naive pooled interval."""
     rng = np.random.default_rng(7)
     m, n, ab = 50, 10, (2, 2)
     hits = 0
     for _ in range(REPS):
         x = rng.binomial(n, rng.beta(*ab, size=m))
         hits += wilson_interval(int(x.sum()), m * n).contains(0.5)
-    assert hits / REPS < 0.85
+    assert hits / REPS < GATE
 
 
 DELTA_SETTINGS = [
@@ -89,8 +97,7 @@ def test_delta_interval_coverage(scope, m, spec, ab, shift):
         trials = _trials(rng, m, spec)
         iv = delta_interval(_outcomes(rng, pa, trials), _outcomes(rng, pb, trials), scope=scope)
         hits += iv.contains(float(np.mean(pb - pa)) if scope == "suite" else pop_truth)
-    cov = hits / REPS
-    assert 0.93 <= cov <= 0.995, f"coverage {cov:.3f}"
+    _check(hits / REPS, scope)
 
 
 @pytest.mark.parametrize("scope", ["suite", "population"])
@@ -104,3 +111,44 @@ def test_false_alarm_rate_when_nothing_changed(scope, m, spec, ab):
         iv = delta_interval(_outcomes(rng, rates, trials), _outcomes(rng, rates, trials), scope=scope)
         alarms += not iv.contains(0.0)
     assert alarms / REPS <= 0.07
+
+
+# Known failure shapes found in review (regression tests, lower bound only).
+PENDING = pytest.mark.xfail(strict=True, reason="population floors not implemented yet")
+
+
+def _deterministic(rng, m, share_pass):
+    return (rng.random(m) < share_pass).astype(float)
+
+
+@PENDING
+def test_h1_bimodal_population_pass_rate():
+    rng = np.random.default_rng(101)
+    hits = 0
+    for _ in range(REPS):
+        rates = _deterministic(rng, 20, 0.95)
+        hits += pass_rate_interval(_outcomes(rng, rates, np.full(20, 10)), scope="population").contains(0.95)
+    assert hits / REPS >= GATE, f"coverage {hits / REPS:.3f}"
+
+
+@PENDING
+def test_h2_three_point_population_pass_rate():
+    rng = np.random.default_rng(102)
+    hits = 0
+    for _ in range(REPS):
+        rates = rng.choice([1.0, 0.7, 0.0], size=30, p=[0.8, 0.1, 0.1])
+        hits += pass_rate_interval(_outcomes(rng, rates, np.full(30, 5)), scope="population").contains(0.87)
+    assert hits / REPS >= GATE, f"coverage {hits / REPS:.3f}"
+
+
+@PENDING
+def test_h6_population_delta_when_candidate_breaks_five_percent():
+    rng = np.random.default_rng(103)
+    hits = 0
+    for _ in range(REPS):
+        pa = _deterministic(rng, 20, 0.95)
+        pb = pa * (rng.random(20) >= 0.05 / 0.95)
+        trials = np.full(20, 10)
+        iv = delta_interval(_outcomes(rng, pa, trials), _outcomes(rng, pb, trials), scope="population")
+        hits += iv.contains(-0.05)
+    assert hits / REPS >= GATE, f"coverage {hits / REPS:.3f}"
