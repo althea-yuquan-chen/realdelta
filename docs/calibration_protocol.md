@@ -248,3 +248,22 @@ private population delta has half-width exactly `1 - 0.0125 ** (1 / m)` (to 1e-1
 `python scripts/suite_bounds_selection.py --amendment 2` writes
 `results/suite_bounds_selection_a2.{json,md}` and refuses to overwrite. Amendment 1 mode is
 unchanged; reproducing 3be2276's files needs them moved aside first because of the overwrite check.
+
+## Outcome record (appended after grid 20261117; no rule changes)
+
+- Amendment 2 selection (`results/suite_bounds_selection_a2.md`, 7f2cd3e): C1 minimum exact
+  coverage 0.9503; S4 (reported only) 0.9583. Step 1 had little screening power for C1, since S1
+  and S2 reduce to exact Clopper-Pearson on integer counts; the independent evidence is the grid
+  below and the unchanged CI gates.
+- Step 3: full test suite passed on C1 (implementation 9743ad8); CI suite pass-rate coverage on
+  the 8 settings 0.970-0.978. Step 4 was not triggered.
+- Grid 20261117 (`results/calibration_grid_20261117.md`, ab80eec, run once at 9743ad8): 0 gated
+  rows fail. Lowest gated rows: suite pass rate 0.956, population pass rate 0.951, suite delta
+  0.945. The row that failed in 20261116 (G2 Beta(50,1) m=5 n=1, suite) is 0.998. Suite pass-rate
+  mean width versus 20261116: median ratio 1.11 (1.05-1.24; different seeds, so noisy).
+- Seven suite pass-rate rows exceed 0.995 (maximum 0.999). The grid has no upper gate; the
+  interval is conservative for suites of near-deterministic cases, and the README says so.
+- Added after the grid, outside Amendment 2's test-change list: a regression test pinning the
+  library's suite interval to C1 (7e8c59e). It is new, not a relaxation, and not a gate.
+- Final runs to list in the README: 20261116 (failed one suite row and the width rule) and
+  20261117 (passed).
