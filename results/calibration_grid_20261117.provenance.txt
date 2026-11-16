@@ -1,0 +1,9 @@
+commit: 9743ad8e4f364128a8575fef8b040d81052cecc8
+invocation: PYTHONPATH=src python scripts/calibration_grid.py (cwd = repo root)
+python: 3.11.9 Windows
+realdelta imported from: src\realdelta\__init__.py
+has _suite_rate_interval (C1): True
+numpy: 2.4.4
+scipy: 1.17.1
+started: 2026-11-16T22:02:48Z
+finished: 2026-11-16T22:03:24Z
