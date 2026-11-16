@@ -165,3 +165,21 @@ def test_population_pass_rate_hull_includes_the_t_interval():
     assert 0.0 < iv.low and iv.high < 1.0
     assert iv.low == pytest.approx(0.5 - half, abs=1e-12)
     assert iv.high == pytest.approx(0.5 + half, abs=1e-12)
+
+
+def test_suite_delta_is_antisymmetric_in_the_two_arms():
+    """delta(a, b) == -delta(b, a). With it, the gated +0.05/+0.10 delta rows also cover the
+    reversed pairs (drops of the same realised size from the shifted baseline). Arms are built with
+    different key orders, so summation order differs; hence the 1e-12 tolerance."""
+    from realdelta import delta_interval
+
+    rng = np.random.default_rng(3)
+    for _ in range(300):
+        m = int(rng.integers(2, 40))
+        trials = rng.choice([1, 3, 5, 10], size=m)
+        a = {f"c{i}": list(rng.random(int(trials[i])) < rng.random()) for i in range(m)}
+        b = {f"c{i}": list(rng.random(int(trials[i])) < rng.random()) for i in reversed(range(m))}
+        forward, backward = delta_interval(a, b), delta_interval(b, a)
+        assert forward.estimate == pytest.approx(-backward.estimate, abs=1e-12)
+        assert forward.low == pytest.approx(-backward.high, abs=1e-12)
+        assert forward.high == pytest.approx(-backward.low, abs=1e-12)
