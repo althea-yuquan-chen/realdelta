@@ -1,0 +1,195 @@
+{
+ "meta": {
+  "seed_base": 20261118,
+  "reps": 2000,
+  "smoke": false,
+  "commit": "463429f5b06d1cfeb647b4d3e7f1dfc71cdd11cf",
+  "realdelta_file": "src\\realdelta\\__init__.py"
+ },
+ "rows": [
+  {
+   "setting": "DB Beta(50,1) m=5 n=1 null",
+   "coverage": 1.0,
+   "miss_low": 0.0,
+   "miss_high": 0.0,
+   "mean_width": 0.8716538215771834,
+   "excludes_zero": 0.0
+  },
+  {
+   "setting": "DB Beta(50,1) m=5 n=1 shift -0.05",
+   "coverage": 0.9995,
+   "miss_low": 0.0,
+   "miss_high": 0.0005,
+   "mean_width": 0.8748571998051561,
+   "excludes_zero": 0.0015
+  },
+  {
+   "setting": "DB Beta(50,1) m=5 n=3 null",
+   "coverage": 0.9995,
+   "miss_low": 0.0,
+   "miss_high": 0.0005,
+   "mean_width": 0.42674093344701647,
+   "excludes_zero": 0.0005
+  },
+  {
+   "setting": "DB Beta(50,1) m=5 n=3 shift -0.05",
+   "coverage": 0.9955,
+   "miss_low": 0.002,
+   "miss_high": 0.0025,
+   "mean_width": 0.4491952171541231,
+   "excludes_zero": 0.0125
+  },
+  {
+   "setting": "DB Beta(50,1) m=20 n=1 null",
+   "coverage": 0.9995,
+   "miss_low": 0.0,
+   "miss_high": 0.0005,
+   "mean_width": 0.3438612917902378,
+   "excludes_zero": 0.0005
+  },
+  {
+   "setting": "DB Beta(50,1) m=20 n=1 shift -0.05",
+   "coverage": 0.9955,
+   "miss_low": 0.002,
+   "miss_high": 0.0025,
+   "mean_width": 0.3684782660030706,
+   "excludes_zero": 0.044
+  },
+  {
+   "setting": "DB Beta(50,1) m=20 n=3 null",
+   "coverage": 0.9975,
+   "miss_low": 0.002,
+   "miss_high": 0.0005,
+   "mean_width": 0.14737703087509027,
+   "excludes_zero": 0.0025
+  },
+  {
+   "setting": "DB Beta(50,1) m=20 n=3 shift -0.05",
+   "coverage": 0.982,
+   "miss_low": 0.011,
+   "miss_high": 0.007,
+   "mean_width": 0.17545637819887322,
+   "excludes_zero": 0.168
+  },
+  {
+   "setting": "DB Beta(20,1) m=5 n=1 null",
+   "coverage": 0.998,
+   "miss_low": 0.0015,
+   "miss_high": 0.0005,
+   "mean_width": 0.8751236768976077,
+   "excludes_zero": 0.002
+  },
+  {
+   "setting": "DB Beta(20,1) m=5 n=1 shift -0.05",
+   "coverage": 1.0,
+   "miss_low": 0.0,
+   "miss_high": 0.0,
+   "mean_width": 0.877812437700687,
+   "excludes_zero": 0.0065
+  },
+  {
+   "setting": "DB Beta(20,1) m=5 n=1 shift +0.05",
+   "coverage": 1.0,
+   "miss_low": 0.0,
+   "miss_high": 0.0,
+   "mean_width": 0.8731578178714137,
+   "excludes_zero": 0.001
+  },
+  {
+   "setting": "DB Beta(20,1) m=5 n=3 null",
+   "coverage": 0.994,
+   "miss_low": 0.001,
+   "miss_high": 0.005,
+   "mean_width": 0.44712951798901945,
+   "excludes_zero": 0.006
+  },
+  {
+   "setting": "DB Beta(20,1) m=5 n=3 shift -0.05",
+   "coverage": 0.9905,
+   "miss_low": 0.005,
+   "miss_high": 0.0045,
+   "mean_width": 0.4692812436962966,
+   "excludes_zero": 0.0255
+  },
+  {
+   "setting": "DB Beta(20,1) m=5 n=3 shift +0.05",
+   "coverage": 0.9995,
+   "miss_low": 0.0005,
+   "miss_high": 0.0,
+   "mean_width": 0.43620933434515885,
+   "excludes_zero": 0.0065
+  },
+  {
+   "setting": "DB Beta(20,1) m=20 n=1 null",
+   "coverage": 0.9905,
+   "miss_low": 0.006,
+   "miss_high": 0.0035,
+   "mean_width": 0.3727717083231772,
+   "excludes_zero": 0.0095
+  },
+  {
+   "setting": "DB Beta(20,1) m=20 n=1 shift -0.05",
+   "coverage": 0.9875,
+   "miss_low": 0.0075,
+   "miss_high": 0.005,
+   "mean_width": 0.3941309441215055,
+   "excludes_zero": 0.0515
+  },
+  {
+   "setting": "DB Beta(20,1) m=20 n=1 shift +0.05",
+   "coverage": 0.999,
+   "miss_low": 0.001,
+   "miss_high": 0.0,
+   "mean_width": 0.35651675320029735,
+   "excludes_zero": 0.006
+  },
+  {
+   "setting": "DB Beta(20,1) m=20 n=3 null",
+   "coverage": 0.9775,
+   "miss_low": 0.0095,
+   "miss_high": 0.013,
+   "mean_width": 0.178843432541435,
+   "excludes_zero": 0.0225
+  },
+  {
+   "setting": "DB Beta(20,1) m=20 n=3 shift -0.05",
+   "coverage": 0.9705,
+   "miss_low": 0.0195,
+   "miss_high": 0.01,
+   "mean_width": 0.2022335552330995,
+   "excludes_zero": 0.15
+  },
+  {
+   "setting": "DB Beta(20,1) m=20 n=3 shift +0.05",
+   "coverage": 0.991,
+   "miss_low": 0.0035,
+   "miss_high": 0.0055,
+   "mean_width": 0.1620237444604132,
+   "excludes_zero": 0.064
+  },
+  {
+   "setting": "DB adversarial all-pass baseline, p_b=0.556 m=5 n=1",
+   "coverage": 0.949,
+   "miss_low": 0.051,
+   "miss_high": 0.0,
+   "mean_width": 0.8553897046144437,
+   "excludes_zero": 0.409
+  },
+  {
+   "setting": "DB adversarial all-pass baseline, p_b=0.829 m=20 n=1",
+   "coverage": 0.976,
+   "miss_low": 0.0215,
+   "miss_high": 0.0025,
+   "mean_width": 0.3986357846708502,
+   "excludes_zero": 0.458
+  },
+  {
+   "setting": "DB adversarial all-pass baseline, p_b=0.786 m=5 n=3",
+   "coverage": 0.9685,
+   "miss_low": 0.024,
+   "miss_high": 0.0075,
+   "mean_width": 0.4850794175846147,
+   "excludes_zero": 0.4185
+  }
+ ]
+}
