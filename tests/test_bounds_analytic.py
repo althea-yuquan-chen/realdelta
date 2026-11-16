@@ -14,7 +14,6 @@ from scipy import stats as st
 
 TOL = 1e-12
 M_VALUES = (5, 7, 10, 20, 30, 50, 100)
-PENDING = pytest.mark.xfail(strict=True, reason="population floors not implemented yet")
 
 
 def _floor(total, m):
@@ -24,7 +23,6 @@ def _floor(total, m):
     return iv.low, iv.high
 
 
-@PENDING
 @pytest.mark.parametrize("m", M_VALUES)
 def test_floor_exact_coverage_bernoulli(m):
     mus = np.concatenate([np.linspace(0.01, 0.99, 2000), np.linspace(0.99, 0.9999, 500)])
@@ -35,7 +33,6 @@ def test_floor_exact_coverage_bernoulli(m):
     assert coverage.min() >= 0.95 - TOL, f"min coverage {coverage.min():.4f} at mu={mus[coverage.argmin()]:.4f}"
 
 
-@PENDING
 @pytest.mark.parametrize("m", (5, 10, 20))
 def test_floor_exact_coverage_three_point(m):
     worst = 1.0
@@ -57,7 +54,6 @@ def test_floor_exact_coverage_three_point(m):
     assert worst >= 0.95 - TOL, f"min coverage {worst:.4f}"
 
 
-@PENDING
 @pytest.mark.parametrize("m", M_VALUES)
 def test_all_pass_lower_bound(m):
     from realdelta import pass_rate_interval
@@ -66,7 +62,6 @@ def test_all_pass_lower_bound(m):
     assert iv.low ** m <= 0.025 + TOL
 
 
-@PENDING
 @pytest.mark.parametrize("m", M_VALUES)
 def test_all_zero_differences_keep_case_level_width(m):
     from realdelta import delta_interval

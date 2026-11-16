@@ -5,6 +5,7 @@ from .simulate import SimulatedSuite
 from .stats import (
     Comparison,
     Interval,
+    case_level_interval,
     compare,
     delta_interval,
     macro_pass_rate,
@@ -19,6 +20,7 @@ __all__ = [
     "Interval",
     "PlanRow",
     "SimulatedSuite",
+    "case_level_interval",
     "compare",
     "delta_interval",
     "estimate_cost",

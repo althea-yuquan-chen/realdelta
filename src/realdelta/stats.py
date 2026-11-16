@@ -13,12 +13,21 @@ Two scopes answer two different questions:
   adjusted per-case variances. The adjustment keeps the interval honest when
   cases pass every time, which is where agent suites usually sit.
 * ``"population"``: how sure are we about *cases like these*? Case-to-case
-  spread counts too. The interval is a t interval over per-case pass rates,
-  widened where needed to contain the suite interval (uncertainty about cases
-  in general is never smaller than about this sample of them).
+  spread counts too. The interval is the hull of a t interval over per-case
+  pass rates, the suite interval, and a case-level floor
+  (:func:`case_level_interval`). The floor matters when a few cases fail
+  every time: m cases cannot rule out a failure mode that affects roughly
+  3.7/m of cases like them, however many trials each case ran.
 
-Both were chosen by simulation; ``tests/test_calibration.py`` checks their
-coverage, including near a 100% pass rate and with unequal trial counts.
+Assumptions (docs/calibration_protocol.md): A1 trials within a case are i.i.d.;
+A2 cases are an i.i.d. draw from the population; A3 compared arms share no
+randomness (seeds, caches, outage windows); A4 the number of trials per case
+does not depend on outcomes. The suite scope needs A1, A3 and A4; the
+population scope needs A2 and A4.
+
+Validity evidence is limited to what the tests and the pre-registered grid
+show: the floor is exact when every case is deterministic; otherwise coverage
+is checked by simulation, not proven.
 """
 
 from __future__ import annotations
@@ -151,10 +160,32 @@ def pass_rate_interval(outcomes: Outcomes, scope: Scope = "suite", conf: float =
     suite = _suite_interval(passes, trials, conf)
     if scope == "suite":
         return suite
-    half = _t_half_width(passes / trials, conf)
-    low = max(0.0, min(suite.estimate - half, suite.low))
-    high = min(1.0, max(suite.estimate + half, suite.high))
+    rates = passes / trials
+    half = _t_half_width(rates, conf)
+    floor = case_level_interval(float(rates.sum()), len(rates), conf)
+    low = max(0.0, min(suite.estimate - half, suite.low, floor.low))
+    high = min(1.0, max(suite.estimate + half, suite.high, floor.high))
     return Interval(suite.estimate, low, high, conf)
+
+
+def case_level_interval(total: float, m: int, conf: float = 0.95) -> Interval:
+    """Clopper-Pearson interval for the mean of m case-level values in [0, 1].
+
+    ``total`` is the sum of the values and may be fractional (e.g. per-case pass
+    rates). The beta-quantile formula is applied to the real-valued total. It is
+    exact (coverage >= conf) when every value is 0 or 1, i.e. deterministic cases.
+    For other values coverage is checked in tests, not proven.
+    """
+    if m <= 0:
+        raise ValueError("m must be positive")
+    if not -1e-9 <= total <= m + 1e-9:
+        raise ValueError(f"total must be in [0, {m}], got {total}")
+    x = min(max(float(total), 0.0), float(m))
+    alpha = 1.0 - conf
+    _z(conf)  # validates conf
+    low = 0.0 if x <= 1e-12 else float(_sps.beta.ppf(alpha / 2.0, x, m - x + 1.0))
+    high = 1.0 if x >= m - 1e-12 else float(_sps.beta.ppf(1.0 - alpha / 2.0, x + 1.0, m - x))
+    return Interval(x / m, low, high, conf)
 
 
 def _paired_counts(baseline: Outcomes, candidate: Outcomes):
@@ -179,7 +210,13 @@ def _delta_interval(pa, ta, pb, tb, scope: Scope, conf: float) -> Interval:
     high = estimate + math.hypot(b.high - b.estimate, a.estimate - a.low)
     if scope == "population":
         half = _t_half_width(diffs, conf)
-        low, high = min(low, estimate - half), max(high, estimate + half)
+        # Case-level floor: split each difference into its positive and negative
+        # parts (both in [0, 1]), bound each mean at 1 - alpha/2, Bonferroni-combine.
+        each = 1.0 - (1.0 - conf) / 2.0
+        up = case_level_interval(float(np.maximum(diffs, 0.0).sum()), m, each)
+        down = case_level_interval(float(np.maximum(-diffs, 0.0).sum()), m, each)
+        low = min(low, estimate - half, up.low - down.high)
+        high = max(high, estimate + half, up.high - down.low)
     return Interval(estimate, max(-1.0, low), min(1.0, high), conf)
 
 

@@ -114,14 +114,12 @@ def test_false_alarm_rate_when_nothing_changed(scope, m, spec, ab):
 
 
 # Known failure shapes found in review (regression tests, lower bound only).
-PENDING = pytest.mark.xfail(strict=True, reason="population floors not implemented yet")
 
 
 def _deterministic(rng, m, share_pass):
     return (rng.random(m) < share_pass).astype(float)
 
 
-@PENDING
 def test_h1_bimodal_population_pass_rate():
     rng = np.random.default_rng(101)
     hits = 0
@@ -131,7 +129,6 @@ def test_h1_bimodal_population_pass_rate():
     assert hits / REPS >= GATE, f"coverage {hits / REPS:.3f}"
 
 
-@PENDING
 def test_h2_three_point_population_pass_rate():
     rng = np.random.default_rng(102)
     hits = 0
@@ -141,7 +138,6 @@ def test_h2_three_point_population_pass_rate():
     assert hits / REPS >= GATE, f"coverage {hits / REPS:.3f}"
 
 
-@PENDING
 def test_h6_population_delta_when_candidate_breaks_five_percent():
     rng = np.random.default_rng(103)
     hits = 0
