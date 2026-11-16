@@ -1,0 +1,145 @@
+{
+ "decision": {
+  "threshold": 0.947,
+  "survivors_narrowest_first": [
+   "C1 clopper_pearson_capped"
+  ],
+  "first_choice": "C1 clopper_pearson_capped",
+  "reported_not_gated": {
+   "C1 clopper_pearson_capped": {
+    "config": "S4 m=5 n_i=(1,1,3,3,10)",
+    "min_coverage": 0.9582967979842655,
+    "mean_width": 0.5318067924605036
+   },
+   "reference wilson (current)": {
+    "config": "S4 m=5 n_i=(1,1,3,3,10)",
+    "min_coverage": 0.8940398788436621,
+    "mean_width": 0.45345606770067276
+   }
+  }
+ },
+ "results": {
+  "C1 clopper_pearson_capped": {
+   "rows": [
+    {
+     "config": "S1 m=5",
+     "min_coverage": 0.9750000002614094,
+     "mean_width": 0.6501222320338765
+    },
+    {
+     "config": "S1 m=10",
+     "min_coverage": 0.9610205102650875,
+     "mean_width": 0.47294813416313336
+    },
+    {
+     "config": "S1 m=20",
+     "min_coverage": 0.9579699368321938,
+     "mean_width": 0.33118954987151566
+    },
+    {
+     "config": "S1 m=50",
+     "min_coverage": 0.9507674249081733,
+     "mean_width": 0.2028389566782738
+    },
+    {
+     "config": "S1 m=100",
+     "min_coverage": 0.9502637503579614,
+     "mean_width": 0.13997744309553573
+    },
+    {
+     "config": "S2 m=5 n=5",
+     "min_coverage": 0.9505107336863856,
+     "mean_width": 0.3274599477171147
+    },
+    {
+     "config": "S2 m=10 n=5",
+     "min_coverage": 0.9507674249081719,
+     "mean_width": 0.2303653769771539
+    },
+    {
+     "config": "S3 m=5 k=2",
+     "min_coverage": 0.9749581765986934,
+     "mean_width": 0.6392162676686788
+    },
+    {
+     "config": "S3 m=5 k=4",
+     "min_coverage": 0.9747461881026593,
+     "mean_width": 0.5692190829345231
+    },
+    {
+     "config": "S3 m=20 k=10",
+     "min_coverage": 0.9749843757036069,
+     "mean_width": 0.30492357890307425
+    },
+    {
+     "config": "S3 m=20 k=16",
+     "min_coverage": 0.9749372866232956,
+     "mean_width": 0.23736750058067244
+    }
+   ],
+   "min_coverage": 0.9502637503579614,
+   "mean_width": 0.37323891551123206
+  },
+  "reference wilson (current)": {
+   "rows": [
+    {
+     "config": "S1 m=5",
+     "min_coverage": 0.8283909251913169,
+     "mean_width": 0.5324199731794548
+    },
+    {
+     "config": "S1 m=10",
+     "min_coverage": 0.8332421925627985,
+     "mean_width": 0.40337053284979135
+    },
+    {
+     "config": "S1 m=20",
+     "min_coverage": 0.8356993364233285,
+     "mean_width": 0.29276534902896456
+    },
+    {
+     "config": "S1 m=50",
+     "min_coverage": 0.8371840311926164,
+     "mean_width": 0.18562195975330242
+    },
+    {
+     "config": "S1 m=100",
+     "min_coverage": 0.8376807298861463,
+     "mean_width": 0.13048978638556788
+    },
+    {
+     "config": "S2 m=5 n=5",
+     "min_coverage": 0.8357228870834899,
+     "mean_width": 0.28861603005044306
+    },
+    {
+     "config": "S2 m=10 n=5",
+     "min_coverage": 0.8368640694268229,
+     "mean_width": 0.20803525499643827
+    },
+    {
+     "config": "S3 m=5 k=2",
+     "min_coverage": 0.8263766928866499,
+     "mean_width": 0.524623067204582
+    },
+    {
+     "config": "S3 m=5 k=4",
+     "min_coverage": 0.8152303857133107,
+     "mean_width": 0.47153018182162454
+    },
+    {
+     "config": "S3 m=20 k=10",
+     "min_coverage": 0.8350204538778369,
+     "mean_width": 0.2714385734412865
+    },
+    {
+     "config": "S3 m=20 k=16",
+     "min_coverage": 0.832936934561785,
+     "mean_width": 0.2171023833593994
+    }
+   ],
+   "min_coverage": 0.8152303857133107,
+   "mean_width": 0.32054664473371414
+  }
+ }
+}
