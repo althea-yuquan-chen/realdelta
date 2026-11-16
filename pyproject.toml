@@ -14,6 +14,9 @@ dependencies = [
     "scipy>=1.10",
 ]
 
+[project.scripts]
+realdelta = "realdelta.cli:main"
+
 [project.optional-dependencies]
 dev = ["pytest>=8"]
 

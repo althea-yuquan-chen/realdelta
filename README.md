@@ -7,8 +7,9 @@ the pass rate moved from 82% to 86%. `realdelta` tells you whether that move is
 larger than the run-to-run noise of your agent, and how many repeated trials you
 need before it can tell.
 
-**Status:** early development, not released. The statistics core and its
-calibration checks are done; the CLI, runner adapters and demo are not.
+**Status:** early development, not released. The statistics core, its
+calibration checks, result-file loading and the command line are done; runner
+adapters and a demo are not.
 
 ## What it does
 
@@ -22,10 +23,12 @@ calibration checks are done; the CLI, runner adapters and demo are not.
   `result.detected` means the interval excludes 0; it does not use the p-value, and
   the two can disagree.
 - **Trial planning.** Simulates a synthetic suite you parameterise (case pass rates
-  from a Beta distribution, every case shifted by the same amount) and reports power
-  and false-alarm rate for 1, 3, 5, 10 or 20 trials per case. Near a 100% pass rate
-  the realised shift is smaller than the one requested, because rates are clipped
-  at 1. A separate function estimates cost from prices you supply.
+  from a Beta distribution) under one of two changes: every case shifted by the same
+  amount, or k randomly chosen cases broken (pass rate 0), the common agent
+  regression. It reports power and false-alarm rate, with Monte Carlo standard
+  errors, for 1, 3, 5, 10 or 20 trials per case, and the realised change: shifts are
+  clipped at 0 and 1, and a broken case removes its own pass rate. A separate
+  function estimates cost from prices you supply.
 
 ```python
 from realdelta import compare, pass_rate_interval
@@ -37,6 +40,50 @@ print(pass_rate_interval(candidate, scope="suite"))
 result = compare(baseline, candidate)          # suite scope
 print(result.delta, result.detected, result.p_value)
 ```
+
+## Result files
+
+One record per trial, as JSON Lines (`.jsonl`) or CSV (`.csv`), UTF-8:
+
+```
+{"case_id": "case-001", "passed": true}
+{"case_id": "case-001", "passed": false}
+```
+
+```
+case_id,passed
+case-001,true
+case-001,false
+```
+
+Fields: `case_id` (a non-empty string), `passed` (a boolean; in CSV one of true,
+false, 1, 0) and, optionally, `trial` (a whole number, on every line or on none;
+each case and trial pair must be unique). Any other field is rejected. File-format
+error messages name the file, line and field, never the value; when `compare` finds
+cases present in only one file, it shows up to three of their ids, cut to 40
+characters. Record failed, crashed or
+timed-out runs as failures: dropping or re-running a trial because of its outcome
+breaks assumption A4 below. Without `trial`, a file concatenated twice cannot be
+detected, so every command prints the number of cases and trials it read; check it.
+`load_outcomes(path)` reads a file into the dictionary the Python API takes.
+
+## Command line
+
+```bash
+python -m realdelta interval results.jsonl                    # pass rate with its interval
+python -m realdelta compare baseline.jsonl candidate.jsonl    # paired change, suite scope
+python -m realdelta plan --cases 40 --delta -0.05             # power per trials option
+python -m realdelta plan --cases 40 --break-cases 2 --trials 3,5,10 \
+    --input-tokens 3000 --output-tokens 500 --usd-per-m-input 1 --usd-per-m-output 5
+```
+
+Run these from the repository root with `src` on `PYTHONPATH` until the package is
+released. Add `--json` for one JSON object. Reports from `compare` and `plan` (and
+from `interval` in the population scope) end with notes on what the result cannot
+tell you; warnings (on stderr) flag settings outside the tested range below, such
+as fewer than 10 cases or fewer than 3 trials per case for a comparison. `compare`
+uses seed 0 for its permutation p-value (with more than 16 cases; up to 16 it
+enumerates every sign flip) unless you pass `--seed`.
 
 ## How the intervals were checked
 
@@ -61,6 +108,10 @@ settings, not a guarantee of 95% coverage elsewhere.
 | Population pass rate | 5 to 50 | 1 to 10, and unequal {1, 3, 10} | as above, plus a 95%/5% pass/fail mixture and sticky trials (see Limitations) |
 | Suite delta | 10 to 50 | 3 to 10, and unequal {1, 3, 10} at 30 cases | Beta(4,2) and Beta(20,1); no change, +0.05 and +0.10 |
 
+Swapping baseline and candidate negates the delta interval exactly (a test pins
+this), so the +0.05 and +0.10 delta rows also cover drops of the same realised size
+from the shifted baseline; they do not cover drops from Beta(4,2) or Beta(20,1)
+themselves, nor a few cases breaking outright.
 The table gives ranges, not a full cross of every combination;
 [`results/calibration_grid_20261117.md`](results/calibration_grid_20261117.md) lists every row.
 File names carry the seed base (20261116, 20261117, 20261118), not a date; both grid
