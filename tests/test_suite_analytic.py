@@ -99,3 +99,22 @@ def test_capped_candidate_is_pooled_clopper_pearson_with_equal_trials(m, n):
         low, high = selection.clopper_pearson_capped(passes, np.full(m, float(n)))
         ci = binomtest(int(passes.sum()), m * n).proportion_ci(confidence_level=0.95, method="exact")
         assert abs(low - ci.low) < 1e-9 and abs(high - ci.high) < 1e-9, passes
+
+
+def test_library_suite_rate_interval_equals_selected_candidate():
+    """Regression test added after grid 20261117 (not a gate): the library implements C1 exactly,
+    including the unequal-trials branch where n_eff, not the trial total, sets N."""
+    from realdelta.stats import _suite_rate_interval
+
+    rng = np.random.default_rng(9)
+    unequal = 0
+    for _ in range(2000):
+        m = int(rng.integers(2, 40))
+        trials = rng.choice([1, 2, 3, 5, 10], size=m).astype(float)
+        if rng.random() < 0.5:
+            trials[:] = trials[0]
+        unequal += len(set(trials)) > 1
+        passes = np.floor(rng.random(m) * (trials + 1))
+        iv = _suite_rate_interval(passes, trials, 0.95)
+        assert (iv.low, iv.high) == selection.clopper_pearson_capped(passes, trials)
+    assert unequal > 500
