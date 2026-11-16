@@ -111,3 +111,75 @@ Settings are listed in the script; in summary:
   (population pass rate, {1:.8, .7:.1, 0:.1}, m=30, n=5), H6 (population delta, break 5%, m=20, n=10).
   Marked `xfail(strict=True)` until the implementation commit.
 - Fault injection under the same gate: pooled Wilson coverage < 0.93.
+
+## Amendment 1 (2026-11-16, after the final grid at seed base 20261116)
+
+Appended after `results/calibration_grid_20261116.{json,md}` were committed (da182ba). The text
+above is unchanged. Everything in this amendment is committed before any candidate below is run.
+
+### Outcome of the 20261116 grid under the rules above
+
+- One gated row fails: G2 Beta(50,1) m=5 n=1, suite scope, coverage 0.917, every miss with the truth
+  above the upper bound. The suite pass rate blocks v0.1 until fixed under a new grid.
+- Width rule: D4 Beta(4,2) m=50 n=10 population delta rows have mean width 0.368 and 0.364 (> 0.30).
+  `delta_interval(scope="population")` and `compare(scope="population")` raise `NotImplementedError`
+  in v0.1, and so does `plan_trials(scope="population")`, which calls `delta_interval`. The width
+  rule is final at seed base 20261116; later grids do not re-evaluate it. The implementation stays
+  as private code; tests that exercised it through the public API call the private function with
+  unchanged assertions.
+
+### Diagnosis
+
+With few total trials and a truth near 1, a single failure moves the Wilson upper bound below the
+truth (4 of 5 passing: Wilson upper 0.964, Clopper-Pearson upper 0.995, truth about 0.980 under
+Beta(50,1)). This is Wilson's known under-coverage near the boundary, not an implementation bug.
+
+### Method change (suite pass rate only)
+
+- The suite pass rate (`pass_rate_interval(scope="suite")`) gets new bounds chosen by the rule below,
+  keeping the current estimate and effective sample size `n_eff`. The population pass rate's hull
+  uses the new suite interval in place of the Wilson one.
+- The suite delta (MOVER) keeps Wilson-based arm intervals, Newcombe's original method. It has no
+  grid row at m=5, n=1 near 100% and inherits Wilson's boundary behaviour; the README states this
+  as an untested limitation.
+- Candidates, both on the real-valued `(x_eff, n_eff)` with `x_eff = estimate * n_eff`:
+  B1 Clopper-Pearson beta quantiles; B2 Wilson with continuity correction (Newcombe 1998, method 4).
+  Neither is claimed exact: `n_eff` is not the trial count and `x_eff` is not an integer in general.
+
+### Selection rule
+
+Exact analytic sweeps (`scripts/suite_bounds_selection.py`, no simulation): S1 homogeneous,
+one trial per case, m in {5, 10, 20, 50, 100}; S2 homogeneous, five trials per case, m in {5, 10};
+S3 one trial per case, k cases at rate 1 and m - k at rate q, (m, k) in {(5, 2), (5, 4), (20, 10),
+(20, 16)}. Parameter range [0.5, 0.9999]. Minimum coverage is taken over a fixed grid plus the
+one-sided limits (+-1e-9) at every interval endpoint in range, so it does not depend on grid
+placement. Mean width: exact expected width per grid point, equal weight over grid points, then
+over configurations.
+
+1. Criterion: minimum coverage >= 0.947 on every configuration. 0.947 = 0.93 + 3 * sqrt(0.93 *
+   0.07 / 2000): a method at or above it fails a 2000-rep grid row by Monte Carlo noise with
+   probability about 0.1% (for the configurations the sweep covers; heterogeneous grid rows are
+   not covered by it). Candidates below it are eliminated.
+2. Survivors are ordered by mean width, narrowest first.
+3. The first survivor is implemented and the full test suite runs, with `tests/test_calibration.py`
+   unchanged (suite coverage in [0.93, 0.995]). A candidate that fails only the 0.995 upper bound
+   moves to the step-4 pool; a candidate that fails the 0.93 lower bound or any other test is
+   eliminated. Then the next survivor is tried.
+4. If no survivor passes step 3 and the step-4 pool is non-empty: the 0.995 upper bound for the
+   suite pass rate is dropped (the relaxation already applied to the population scope) and the
+   narrowest candidate in the pool is used. This is a gate change: it is reviewed, written into
+   Amendment 2 and reported to the owner before the new grid runs. If the pool is empty, or no
+   candidate survives step 1, stop: v0.1 is blocked and the decision returns to the owner.
+5. One new grid, seed base 20261117. If any gated suite row fails, no further suite method is tried
+   before 2027-01-11; v0.1 is blocked and the owner decides. A failing population pass-rate row
+   follows the original Hoeffding-Bentkus fallback above.
+
+### Tests and grid changes
+
+- `tests/test_suite_analytic.py`: the S1-S3 sweep on the public suite pass rate, one test,
+  `xfail(strict=True)` until the implementation commit; a check that the current Wilson bounds fail
+  the sweep; a check that the script's copy of `n_eff` matches the library.
+- `scripts/calibration_grid.py` (a declared deviation from the Runs clause, which allows script fixes
+  only for bugs): seed base 20261117; population-scope delta rows are not run; width-rule reporting
+  removed; refuses to overwrite existing results. Settings, repetitions, truths and the gate are
+  otherwise unchanged. The 20261116 run stays reproducible from commit da182ba.

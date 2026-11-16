@@ -69,3 +69,12 @@ def test_grid_has_expected_shape():
     assert len(ids) == len(set(ids))
     assert sum(s.id.startswith("D4") for s in settings) == 16
     assert all(s.gated.keys() == set(s.scopes) for s in settings)
+
+
+def test_amendment_1_drops_population_delta_rows():
+    settings = grid.build_settings()
+    assert grid.SEED_BASE == 20261117
+    assert not any(s.kind == "delta" and "population" in s.scopes for s in settings)
+    assert any(s.kind == "rate" and "population" in s.scopes for s in settings)
+    assert len(settings) == 66
+    assert sum(s.kind == "delta" and "suite" in s.scopes for s in settings) == 26  # D3 8, D4 16, D6 1, V2 1

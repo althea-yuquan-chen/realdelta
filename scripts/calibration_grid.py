@@ -1,8 +1,12 @@
 """Frozen calibration grid for realdelta (see docs/calibration_protocol.md).
 
 Usage:
-    python scripts/calibration_grid.py            # final run: 2000 reps, seed base 20261116
+    python scripts/calibration_grid.py            # final run: 2000 reps, seed base 20261117
     python scripts/calibration_grid.py --smoke    # 50 reps, seed base 1, not evidence
+
+Amendment 1 (docs/calibration_protocol.md): seed base 20261117; the population-scope delta is not
+shipped in v0.1 (width rule, final at seed base 20261116), so delta settings drop that scope and
+settings left without a scope are skipped. The 20261116 run is reproducible from commit da182ba.
 
 Imports only the public API of realdelta.
 """
@@ -22,7 +26,7 @@ import numpy as np
 
 from realdelta import delta_interval, pass_rate_interval
 
-SEED_BASE = 20261116
+SEED_BASE = 20261117
 REPS = 2000
 GATE = 0.93
 TRUTH_SEED = 20261116
@@ -201,7 +205,19 @@ def build_settings() -> list[Setting]:
                     gated={"suite": False, "population": True}, sticky=r))
     add(Setting("V2 batch shock sd=0.3 null Beta(4,2) m=30 n=5", "delta", 30, 5, beta_rates(4, 2), 0.0, both,
                 gated={"suite": False, "population": False}, candidate=same(), shock_sd=0.3))
-    return S
+    return _drop_population_delta(S)
+
+
+def _drop_population_delta(settings: list[Setting]) -> list[Setting]:
+    """Amendment 1: the population-scope delta is not shipped, so it is not re-run."""
+    kept = []
+    for s in settings:
+        if s.kind == "delta":
+            s.scopes = tuple(sc for sc in s.scopes if sc != "population")
+            s.gated = {sc: g for sc, g in s.gated.items() if sc != "population"}
+        if s.scopes:
+            kept.append(s)
+    return kept
 
 
 # ---------------------------------------------------------------- runner
@@ -249,17 +265,10 @@ def run_setting(s: Setting, reps: int, seed: int) -> list[dict]:
     return rows
 
 
-def width_rule(rows: list[dict]) -> dict:
-    target = [r for r in rows if r["setting"].startswith("D4") and "m=50 n=10" in r["setting"]
-              and r["scope"] == "population"]
-    return {"rows": [(r["setting"], r["mean_width"]) for r in target],
-            "population_delta_ships": bool(target) and all(r["mean_width"] <= 0.30 for r in target)}
-
-
 def to_markdown(rows: list[dict], meta: dict) -> str:
     lines = [f"# Calibration grid, seed base {meta['seed_base']}, {meta['reps']} reps", "",
              f"Gate: coverage >= {GATE} on gated rows. Gated rows failing: {meta['gated_failures']}. "
-             f"Population delta ships (width rule): {meta['width_rule']['population_delta_ships']}.", "",
+             "Population delta: not shipped in v0.1, width rule final at seed base 20261116.", "",
              "| setting | scope | gated | coverage | miss low | miss high | mean width | excludes 0 | note |",
              "|---|---|---|---|---|---|---|---|---|"]
     for r in rows:
@@ -278,6 +287,10 @@ def main(argv: list[str] | None = None) -> int:
     args = ap.parse_args(argv)
     reps, base = (50, 1) if args.smoke else (REPS, SEED_BASE)
     out_dir = args.out or (Path("results") if not args.smoke else Path("smoke_results"))
+    stem = f"calibration_grid_{base}"
+    if not args.smoke and any((out_dir / f"{stem}{ext}").exists() for ext in (".json", ".md")):
+        print(f"refusing to overwrite {out_dir / stem}.*", file=sys.stderr)
+        return 1
     settings = build_settings()
     rows: list[dict] = []
     t0 = time.time()
@@ -286,9 +299,8 @@ def main(argv: list[str] | None = None) -> int:
         print(f"[{i + 1}/{len(settings)}] {s.id} ({time.time() - t0:.0f}s)", file=sys.stderr)
     failures = [f"{r['setting']} [{r['scope']}]" for r in rows if r["gated"] and not r["passes_gate"]]
     meta = {"seed_base": base, "reps": reps, "smoke": args.smoke, "n_settings": len(settings),
-            "gated_failures": len(failures), "failures": failures, "width_rule": width_rule(rows)}
+            "gated_failures": len(failures), "failures": failures}
     out_dir.mkdir(parents=True, exist_ok=True)
-    stem = f"calibration_grid_{base}"
     (out_dir / f"{stem}.json").write_text(json.dumps({"meta": meta, "rows": rows}, indent=1), encoding="utf-8")
     (out_dir / f"{stem}.md").write_text(to_markdown(rows, meta), encoding="utf-8")
     print(json.dumps(meta, indent=1))
