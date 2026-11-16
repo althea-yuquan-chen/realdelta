@@ -183,3 +183,68 @@ over configurations.
   only for bugs): seed base 20261117; population-scope delta rows are not run; width-rule reporting
   removed; refuses to overwrite existing results. Settings, repetitions, truths and the gate are
   otherwise unchanged. The 20261116 run stays reproducible from commit da182ba.
+
+## Amendment 2 (2026-11-16, after the Amendment 1 selection)
+
+Appended after `results/suite_bounds_selection.{json,md}` were committed (3be2276). Amendment 1
+stopped at step 1: B1 reached a minimum coverage of 0.9449 (S1 m=100), B2 0.9434 (S3 m=5 k=4), both
+below 0.947. The owner chose to add one more candidate under the same rule. Everything in this
+amendment is committed before the candidate is run.
+
+### Disclosure
+
+C1 was designed after seeing the Amendment 1 sweep: B1 fell short in S1 at m=50 and m=100, where
+`n_eff` exceeds the number of trials. The analytic sweep is therefore not an independent test of C1.
+The independent evidence for C1 is the unchanged CI tests and the grid at seed base 20261117,
+which has not been run. The README lists both amendments and the failed candidates.
+
+### Candidate C1
+
+Clopper-Pearson beta quantiles on `(x, N)` with `N = min(n_eff, sum_i n_i)` and `x = estimate * N`:
+the effective sample size is capped at the number of trials actually run. With one trial per case,
+`N = m` and `x` is the integer pass count, so C1 is the ordinary Clopper-Pearson interval and its
+coverage in S1 is at least 0.95. With equal trials per case, `n_eff >= m * n` (Jensen's inequality on
+the per-case adjusted variances), so the cap always binds: C1 is the pooled Clopper-Pearson interval
+on the total pass count out of `m * n` trials, and `n_eff` plays no role. For the suite estimand
+(the mean of this sample's case rates) the total is Poisson-binomial with variance at most the
+binomial's, so ignoring case clustering is conservative, not an error; coverage under heterogeneous
+rates is still checked, not proven. Only with unequal trials does `n_eff` stay in use (`x` is then
+non-integer). For equal trials this departs from Amendment 1's "keeping the current ... `n_eff`"
+and is declared here. A test checks the equal-trials equivalence.
+
+### Rule
+
+Amendment 1's selection rule applies unchanged with C1 as the only candidate: step 1 (minimum exact
+coverage >= 0.947 on S1-S3, endpoint limits included), then step 3 (full test suite,
+`tests/test_calibration.py` unchanged), with the step-3/step-4 split of failure types, step 4's gate
+change requiring review, Amendment 3 and the owner's sign-off, and step 5's single grid at seed base
+20261117. If C1 fails step 1, or fails step 3 on anything other than the 0.995 upper bound, stop:
+v0.1 is blocked and no further suite candidate is added before 2027-01-11. Under step 4, an
+owner who does not sign off leaves v0.1 blocked.
+
+Expected outcome, stated before the run: step 1 should pass, since S1 and S2 reduce to exact
+Clopper-Pearson on integer counts and S3 was already at 0.972 for the narrower B1. The selection
+output reports C1's mean width next to the reference Wilson (reported, not gated). The cost: with
+equal trials the interval has pooled-binomial width, wider than needed for suites of mostly
+deterministic cases; the README says so.
+
+S4, reported only: unequal trials, m=5, `n_i = (1, 1, 3, 3, 10)`, homogeneous p, exact enumeration
+with endpoint limits. Added by Amendment 2 because unequal trials are the one regime with neither a
+proof nor a sweep configuration. It does not gate; if its minimum coverage is below 0.947 the README
+lists it as a known weakness. If it is below 0.93, the README states the value and the configuration
+in the same paragraph as the main coverage claim.
+
+Test changes allowed in the implementation commit, and no others: remove the `PENDING` marks in
+`tests/test_suite_analytic.py`; point `test_selection_script_reproduces_the_library_wilson_suite_bounds`
+at the library function that keeps the Wilson suite bounds for MOVER (assertions unchanged); switch
+population-delta call sites to the private function as stated in Amendment 1; add two new tests,
+defined here: (1) `delta_interval`, `compare` and `plan_trials` called with `scope="population"`
+raise `NotImplementedError`; (2) on data where every case passes all 10 trials in both arms, the
+private population delta has half-width exactly `1 - 0.0125 ** (1 / m)` (to 1e-12) for m in
+{5, 7, 10, 20, 30, 50, 100}, which pins the Bonferroni split of the delta floor.
+
+### Run
+
+`python scripts/suite_bounds_selection.py --amendment 2` writes
+`results/suite_bounds_selection_a2.{json,md}` and refuses to overwrite. Amendment 1 mode is
+unchanged; reproducing 3be2276's files needs them moved aside first because of the overwrite check.

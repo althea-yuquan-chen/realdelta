@@ -10,9 +10,11 @@ Minimum coverage includes the one-sided limits at every interval endpoint, so it
 depend on where grid points fall.
 
 Usage:
-    python scripts/suite_bounds_selection.py     # writes results/suite_bounds_selection.{json,md}
+    python scripts/suite_bounds_selection.py               # Amendment 1: results/suite_bounds_selection.*
+    python scripts/suite_bounds_selection.py --amendment 2 # Amendment 2: results/suite_bounds_selection_a2.*
 
 ``sweep`` is also used by tests/test_suite_analytic.py on the public pass_rate_interval.
+Amendment 2 adds candidate C1 and a reported-only configuration S4 (unequal trials).
 """
 
 from __future__ import annotations
@@ -109,6 +111,21 @@ def _config_s3(bounds: Bounds, m: int, k: int):
                      _grid_small(), ends)
 
 
+def _config_s4(bounds: Bounds, n_i: tuple[int, ...] = (1, 1, 3, 3, 10)):
+    """Amendment 2, reported only: unequal trials per case, homogeneous p, exact enumeration."""
+    trials = np.array(n_i, dtype=float)
+    outcomes = list(itertools.product(*[range(n + 1) for n in n_i]))
+    ivs = [bounds(np.array(o, dtype=float), trials) for o in outcomes]
+    lo, hi = np.array([iv[0] for iv in ivs]), np.array([iv[1] for iv in ivs])
+    counts = np.array(outcomes)
+
+    def weights(p):
+        return np.prod([st.binom.pmf(counts[:, j], n, p) for j, n in enumerate(n_i)], axis=0)
+
+    ends = np.concatenate([hi + EPS, lo - EPS])
+    return _evaluate(lo, hi, weights, lambda p: p, _grid_small(), ends)
+
+
 S3_K = [(5, 2), (5, 4), (20, 10), (20, 16)]   # (m, k): shares 0.4/0.8 at m=5, 0.5/0.8 at m=20
 
 CONFIGS = (
@@ -194,29 +211,60 @@ def wilson_cc(passes, trials):
     return wilson_cc_bounds(p, n, z)
 
 
-CANDIDATES = {"B1 clopper_pearson": clopper_pearson, "B2 wilson_cc": wilson_cc}
+def clopper_pearson_capped(passes, trials):
+    """C1 (Amendment 2): Clopper-Pearson with the sample size capped at the trials actually run.
+
+    N = min(n_eff, sum of trials), x = estimate * N. With one trial per case N = m and x is the
+    integer pass count, so the interval is the ordinary Clopper-Pearson interval.
+    """
+    p, n_eff = _estimate_and_n_eff(passes, trials, _z())
+    n = min(n_eff, float(np.sum(trials)))
+    return cp_bounds(p * n, n)
+
+
+CANDIDATES_BY_AMENDMENT = {
+    1: {"B1 clopper_pearson": clopper_pearson, "B2 wilson_cc": wilson_cc},
+    2: {"C1 clopper_pearson_capped": clopper_pearson_capped},
+}
+CANDIDATES = CANDIDATES_BY_AMENDMENT[1]
 REFERENCE = {"reference wilson (current)": wilson}
 
 
-def select(results: dict) -> dict:
-    survivors = [name for name in CANDIDATES if results[name]["min_coverage"] >= THRESHOLD]
+def select(results: dict, candidates: dict = CANDIDATES) -> dict:
+    survivors = [name for name in candidates if results[name]["min_coverage"] >= THRESHOLD]
     survivors.sort(key=lambda name: results[name]["mean_width"])
     return {"threshold": THRESHOLD, "survivors_narrowest_first": survivors,
             "first_choice": survivors[0] if survivors else None}
 
 
-def main() -> int:
+def main(argv: list[str] | None = None) -> int:
+    import argparse
+
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--amendment", type=int, choices=(1, 2), default=1)
+    args = ap.parse_args(argv)
+    candidates = CANDIDATES_BY_AMENDMENT[args.amendment]
     out = Path("results")
-    stem = out / "suite_bounds_selection"
+    stem = out / ("suite_bounds_selection" if args.amendment == 1 else "suite_bounds_selection_a2")
     if stem.with_suffix(".json").exists() or stem.with_suffix(".md").exists():
         print(f"refusing to overwrite {stem}.*", file=sys.stderr)
         return 1
-    results = {name: sweep(fn) for name, fn in {**CANDIDATES, **REFERENCE}.items()}
-    decision = select(results)
+    results = {name: sweep(fn) for name, fn in {**candidates, **REFERENCE}.items()}
+    decision = select(results, candidates)
+    if args.amendment == 2:
+        reported = {}
+        for name, fn in {**candidates, **REFERENCE}.items():
+            cov, wid = _config_s4(fn)
+            reported[name] = {"config": "S4 m=5 n_i=(1,1,3,3,10)", "min_coverage": float(cov.min()),
+                              "mean_width": float(wid.mean())}
+        decision["reported_not_gated"] = reported
     out.mkdir(exist_ok=True)
     stem.with_suffix(".json").write_text(json.dumps({"decision": decision, "results": results}, indent=1),
                                          encoding="utf-8")
-    lines = ["# Suite pass-rate bounds: pre-registered selection", "",
+    title = "# Suite pass-rate bounds: pre-registered selection"
+    if args.amendment != 1:
+        title += f" (Amendment {args.amendment})"
+    lines = [title, "",
              f"Criterion: min exact coverage >= {THRESHOLD} on every configuration. "
              f"Survivors, narrowest first: {decision['survivors_narrowest_first']}. "
              f"First choice: {decision['first_choice']}.", "",
@@ -225,6 +273,11 @@ def main() -> int:
         for r in res["rows"]:
             lines.append(f"| {name} | {r['config']} | {r['min_coverage']:.4f} | {r['mean_width']:.4f} |")
         lines.append(f"| {name} | **all** | **{res['min_coverage']:.4f}** | **{res['mean_width']:.4f}** |")
+    if "reported_not_gated" in decision:
+        lines += ["", "Reported, not gated (Amendment 2): unequal trials, homogeneous p.", "",
+                  "| method | config | min coverage | mean width |", "|---|---|---|---|"]
+        for name, r in decision["reported_not_gated"].items():
+            lines.append(f"| {name} | {r['config']} | {r['min_coverage']:.4f} | {r['mean_width']:.4f} |")
     stem.with_suffix(".md").write_text("\n".join(lines) + "\n", encoding="utf-8")
     print(json.dumps(decision, indent=1))
     return 0

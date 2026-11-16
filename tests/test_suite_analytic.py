@@ -79,3 +79,27 @@ def test_cp_bounds_match_scipy_exact_interval_at_integer_counts(n):
         ci = binomtest(x, n).proportion_ci(confidence_level=0.95, method="exact")
         low, high = selection.cp_bounds(float(x), float(n))
         assert abs(low - ci.low) < 1e-9 and abs(high - ci.high) < 1e-9, (x, n)
+
+
+@pytest.mark.parametrize("m", (5, 10, 20, 50, 100))
+def test_capped_candidate_is_exact_clopper_pearson_with_one_trial_per_case(m):
+    """Amendment 2, C1: with n_i = 1 the cap gives N = m and the integer pass count."""
+    from scipy.stats import binomtest
+
+    for x in range(m + 1):
+        low, high = selection.clopper_pearson_capped(np.array([1.0] * x + [0.0] * (m - x)), np.ones(m))
+        ci = binomtest(x, m).proportion_ci(confidence_level=0.95, method="exact")
+        assert abs(low - ci.low) < 1e-9 and abs(high - ci.high) < 1e-9, (x, m)
+
+
+@pytest.mark.parametrize("m,n", [(5, 5), (10, 5), (30, 3), (20, 10)])
+def test_capped_candidate_is_pooled_clopper_pearson_with_equal_trials(m, n):
+    """Amendment 2, C1: with equal n_i, n_eff >= m * n (Jensen), so N = m * n and x = total passes."""
+    from scipy.stats import binomtest
+
+    rng = np.random.default_rng(m * 100 + n)
+    for _ in range(200):
+        passes = rng.integers(0, n + 1, size=m).astype(float)
+        low, high = selection.clopper_pearson_capped(passes, np.full(m, float(n)))
+        ci = binomtest(int(passes.sum()), m * n).proportion_ci(confidence_level=0.95, method="exact")
+        assert abs(low - ci.low) < 1e-9 and abs(high - ci.high) < 1e-9, passes
