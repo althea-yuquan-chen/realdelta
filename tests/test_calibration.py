@@ -15,6 +15,13 @@ import numpy as np
 import pytest
 
 from realdelta import delta_interval, pass_rate_interval, wilson_interval
+from realdelta.stats import _delta_interval, _paired_counts
+
+
+def _delta(baseline, candidate, scope):
+    if scope == "population":  # not public in v0.1 (docs/calibration_protocol.md, Amendment 1)
+        return _delta_interval(*_paired_counts(baseline, candidate), scope, 0.95)
+    return delta_interval(baseline, candidate, scope=scope)
 
 REPS = 1000
 GATE = 0.93
@@ -95,7 +102,7 @@ def test_delta_interval_coverage(scope, m, spec, ab, shift):
         pa = rng.beta(*ab, size=m)
         pb = np.clip(pa + shift, 0, 1)
         trials = _trials(rng, m, spec)
-        iv = delta_interval(_outcomes(rng, pa, trials), _outcomes(rng, pb, trials), scope=scope)
+        iv = _delta(_outcomes(rng, pa, trials), _outcomes(rng, pb, trials), scope)
         hits += iv.contains(float(np.mean(pb - pa)) if scope == "suite" else pop_truth)
     _check(hits / REPS, scope)
 
@@ -108,7 +115,7 @@ def test_false_alarm_rate_when_nothing_changed(scope, m, spec, ab):
     for _ in range(REPS):
         rates = rng.beta(*ab, size=m)
         trials = _trials(rng, m, spec)
-        iv = delta_interval(_outcomes(rng, rates, trials), _outcomes(rng, rates, trials), scope=scope)
+        iv = _delta(_outcomes(rng, rates, trials), _outcomes(rng, rates, trials), scope)
         alarms += not iv.contains(0.0)
     assert alarms / REPS <= 0.07
 
@@ -145,6 +152,6 @@ def test_h6_population_delta_when_candidate_breaks_five_percent():
         pa = _deterministic(rng, 20, 0.95)
         pb = pa * (rng.random(20) >= 0.05 / 0.95)
         trials = np.full(20, 10)
-        iv = delta_interval(_outcomes(rng, pa, trials), _outcomes(rng, pb, trials), scope="population")
+        iv = _delta(_outcomes(rng, pa, trials), _outcomes(rng, pb, trials), "population")
         hits += iv.contains(-0.05)
     assert hits / REPS >= GATE, f"coverage {hits / REPS:.3f}"

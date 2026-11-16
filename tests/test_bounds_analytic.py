@@ -64,10 +64,21 @@ def test_all_pass_lower_bound(m):
 
 @pytest.mark.parametrize("m", M_VALUES)
 def test_all_zero_differences_keep_case_level_width(m):
-    from realdelta import delta_interval
+    from realdelta.stats import _delta_interval, _paired_counts  # not public in v0.1 (Amendment 1)
 
     # The most favourable data: every case passes every trial in both arms.
     outcomes = {f"c{i}": [True] * 10 for i in range(m)}
-    iv = delta_interval(outcomes, outcomes, scope="population")
+    iv = _delta_interval(*_paired_counts(outcomes, outcomes), "population", 0.95)
     half = 1.0 - 0.025 ** (1.0 / m)
     assert iv.low <= -half + TOL and iv.high >= half - TOL
+
+
+@pytest.mark.parametrize("m", M_VALUES)
+def test_delta_floor_half_width_pins_bonferroni_split(m):
+    """Amendment 2: each side of the delta floor is bounded at level 1 - alpha/2."""
+    from realdelta.stats import _delta_interval, _paired_counts
+
+    outcomes = {f"c{i}": [True] * 10 for i in range(m)}
+    iv = _delta_interval(*_paired_counts(outcomes, outcomes), "population", 0.95)
+    half = 1.0 - 0.0125 ** (1.0 / m)
+    assert abs(iv.high - half) <= TOL and abs(iv.low + half) <= TOL

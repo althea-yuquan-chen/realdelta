@@ -8,16 +8,24 @@ weighs the same however many trials it ran.
 Two scopes answer two different questions:
 
 * ``"suite"``: how sure are we about *this fixed set of cases*? Only
-  trial-to-trial randomness counts. The interval is a Wilson score interval on
-  the macro rate, with an effective sample size taken from Agresti-Coull
-  adjusted per-case variances. The adjustment keeps the interval honest when
-  cases pass every time, which is where agent suites usually sit.
+  trial-to-trial randomness counts. The pass-rate interval is Clopper-Pearson
+  on the macro rate with an effective sample size taken from Agresti-Coull
+  adjusted per-case variances, capped at the number of trials run (with equal
+  trials per case this is Clopper-Pearson on the pooled pass count). It
+  replaced a Wilson interval that under-covered near a 100% pass rate with few
+  trials (docs/calibration_protocol.md, Amendments 1 and 2).
 * ``"population"``: how sure are we about *cases like these*? Case-to-case
-  spread counts too. The interval is the hull of a t interval over per-case
-  pass rates, the suite interval, and a case-level floor
+  spread counts too. The pass-rate interval is the hull of a t interval over
+  per-case pass rates, the suite interval, and a case-level floor
   (:func:`case_level_interval`). The floor matters when a few cases fail
-  every time: m cases cannot rule out a failure mode that affects roughly
-  3.7/m of cases like them, however many trials each case ran.
+  every time: if every one of m cases passes, the lower bound is
+  0.025 ** (1/m) (about 1 - 3.7/m for large m; 0.48 at m = 5), however many
+  trials each case ran.
+
+The delta (:func:`delta_interval`, :func:`compare`) is suite scope only in
+v0.1: MOVER over the two arms' Wilson-based suite intervals. The
+population-scope delta failed the pre-registered width rule and raises
+NotImplementedError.
 
 Assumptions (docs/calibration_protocol.md): A1 trials within a case are i.i.d.;
 A2 cases are an i.i.d. draw from the population; A3 compared arms share no
@@ -153,11 +161,41 @@ def _require_scope(scope: str, m: int) -> None:
         raise ValueError("the population scope needs at least 2 cases")
 
 
+def _cp_bounds(x: float, n: float, conf: float) -> tuple[float, float]:
+    """Clopper-Pearson beta quantiles for a (possibly real-valued) count x out of n."""
+    alpha = 1.0 - conf
+    _z(conf)  # validates conf
+    x = min(max(float(x), 0.0), float(n))
+    low = 0.0 if x <= 1e-12 else float(_sps.beta.ppf(alpha / 2.0, x, n - x + 1.0))
+    high = 1.0 if x >= n - 1e-12 else float(_sps.beta.ppf(1.0 - alpha / 2.0, x + 1.0, n - x))
+    if not (math.isfinite(low) and math.isfinite(high)):
+        raise FloatingPointError(f"non-finite Clopper-Pearson bound for x={x}, n={n}")
+    return low, high
+
+
+def _suite_rate_interval(passes: np.ndarray, trials: np.ndarray, conf: float) -> Interval:
+    """Suite-scope pass-rate interval (docs/calibration_protocol.md, Amendment 2, candidate C1).
+
+    Clopper-Pearson on (estimate * N, N) with N = min(n_eff, total trials): the effective sample
+    size is capped at the trials actually run. With one trial per case this is the ordinary
+    Clopper-Pearson interval; with equal trials per case it is Clopper-Pearson on the pooled pass
+    count, since n_eff >= m * n then.
+    """
+    z = _z(conf)
+    m = len(passes)
+    estimate = float(np.mean(passes / trials))
+    var = float(np.sum(_adjusted_var(passes, trials, z)) / (m * m))
+    p_bar = float(np.mean((passes + z * z / 2.0) / (trials + z * z)))
+    n = min(p_bar * (1.0 - p_bar) / var, float(np.sum(trials)))
+    low, high = _cp_bounds(estimate * n, n, conf)
+    return Interval(estimate, low, high, conf)
+
+
 def pass_rate_interval(outcomes: Outcomes, scope: Scope = "suite", conf: float = 0.95) -> Interval:
     """Interval for the macro pass rate of a suite run with repeated trials."""
     _, passes, trials = _counts(outcomes)
     _require_scope(scope, len(passes))
-    suite = _suite_interval(passes, trials, conf)
+    suite = _suite_rate_interval(passes, trials, conf)
     if scope == "suite":
         return suite
     rates = passes / trials
@@ -181,10 +219,7 @@ def case_level_interval(total: float, m: int, conf: float = 0.95) -> Interval:
     if not -1e-9 <= total <= m + 1e-9:
         raise ValueError(f"total must be in [0, {m}], got {total}")
     x = min(max(float(total), 0.0), float(m))
-    alpha = 1.0 - conf
-    _z(conf)  # validates conf
-    low = 0.0 if x <= 1e-12 else float(_sps.beta.ppf(alpha / 2.0, x, m - x + 1.0))
-    high = 1.0 if x >= m - 1e-12 else float(_sps.beta.ppf(1.0 - alpha / 2.0, x + 1.0, m - x))
+    low, high = _cp_bounds(x, float(m), conf)
     return Interval(x / m, low, high, conf)
 
 
@@ -225,13 +260,27 @@ def delta_interval(
 ) -> Interval:
     """Interval for the change in macro pass rate, candidate minus baseline, paired by case.
 
-    In the suite scope the two arms' suite intervals are combined with the
-    MOVER method (Newcombe's hybrid score interval, generalised to macro
-    rates). In the population
-    scope a paired t interval over per-case differences is used, widened where
-    needed to contain the suite interval.
+    Suite scope only in v0.1. The two arms' Wilson-based suite intervals are
+    combined with the MOVER method (Newcombe's hybrid score interval,
+    generalised to macro rates). It has no calibration-grid row with very few
+    trials near a 100% pass rate, where Wilson bounds are known to under-cover.
+
+    ``scope="population"`` raises NotImplementedError: it failed the
+    pre-registered width rule (results/calibration_grid_20261116.md).
     """
+    _reject_population_delta(scope)
     return _delta_interval(*_paired_counts(baseline, candidate), scope, conf)
+
+
+_POPULATION_DELTA_MESSAGE = (
+    "the population-scope delta is not in v0.1: it failed the pre-registered width rule "
+    "(docs/calibration_protocol.md, results/calibration_grid_20261116.md); use scope='suite'"
+)
+
+
+def _reject_population_delta(scope: str) -> None:
+    if scope == "population":
+        raise NotImplementedError(_POPULATION_DELTA_MESSAGE)
 
 
 @dataclass(frozen=True)
@@ -276,7 +325,8 @@ def compare(
     n_perm: int = 10000,
     seed: int | None = None,
 ) -> Comparison:
-    """Compare a candidate version against a baseline run on the same cases."""
+    """Compare a candidate version against a baseline run on the same cases (suite scope only in v0.1)."""
+    _reject_population_delta(scope)
     pa, ta, pb, tb = _paired_counts(baseline, candidate)
     delta = _delta_interval(pa, ta, pb, tb, scope, conf)
     p_value = _sign_flip_p_value(pb / tb - pa / ta, n_perm, np.random.default_rng(seed))

@@ -19,16 +19,12 @@ _SPEC = importlib.util.spec_from_file_location(
 selection = importlib.util.module_from_spec(_SPEC)
 _SPEC.loader.exec_module(selection)
 
-PENDING = pytest.mark.xfail(strict=True, reason="suite pass-rate fix not implemented yet")
-
-
 def _public_bounds(passes: np.ndarray, trials: np.ndarray) -> tuple[float, float]:
     outcomes = {f"c{i}": [True] * int(p) + [False] * int(t - p) for i, (p, t) in enumerate(zip(passes, trials))}
     iv = pass_rate_interval(outcomes, scope="suite")
     return iv.low, iv.high
 
 
-@PENDING
 def test_suite_pass_rate_exact_coverage():
     """One test over all of S1-S3, so a configuration the current method happens to pass cannot XPASS."""
     result = selection.sweep(_public_bounds)

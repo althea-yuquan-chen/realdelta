@@ -108,3 +108,16 @@ def test_compare_is_symmetric_in_sign():
     rev = compare(cand, base, seed=5)
     assert fwd.delta.estimate == pytest.approx(-rev.delta.estimate)
     assert fwd.p_value == pytest.approx(rev.p_value, abs=0.02)
+
+
+def test_population_delta_is_not_public_in_v0_1():
+    """Amendment 1/2: the population-scope delta failed the width rule."""
+    from realdelta import delta_interval, plan_trials
+
+    outcomes = {f"c{i}": [True, False, True] for i in range(10)}
+    with pytest.raises(NotImplementedError):
+        delta_interval(outcomes, outcomes, scope="population")
+    with pytest.raises(NotImplementedError):
+        compare(outcomes, outcomes, scope="population")
+    with pytest.raises(NotImplementedError):
+        plan_trials(10, 0.1, trials_options=(3,), scope="population", n_sim=2, seed=0)
