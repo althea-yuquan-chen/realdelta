@@ -262,8 +262,12 @@ def delta_interval(
 
     Suite scope only in v0.1. The two arms' Wilson-based suite intervals are
     combined with the MOVER method (Newcombe's hybrid score interval,
-    generalised to macro rates). It has no calibration-grid row with very few
-    trials near a 100% pass rate, where Wilson bounds are known to under-cover.
+    generalised to macro rates). Near a 100% pass rate with few trials, where
+    Wilson bounds are known to under-cover, it is not covered by the gated
+    calibration grid; a reported-only diagnostic found coverage >= 0.949 on 23
+    settings with m >= 5, including constructed worst cases
+    (results/delta_boundary_diagnostic_20261118.md). This is not a general
+    guarantee for that regime, and power there is low.
 
     ``scope="population"`` raises NotImplementedError: it failed the
     pre-registered width rule (results/calibration_grid_20261116.md).
