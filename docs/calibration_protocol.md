@@ -267,3 +267,34 @@ unchanged; reproducing 3be2276's files needs them moved aside first because of t
   library's suite interval to C1 (7e8c59e). It is new, not a relaxation, and not a gate.
 - Final runs to list in the README: 20261116 (failed one suite row and the width rule) and
   20261117 (passed).
+
+## Diagnostic DB (declared 2026-11-16, before it is run; reported only)
+
+The suite delta (MOVER over Wilson-based arm intervals) has no gated grid row with both arms near
+100% and few trials, and the Wilson arm intervals reach 0.815-0.838 minimum exact coverage in the
+Amendment 1/2 sweeps. `scripts/delta_boundary_diagnostic.py` measures the suite delta there, with
+truth mean(p_b - p_a), 2000 reps per row, generator `default_rng([20261118, row index])`:
+- Random rows (20): baseline rates Beta(a, 1), a in {50, 20}; m in {5, 20}; n in {1, 3}; candidate
+  equal to the baseline (null) or lowered by 0.05 per case, clipped at 0; for a = 20 also raised by
+  0.05, clipped at 1.
+- Adversarial rows (3): every baseline case at rate 1; every candidate case at the fixed rate
+  1 - z^2 / (N + z^2) - 0.01 with N = m * n, for (m, n) in {(5, 1), (20, 1), (5, 3)}. This sits just
+  below the Wilson lower bound for an all-pass arm of N trials, where MOVER over Wilson arms is
+  expected to under-cover (hand calculation, not verified). These are constructed worst cases.
+It runs once; output (with commit and the location of the imported realdelta) is committed as
+produced. A `--smoke` mode (50 reps, seed base 1, temp directory) checks that it runs; its output
+is not evidence.
+
+It gates nothing and changes no method. The Gate section's "a failing suite row blocks the
+release" does not apply: these rows are reported only. The Runs section's bug rule applies: a fix
+to the script uses a new seed base and earlier output stays. Disposition, fixed now:
+- Every row >= 0.93: the README reports the lowest random-row and lowest adversarial-row coverage,
+  limited to these settings (null, -0.05, +0.05 at Beta(20,1), and the three constructed cases;
+  m >= 5). It does not say the delta is safe near 100% in general. The `delta_interval` docstring
+  keeps its warning, reworded to cite this diagnostic.
+- Any row < 0.93: the README states the lowest coverage and its configuration in the same paragraph
+  as the main coverage claim, and the `delta_interval` docstring names the regime. The owner then
+  chooses one of two options: (a) fix the suite delta in v0.1 under a new amendment, whose new grid
+  includes these 23 settings as gated rows with a new seed base; or (b) release with the disclosure
+  and the docstring warning. Re-running with another seed or dropping rows is not an option. This
+  diagnostic is not reused to choose a fix.
