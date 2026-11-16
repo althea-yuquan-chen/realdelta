@@ -1,7 +1,8 @@
 """Uncertainty for agent eval results that are repeated per case.
 
 An eval run produces, for every case, a list of trial outcomes (pass / fail).
-Trials of the same case are correlated, so the case is the unit. The point
+Trials of the same case share that case's pass rate: given the case they are
+independent draws, but across cases they are not exchangeable. The point
 estimate is the macro pass rate: the mean of per-case pass rates, so every case
 weighs the same however many trials it ran.
 
@@ -265,7 +266,7 @@ def delta_interval(
     generalised to macro rates). Near a 100% pass rate with few trials, where
     Wilson bounds are known to under-cover, it is not covered by the gated
     calibration grid; a reported-only diagnostic found coverage >= 0.949 on 23
-    settings with m >= 5, including constructed worst cases
+    settings with m >= 5, including three cases constructed to be adverse
     (results/delta_boundary_diagnostic_20261118.md). This is not a general
     guarantee for that regime, and power there is low.
 
