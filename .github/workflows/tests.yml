@@ -15,15 +15,25 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest]
-        python: ["3.10", "3.11", "3.12"]
+        python: ["3.10", "3.11", "3.12", "3.13"]
         include:
-          # The synthetic-demo transcript was recorded with numpy 2.4.4; pinning it lets the byte-for-byte
-          # reproduction test run. numpy 2.4 does not support Python 3.10, where that test is skipped.
+          # The synthetic-demo transcript was recorded with numpy 2.4.4; pinning it (wheels exist for 3.11-3.13
+          # on both platforms) lets the byte-for-byte reproduction test run, and REALDELTA_REQUIRE_BYTE_TEST
+          # makes it fail rather than skip if the pin ever stops matching. numpy 2.4 has no 3.10 wheels, so
+          # on 3.10 that test is skipped by design.
           - python: "3.11"
             numpy: "numpy==2.4.4"
+            require_byte_test: "1"
           - python: "3.12"
             numpy: "numpy==2.4.4"
+            require_byte_test: "1"
+          - python: "3.13"
+            numpy: "numpy==2.4.4"
+            require_byte_test: "1"
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    env:
+      REALDELTA_REQUIRE_BYTE_TEST: ${{ matrix.require_byte_test }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5

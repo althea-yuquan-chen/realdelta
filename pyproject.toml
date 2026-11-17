@@ -1,28 +1,64 @@
 [build-system]
-requires = ["hatchling>=1.21"]
+# 1.27 is the first hatchling that writes PEP 639 metadata (License-Expression with Metadata-Version 2.4)
+# for the SPDX `license` string below; older versions build but write inconsistent license metadata.
+requires = ["hatchling>=1.27"]
 build-backend = "hatchling.build"
 
 [project]
 name = "realdelta"
-version = "0.0.1"
+version = "0.1.0"
 description = "Is that change in your agent eval real, or noise? Intervals, paired comparisons and trial planning for repeated agent evals; interval coverage checked on a pre-registered simulation grid."
 readme = "README.md"
 license = "Apache-2.0"
+license-files = ["LICENSE"]
+authors = [{ name = "Althea Yuquan Chen" }]
 requires-python = ">=3.10"
+keywords = ["evaluation", "llm", "agents", "statistics", "confidence-intervals", "a/b-testing"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Mathematics",
+    "Topic :: Software Development :: Testing",
+]
 dependencies = [
     "numpy>=1.24",
     "scipy>=1.10",
 ]
+
+[project.urls]
+Repository = "https://github.com/althea-yuquan-chen/realdelta"
+Issues = "https://github.com/althea-yuquan-chen/realdelta/issues"
 
 [project.scripts]
 realdelta = "realdelta.cli:main"
 
 [project.optional-dependencies]
 dev = ["pytest>=8"]
-demo = ["openai"]  # examples/real_model only; the library itself does not call any model
+demo = ["openai>=3.37"]  # examples/real_model only (tested with 3.37.0); the library itself calls no model
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/realdelta"]
+
+[tool.hatch.build.targets.sdist]
+# Explicit allow-list: local working notes are excluded only through .git/info/exclude, which the sdist
+# builder does not read, so nothing outside this list may be packaged.
+include = [
+    "src/realdelta",
+    "tests",
+    "docs",
+    "examples",
+    "scripts",
+    "results",
+    "README.md",
+    "LICENSE",
+    "pyproject.toml",
+]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

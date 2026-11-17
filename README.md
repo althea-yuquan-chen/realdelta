@@ -7,9 +7,20 @@ the pass rate moved from 82% to 86%. `realdelta` tells you whether that move is
 larger than the run-to-run noise of your agent, and how many repeated trials you
 need before it can tell.
 
-**Status:** early development, not released. The statistics core, its
-calibration checks, result-file loading, the command line, a synthetic demo and one
-pre-registered demo on a real model are done; packaging and release checks are not.
+**Status:** version 0.1.0, early development, not published on PyPI. The statistics
+core, its calibration checks, result-file loading, the command line, a synthetic demo
+and one pre-registered demo on a real model are done; installation from a clone was
+checked on Windows and Linux.
+
+## Install
+
+From a clone (Python 3.10 or later; depends on numpy and scipy):
+
+```bash
+git clone https://github.com/althea-yuquan-chen/realdelta
+cd realdelta
+pip install -e ".[dev]"      # the dev extra adds pytest
+```
 
 ## What it does
 
@@ -77,8 +88,8 @@ python -m realdelta plan --cases 40 --break-cases 2 --trials 3,5,10 \
     --input-tokens 3000 --output-tokens 500 --usd-per-m-input 1 --usd-per-m-output 5
 ```
 
-Run these from the repository root with `src` on `PYTHONPATH` until the package is
-released. Add `--json` for one JSON object. Reports from `compare` and `plan` (and
+After installing, `realdelta ...` is the same command as `python -m realdelta ...`.
+Add `--json` for one JSON object. Reports from `compare` and `plan` (and
 from `interval` in the population scope) end with notes on what the result cannot
 tell you; warnings (on stderr) flag settings outside the tested range below, such
 as fewer than 10 cases or fewer than 3 trials per case for a comparison. `compare`
@@ -91,7 +102,9 @@ enumerates every sign flip) unless you pass `--seed`.
 cases that mostly pass (case pass rates from Beta(20,1); true pass rate 0.95507), run 5
 times each, with one fixed seed (the first one tried) and no model calls. Its full
 output is in [`examples/synthetic/transcript.txt`](examples/synthetic/transcript.txt);
-a test re-runs it and compares the output byte for byte.
+a test re-runs it and compares the output byte for byte. The comparison runs only with
+numpy 2.4.4, the version the transcript was recorded with (other versions skip it;
+CI pins 2.4.4 so it runs there, on Linux and Windows).
 
 - **Noise alone moves the number.** Across 500 pairs of runs of the *unchanged*
   agent, the pass rate moved by 2 points or more in 184 pairs (36.8%) and by 4 points
@@ -276,14 +289,12 @@ mode affecting a few percent of cases like them.
 
 ## Reproduce
 
-From the repository root:
+After the install above, from the repository root:
 
 ```bash
-python -m pytest                                              # unit, analytic and CI coverage tests
-PYTHONPATH=src python scripts/calibration_grid.py --smoke     # 50 repetitions; not evidence
+python -m pytest                                    # unit, analytic and CI coverage tests
+python scripts/calibration_grid.py --smoke          # 50 repetitions; not evidence
 ```
-
-In PowerShell, set the path first with `$env:PYTHONPATH = "src"`.
 
 Both final grid runs are committed in `results/` with a provenance file, and each
 ran once; the diagnostic records its commit in its own header. The grid script

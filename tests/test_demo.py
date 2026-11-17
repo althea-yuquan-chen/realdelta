@@ -2,9 +2,12 @@
 
 numpy does not promise identical random streams across versions for every distribution, so the
 byte comparison runs only when the installed numpy matches the version recorded in the transcript.
+With REALDELTA_REQUIRE_BYTE_TEST set (CI does this where numpy is pinned), a version mismatch fails
+instead of skipping, so the test cannot silently stop running.
 """
 
 import importlib.util
+import os
 from pathlib import Path
 
 import numpy as np
@@ -18,7 +21,10 @@ def test_demo_reproduces_committed_transcript(tmp_path, capsys):
     header = (COMMITTED / "transcript.txt").read_text(encoding="utf-8").splitlines()[0]
     recorded = header.rsplit("numpy ", 1)[1]
     if recorded != np.__version__:
-        pytest.skip(f"transcript recorded with numpy {recorded}, running {np.__version__}")
+        message = f"transcript recorded with numpy {recorded}, running {np.__version__}"
+        if os.environ.get("REALDELTA_REQUIRE_BYTE_TEST"):
+            pytest.fail(message + " (REALDELTA_REQUIRE_BYTE_TEST is set)")
+        pytest.skip(message)
     spec = importlib.util.spec_from_file_location("synthetic_demo", REPO / "examples" / "synthetic_demo.py")
     demo = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(demo)
