@@ -1,2 +1,3 @@
 tests/data/** -text
 examples/synthetic/** -text
+examples/haiku/run_*/** -text
