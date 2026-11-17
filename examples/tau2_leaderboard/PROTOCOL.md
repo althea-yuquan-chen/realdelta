@@ -265,3 +265,30 @@ How the results are read from now on:
   `posthoc_published_scores.md` and this amendment, so that the D rows, among them B vs D "detected", never
   appear without this note.
 - Telling the leaderboard maintainers about this is an outward step and needs the owner's approval.
+
+### Amendment 3 (2026-11-17): correction to Amendment 2, and what `evaluation_date` may describe
+
+Correction. Amendment 2 says the files' timestamps "do not agree with the `evaluation_date` fields". That holds
+for A, C and D. It does not hold for B: B's airline results file is timestamped 2026-02-24T09:40:24 and its
+`evaluation_date` is 2026-02-24.
+
+`evaluation_date` may describe another domain's evaluation. The pinned `submission.json` of A and of C both carry
+the same `methodology.notes`: "Evaluated using AllTools retrieval (BM25 + dense OpenAI text-embedding-3-large +
+sandboxed shell). ... Banking_knowledge domain only — other domains intentionally excluded from this
+comparison". Their `evaluation_date` (2026-05-05) may therefore refer to a banking_knowledge evaluation rather
+than to the airline runs. This is a reading of the notes; no source states it.
+- If that reading is right, the reason the primary pair was chosen (A and C are the only pair with the same
+  evaluation date) does not separate A-C from A-B or B-C: the airline results files of A, B and C are
+  timestamped on 2026-02-24 within about 51 minutes of one another (a fact that does not depend on this
+  reading).
+- The primary pair stays as pre-registered. A-B and B-C do not become findings.
+- A write-up states this next to the primary result.
+
+Other records:
+- `analyze.py` and `fetch_data.py` are unchanged since 7c4ef90, and this protocol has only had text appended
+  since then (evidence kept with the run logs).
+- `analyze.py` was run once. That is the analyst's statement; the repository shows one run directory and the
+  script refuses to overwrite it, but cannot show that no other run took place.
+- The directory name `run_20261123` is the permutation seed, not a date. The analysis ran on 2026-11-17.
+- The retail and telecom checks of Amendment 2 compare pass^1 only. If a write-up or a message to the
+  leaderboard maintainers cites them, those four files are first pinned and the check code is committed.
