@@ -23,3 +23,6 @@ Thumbs.db
 
 # Grid smoke runs (not evidence)
 smoke_results/
+
+# third-party leaderboard files fetched by examples/tau2_leaderboard/fetch_data.py (not redistributed)
+examples/tau2_leaderboard/data/
