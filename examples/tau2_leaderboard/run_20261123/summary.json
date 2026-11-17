@@ -1,0 +1,108 @@
+{
+ "meta": {
+  "commit": "f2449b1c0af12534ec8adc28c3fe185bb70548ee",
+  "realdelta_version": "0.1.1",
+  "manifest_fetched_at": "2026-11-17T05:18:11+00:00",
+  "submissions": {
+   "A": "claude-opus-4-5_sierra_2026-02-26",
+   "B": "claude-sonnet-4-5_sierra_2026-02-26",
+   "C": "gpt-5-2_sierra_2026-02-26",
+   "D": "gpt-5-2-none_sierra_2026-02-26"
+  },
+  "notes": {
+   "A": "evaluated 2026-05-05",
+   "B": "evaluated 2026-02-24; metadata fields disagree (label reasoning 'enabled', run arguments give temperature 0.0 and no reasoning setting)",
+   "C": "evaluated 2026-05-05",
+   "D": "evaluated 2026-05-26; metadata fields disagree (label reasoning 'none', run arguments say 'medium')"
+  },
+  "perm_seed": 20261123
+ },
+ "per_submission": {
+  "A": {
+   "estimate": 0.84,
+   "low": 0.7817009846486592,
+   "high": 0.8879125023541982
+  },
+  "B": {
+   "estimate": 0.72,
+   "low": 0.6523112627953918,
+   "high": 0.781038844329967
+  },
+  "C": {
+   "estimate": 0.83,
+   "low": 0.7706283996061137,
+   "high": 0.8793043767637826
+  },
+  "D": {
+   "estimate": 0.805,
+   "low": 0.7432143124734407,
+   "high": 0.8575081252209411
+  }
+ },
+ "comparisons": [
+  {
+   "pair": "A vs C",
+   "role": "primary",
+   "delta": -0.01,
+   "low": -0.07865120664338401,
+   "high": 0.05898659845824714,
+   "detected": false,
+   "p_value": 0.8623137686231377
+  },
+  {
+   "pair": "A vs B",
+   "role": "descriptive",
+   "delta": -0.12,
+   "low": -0.19420676452814725,
+   "high": -0.04389389195275632,
+   "detected": true,
+   "p_value": 0.007099290070992901
+  },
+  {
+   "pair": "A vs D",
+   "role": "descriptive",
+   "delta": -0.035,
+   "low": -0.10608755243204587,
+   "high": 0.03629177361151083,
+   "detected": false,
+   "p_value": 0.2141785821417858
+  },
+  {
+   "pair": "B vs C",
+   "role": "descriptive",
+   "delta": 0.11,
+   "low": 0.033718715019125864,
+   "high": 0.18469605914114423,
+   "detected": true,
+   "p_value": 0.0321967803219678
+  },
+  {
+   "pair": "B vs D",
+   "role": "descriptive",
+   "delta": 0.085,
+   "low": 0.006518878859183022,
+   "high": 0.16183012084497067,
+   "detected": true,
+   "p_value": 0.032096790320967905
+  },
+  {
+   "pair": "C vs D",
+   "role": "descriptive",
+   "delta": -0.025,
+   "low": -0.09659816659845621,
+   "high": 0.04647875027523577,
+   "detected": false,
+   "p_value": 0.543945605439456
+  }
+ ],
+ "dependence": {
+  "computable": true,
+  "informative_tasks": 4,
+  "observed": -0.03065696697424829,
+  "perm_2.5": -0.15328483487124145,
+  "perm_97.5": 0.21459876881973805,
+  "p_one_sided": 0.7936206379362064,
+  "n_perm": 10000,
+  "above_range": false
+ }
+}
