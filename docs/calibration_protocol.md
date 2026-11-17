@@ -309,3 +309,74 @@ under `results/` were then updated mechanically to the edited commits. Apart fro
 strings, no file content changed, and every commit kept its author and commit dates and its order.
 Each cited commit therefore has the same timestamps, and the same files apart from cited hash
 strings, as the commit the citation originally named.
+
+## Diagnostic AD: dependence between and within arms (declared 2026-11-16, before the full run; reported only)
+
+Why: README Limitations and the command-line assumption note say that if the two arms share seeds, caches
+or an outage window, intervals are too narrow, and cite the grid's V2 row (suite delta coverage 0.894).
+V2 is a shock drawn separately for each arm and shared by that arm's cases. That is dependence across cases
+within one arm, not randomness shared between the arms. MOVER over the arms' intervals assumes the arms'
+trial noise is independent (stats.py, `_delta_interval`), and the direction of a violation has not been
+measured. `scripts/arm_dependence_diagnostic.py` measures the suite delta (realdelta.delta_interval, suite
+scope, 95%). Truth is mean(p_b - p_a) over the sample's cases. 2000 reps per row; generator
+`default_rng([20261122, row index])`; m = 30, n = 5. Rows:
+- X0, within-arm shock (V2's structure, a different random stream, so not expected to reproduce 0.894
+  exactly): each arm draws its own logit shock N(0, 0.3^2) per trial index, shared by its cases; null;
+  Beta(4,2).
+- X1, latent coupling per (case, trial): arm a passes when Phi(z_a) < p_a,i and arm b when
+  Phi(z_b) < p_b,i, with (z_a, z_b) standard normal and correlation rho.
+  - Null, Beta(4,2): rho in {-0.5, 0, 0.5, 0.9, 1.0}. rho = 0 is the independent reference; rho > 0
+    models shared seeds; rho = 1 is the same random number in both arms.
+  - Shift +0.05, Beta(4,2): rho in {0, 0.9}. rho = 0 is the power reference.
+  - Null, Beta(20,1): rho = 0.9.
+- X2, correlated run-level shocks: as X0, but the arms' shocks for trial index t have correlation c.
+  - Null, Beta(4,2): c in {0.5, 1.0}.
+  - Shift +0.05, Beta(4,2): c = 1.0.
+
+Disclosure. A `--smoke` run (50 reps, seed base 1) of an earlier version of the script was made before this
+section was committed, to check that it runs. That version had X0, X1 null at rho 0.5, 0.9 and 1.0, X1 shift
+at rho 0.9, X1 Beta(20,1) and X2 at c = 1 (null and shift). Every number it printed was seen:
+- coverage: X0 0.900; X1 0.960, 1.000, 1.000, 1.000 (shift), 1.000 (Beta(20,1)); X2 1.000 (null) and
+  0.940 (shift);
+- excludes 0: X0 0.100; X1 null rho 0.5 0.040, rho 0.9 0.000, rho 1.0 0.000; X1 shift 0.020; X1 Beta(20,1)
+  0.000; X2 null 0.000; X2 shift 0.180.
+The power clause below and the rows rho = 0 (null and shift), rho = -0.5 and c = 0.5 were added after that
+output, at a reviewer's request. After the final edits the script was run once more with `--smoke` only to
+confirm exit code 0; that output was not viewed. The smoke output is not evidence. Seed base 20261122 is used
+nowhere else.
+
+It runs once; the output (with the commit and the location of the imported realdelta) is committed as
+produced. It gates nothing and changes no method. The Runs section's bug rule applies.
+
+Disposition, fixed now:
+- Two mechanisms are described separately everywhere they are mentioned:
+  - Dependence within an arm: one shock shared by all cases of one arm's run. X0 and V2 measure it. The text
+    quotes both numbers: the grid's reported-only V2 row (0.894 coverage, 0.105 false alarms) and X0 from
+    this run.
+  - Coupling between the arms: shared seeds (X1, rho > 0), opposite coupling (X1, rho < 0) and run-level
+    shocks shared by both arms (X2).
+- For the coupling between the arms, the text makes three separate statements, one per coupling type:
+  positive latent coupling (X1, rho > 0), negative latent coupling (X1, rho < 0), and correlated run-level
+  shocks (X2, c > 0). Each statement quotes the lowest coverage and the largest false-alarm rate over that
+  type's null rows, and the shift rows' power next to the rho = 0 reference where the type has a shift row.
+  A type whose rows all cover at least 0.93 is described as not making intervals too narrow in the tested
+  rows (its rho or c values, m = 30, n = 5, these rate distributions). A type with a row below 0.93 is
+  described as able to make intervals too narrow, with that row's configuration and coverage.
+  Caches that make a case's trials repeat each other are A1 violations (the grid's V1), not covered here, and
+  are not called harmless.
+- Assumptions in README, stats.py and the command-line note:
+  - A3 stays "the two arms' trial noise is independent", with the measured direction and power cost of
+    the tested violations attached.
+  - A new assumption A5 is added: within an arm, cases do not share a run-level shock (X0, V2). It is
+    marked as measured for the suite delta only; its effect on pass-rate intervals is not measured.
+  - The A3 text earlier in this protocol (Section "Assumptions") and the V2 label stay as written; this
+    section records the correction.
+- Places to change, listed now:
+  - README.md Limitations (the assumptions bullet);
+  - src/realdelta/cli.py NOTE_ASSUMPTIONS;
+  - src/realdelta/stats.py module docstring (assumptions) and the `_delta_interval` comment on independence;
+  - tests/test_cli.py, which asserts the note's first words "Note: Assumptions A1 and A3". If the note
+    changes, the test changes with it, and the change is listed in the commit.
+- Not changed: examples/real_model/PROTOCOL.md "Call order (A3)". It is a committed pre-registration, and its
+  interleaving puts drift on both arms alike (X2's structure). The README's real-model section gets a
+  one-line pointer if its A3 wording conflicts with the new text.
