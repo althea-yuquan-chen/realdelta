@@ -397,3 +397,27 @@ the same parent, 7c4ef90.
 | dc3703e5dd3309d2a827ece4b3ff11dc4c543715 | 427ddb5339c996c22ca465c49830280c576ffe3b | 6dd8bf657f62a93a0f959e3ca95545fd045bc8a3 |
 | 7819263bebef8289c60a23713f5a7573854ba50a | d6091315326ffb14539fe0c2c3d8a6e2bdf0e174 | feafe99317d7ded560c9312ea7133dedafaad3cb |
 | a9d6cec8e190902096e52d28956b14dab654c613 | 3a88a3ebcd6a37cc86f1f8eefcb55a03d30ce1e9 | 1e552b24a88914167c04225fd07fa49e0cb20c4d |
+
+### Amendment 7 (2026-11-17): upstream issue #764; a README section on this study
+
+Upstream issue. On 2026-11-17 at 05:59:54 UTC, with the owner's approval, the owner's GitHub account opened
+sierra-research/tau2-bench#764, "S3 airline trajectories for gpt-5-2-none_sierra_2026-02-26 predate the #334
+rerun".
+- It reports what Amendment 5 records for D's airline files: the two result files, their timestamp and run
+  arguments, and their pass^1 to pass^4 against the values D's `submission.json` listed before and after #334.
+  It adds that the same computation matches the published airline pass^1 to pass^4 of A, B and C.
+- It asks whether the rerun's trajectories could be uploaded, or a note added to D's submission, and offers a
+  pull request for the note. It does not mention this study or realdelta.
+- It covers airline only. The retail and telecom checks of Amendment 2 are not in it; Amendment 3's condition
+  for citing them is unchanged.
+- When this amendment was written, the issue was open with no comments (`gh issue view` on 2026-11-17:
+  createdAt 2026-11-17T05:59:54Z, state OPEN, 0 comments; the output is kept in the analyst's notes, not in
+  this repository). A maintainer reply, or a change to the
+  bucket or to D's submission, is recorded in a later amendment; this one is not edited.
+
+README. The repository README gains a section on this study, committed with this amendment. It quotes the
+primary result with the dependence statement, the A5 caveat and Amendment 3's reading; the post-hoc power with
+Amendment 4's limits and the false-alarm reading of `posthoc_power.md`; and D only as Amendment 2 requires,
+citing #238, #334 and #764. It names no model in its text and no descriptive pair as detected. Pushing it is
+an outward step and waits for the owner, as does any write-up outside this repository, together with the
+owner's re-confirmation of the clean-room answer.

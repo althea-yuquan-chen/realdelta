@@ -12,7 +12,8 @@ need before it can tell.
 row that measures a shock within one arm. The statistics
 core, its calibration checks, result-file loading, the command line, a synthetic demo
 and one pre-registered demo on a real model are done. The test suite runs in CI on
-Linux and Windows, Python 3.10 to 3.13. Links below point to the files of this release.
+Linux and Windows, Python 3.10 to 3.13. Links below point to the files of this release,
+except in the tau2-bench study section (`main` branch).
 
 ## Install
 
@@ -200,6 +201,57 @@ A1 appears in both comparisons, so they are not independent, and each can raise 
 of unchanged pairs in the synthetic demo; the calibration tests allow up to 7%). The task set is
 synthetic and says nothing about other tasks. Dollar cost is not quoted here because Azure's price
 for this model is uncertain; `summary.txt` gives an upper estimate.
+
+## Study on public leaderboard data: tau2-bench airline
+
+This study is not part of release 0.1.1; its links point to the `main` branch.
+[`examples/tau2_leaderboard/`](https://github.com/althea-yuquan-chen/realdelta/tree/main/examples/tau2_leaderboard/)
+applies `compare` to the published per-trial results of the tau2-bench airline leaderboard: four
+submissions, labelled A to D, run by Sierra (the benchmark's maintainer) on the same 50 tasks with 4 trials
+each, where each submission is a model plus everything that differed in its run (evaluation date,
+provider-side state, reasoning settings). These are comparisons of submissions on this task set, not of
+models. The question, the pairs and the analysis were fixed in
+[`PROTOCOL.md`](https://github.com/althea-yuquan-chen/realdelta/blob/main/examples/tau2_leaderboard/PROTOCOL.md)
+before the data were fetched; the leaderboard's pass rates are public, and what was read before that is listed
+in its Disclosure section. Everything added later is a dated amendment there; Amendment 6 maps the commit
+hashes recorded inside the output files to the published ones.
+
+- **Primary pair, A vs C:** change -0.010, 95% interval (suite scope) [-0.079, +0.059]. Not detected
+  at this scale; the interval reaches about 7 points on either side of the estimate. No correlation between the arms was
+  visible at this size (4 informative tasks); if shared seeds couple the arms positively, the interval is
+  conservative and low in power; a negative coupling would make it too narrow (Diagnostic AD). A run-level
+  shock within one submission's run (assumption A5) cannot be measured here and can raise a single pair's
+  false-alarm rate to 0.085 (Diagnostic AD, X0) to 0.105 (grid V2). A vs C was pre-registered as primary
+  because the two share an evaluation date; that date may describe another domain's evaluation (Amendment 3), which weakens the reason for the
+  choice. The pair stays as pre-registered.
+- **Which changes 50 tasks x 4 trials can detect** (post-hoc, Amendment 4,
+  [`posthoc_power.md`](https://github.com/althea-yuquan-chen/realdelta/blob/main/examples/tau2_leaderboard/posthoc_power.md)).
+  These are simulations of synthetic 50-task suites, not a statement about submissions A or C: per-task pass
+  rates are drawn from a Beta fitted to A's and C's per-task pass counts, and the arms are independent.
+  - At 4 trials per task, the first shift on the grid reaching power 0.8 is -0.12 (realised change -0.1158,
+    power 0.897); at -0.10 the power is 0.763.
+  - For a 1-point change, the first option reaching 0.8 is 256 trials per task (power 0.867; 128 trials:
+    0.563). This is outside the gated range of 3 to 10 trials, and four trials cannot tell a rate of 1 from
+    0.97, so it depends on the fitted Beta's shape near 0 and 1: an extrapolation. With the planner's
+    default Beta(8, 2) rates it is 512 trials (power 0.809, SE 0.012). Power is compared with 0.8 as a
+    point estimate; a row within about 2 SE of it could fall on either side with another seed.
+  - 71 of the 100 observed per-task counts of A and C are 4 of 4. In these simulations, at 4 trials per
+    task, the interval's false-alarm rate is 0.003 (SE 0.002), below 0.05 by more than 2 SE: the interval is
+    conservative here, and the calibration grid has no row for this setting. The change sizes above are a
+    property of this interval under these assumptions, not of the leaderboard.
+- **Descriptive pairs and D.** The five other pairs are descriptive and give no finding; they are in
+  [`run_20261123/summary.md`](https://github.com/althea-yuquan-chen/realdelta/blob/main/examples/tau2_leaderboard/run_20261123/summary.md)
+  with the same caveats. D's rows use the bucket files of submission D, which do not reproduce its
+  published scores
+  ([`posthoc_published_scores.md`](https://github.com/althea-yuquan-chen/realdelta/blob/main/examples/tau2_leaderboard/posthoc_published_scores.md),
+  Amendment 2). Upstream records explain this (Amendment 5): issue
+  [#238](https://github.com/sierra-research/tau2-bench/issues/238) reported that D's published airline scores
+  could not be reproduced with reasoning effort "none", a contributor replied that the run had used
+  "medium", and pull request
+  [#334](https://github.com/sierra-research/tau2-bench/pull/334) replaced D's published scores with a
+  rerun's. The two airline result files under D's prefix in the bucket, as listed on 2026-11-17, still
+  hold the run whose scores #334 replaced; that is reported upstream in
+  [#764](https://github.com/sierra-research/tau2-bench/issues/764) (Amendment 7).
 
 ## How the intervals were checked
 
