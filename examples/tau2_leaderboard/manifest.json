@@ -1,0 +1,24 @@
+{
+ "bucket": "https://sierra-tau-bench-public.s3.us-west-2.amazonaws.com/submissions",
+ "fetched_at_utc": "2026-11-17T05:18:11+00:00",
+ "sha256": {
+  "claude-opus-4-5_sierra_2026-02-26.airline.results.json": "3b3ca4482d9a227979da4e952eaf9efcb8042597c25a0ef66e2a37fc984f867d",
+  "claude-opus-4-5_sierra_2026-02-26.airline.seeds.json": "5581cddda6ec19be799e077a1a492bbc119ff48d8f68f4f508e316792e5b4a67",
+  "claude-opus-4-5_sierra_2026-02-26.submission.json": "9c3b8b400e21d370cea27caec3643bfe6fd8385be9ed5135b585d0b976b6e34f",
+  "claude-sonnet-4-5_sierra_2026-02-26.airline.results.json": "95e3cbf5a79190e88636d9efdcd4a4380980f77902f8e1f3844671e5969cab47",
+  "claude-sonnet-4-5_sierra_2026-02-26.airline.seeds.json": "5581cddda6ec19be799e077a1a492bbc119ff48d8f68f4f508e316792e5b4a67",
+  "claude-sonnet-4-5_sierra_2026-02-26.submission.json": "e5ce9f12ab9e616db52e973e90b48144b7bafd29e35c4fd6c3e7fde573a9b8d8",
+  "gpt-5-2-none_sierra_2026-02-26.airline.results.json": "783a31ca256519748884999c706217acf208009930b3244ba4c9fb07fcd93652",
+  "gpt-5-2-none_sierra_2026-02-26.airline.seeds.json": "5581cddda6ec19be799e077a1a492bbc119ff48d8f68f4f508e316792e5b4a67",
+  "gpt-5-2-none_sierra_2026-02-26.submission.json": "e1be4bac436e8115f9253697d68b71867f17cfcb2bef5dfa6a756c0a89a70dab",
+  "gpt-5-2_sierra_2026-02-26.airline.results.json": "adde527550b16233ef57d9b8a1d5eb7ee071de5b26ef1481d40f145cc5377c5d",
+  "gpt-5-2_sierra_2026-02-26.airline.seeds.json": "5581cddda6ec19be799e077a1a492bbc119ff48d8f68f4f508e316792e5b4a67",
+  "gpt-5-2_sierra_2026-02-26.submission.json": "343687b822edbcbff42a4d4632ecc6288a58d9817a7a02c8533081c5709c0ac6"
+ },
+ "submissions": {
+  "A": "claude-opus-4-5_sierra_2026-02-26",
+  "B": "claude-sonnet-4-5_sierra_2026-02-26",
+  "C": "gpt-5-2_sierra_2026-02-26",
+  "D": "gpt-5-2-none_sierra_2026-02-26"
+ }
+}
