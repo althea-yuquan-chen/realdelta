@@ -1,0 +1,2 @@
+{"system": "s0", "text": "42", "stop_reason": "end_turn", "input_tokens": 57, "output_tokens": 31, "model": "gpt-5.6-luna", "content_filters_present": true, "reissues": 0}
+{"system": "s1", "text": "42", "stop_reason": "end_turn", "input_tokens": 66, "output_tokens": 5, "model": "gpt-5.6-luna", "content_filters_present": true, "reissues": 0}

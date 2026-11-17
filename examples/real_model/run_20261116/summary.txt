@@ -1,0 +1,172 @@
+Real-model demo run (examples/real_model/PROTOCOL.md, Amendment 1)
+
+calls 602 (incl. 2 preflight), re-issues 0, input tokens 51213, output tokens 52408, cost upper estimate $0.3657 at the conservative $1.0/$6.0 per million (the Azure bill is authoritative)
+
+Categories per arm: pass, wrong_value, no_answer_line, empty, incomplete_other, max_tokens, refusal, timeout
+  a1: 175, 1, 24, 0, 0, 0, 0, 0
+  a2: 171, 1, 28, 0, 0, 0, 0, 0
+  b: 164, 2, 34, 0, 0, 0, 0, 0
+
+$ python -m realdelta interval a1.jsonl --json
+{
+ "command": "interval",
+ "file": "a1.jsonl",
+ "scope": "suite",
+ "conf": 0.95,
+ "estimate": 0.875,
+ "low": 0.8210262499212004,
+ "high": 0.9174476581711831,
+ "summary": {
+  "cases": 40,
+  "trials_min": 5,
+  "trials_median": 5.0,
+  "trials_max": 5,
+  "trials_total": 200
+ },
+ "notes": [],
+ "warnings": []
+}
+(exit 0)
+
+$ python -m realdelta interval a2.jsonl --json
+{
+ "command": "interval",
+ "file": "a2.jsonl",
+ "scope": "suite",
+ "conf": 0.95,
+ "estimate": 0.8549999999999999,
+ "low": 0.7984385038268198,
+ "high": 0.9006913774447923,
+ "summary": {
+  "cases": 40,
+  "trials_min": 5,
+  "trials_median": 5.0,
+  "trials_max": 5,
+  "trials_total": 200
+ },
+ "notes": [],
+ "warnings": []
+}
+(exit 0)
+
+$ python -m realdelta interval b.jsonl --json
+{
+ "command": "interval",
+ "file": "b.jsonl",
+ "scope": "suite",
+ "conf": 0.95,
+ "estimate": 0.82,
+ "low": 0.7596189031159926,
+ "high": 0.8706310716516028,
+ "summary": {
+  "cases": 40,
+  "trials_min": 5,
+  "trials_median": 5.0,
+  "trials_max": 5,
+  "trials_total": 200
+ },
+ "notes": [],
+ "warnings": []
+}
+(exit 0)
+
+$ python -m realdelta interval a1.jsonl --scope population --json
+{
+ "command": "interval",
+ "file": "a1.jsonl",
+ "scope": "population",
+ "conf": 0.95,
+ "estimate": 0.875,
+ "low": 0.7319670826382796,
+ "high": 0.9581403738613833,
+ "summary": {
+  "cases": 40,
+  "trials_min": 5,
+  "trials_median": 5.0,
+  "trials_max": 5,
+  "trials_total": 200
+ },
+ "notes": [
+  "The population scope assumes your cases are a random draw from the cases you care about (A2)."
+ ],
+ "warnings": []
+}
+(exit 0)
+
+$ python -m realdelta compare a1.jsonl a2.jsonl --seed 0 --n-perm 10000 --conf 0.95 --json
+{
+ "command": "compare",
+ "baseline": {
+  "file": "a1.jsonl",
+  "cases": 40,
+  "trials_min": 5,
+  "trials_median": 5.0,
+  "trials_max": 5,
+  "trials_total": 200
+ },
+ "candidate": {
+  "file": "a2.jsonl",
+  "cases": 40,
+  "trials_min": 5,
+  "trials_median": 5.0,
+  "trials_max": 5,
+  "trials_total": 200
+ },
+ "scope": "suite",
+ "conf": 0.95,
+ "delta": {
+  "estimate": -0.019999999999999997,
+  "low": -0.0855583084508881,
+  "high": 0.04559021731720849
+ },
+ "detected": false,
+ "p_value": 0.6711328867113289,
+ "n_perm": 10000,
+ "seed": 0,
+ "region": "inside gated range",
+ "notes": [
+  "Assumptions A1 and A3 cannot be checked from result files: if the two arms share seeds, caches or an outage window, or a case's trials repeat each other, intervals are too narrow (in the grid suite delta coverage fell to 0.894 with shared shocks; suite pass-rate coverage to 0.871 and 0.734 with sticky trials) (README, Limitations).",
+  "The p-value tests the sharp null 'the two versions behave identically on every case' and has not been calibration-checked. 'detected' uses the interval, not the p-value; the two can disagree."
+ ],
+ "warnings": []
+}
+(exit 0)
+
+$ python -m realdelta compare a1.jsonl b.jsonl --seed 0 --n-perm 10000 --conf 0.95 --json
+{
+ "command": "compare",
+ "baseline": {
+  "file": "a1.jsonl",
+  "cases": 40,
+  "trials_min": 5,
+  "trials_median": 5.0,
+  "trials_max": 5,
+  "trials_total": 200
+ },
+ "candidate": {
+  "file": "b.jsonl",
+  "cases": 40,
+  "trials_min": 5,
+  "trials_median": 5.0,
+  "trials_max": 5,
+  "trials_total": 200
+ },
+ "scope": "suite",
+ "conf": 0.95,
+ "delta": {
+  "estimate": -0.05499999999999999,
+  "low": -0.12314552790016114,
+  "high": 0.013502463660340816
+ },
+ "detected": false,
+ "p_value": 0.35396460353964604,
+ "n_perm": 10000,
+ "seed": 0,
+ "region": "inside gated range",
+ "notes": [
+  "Assumptions A1 and A3 cannot be checked from result files: if the two arms share seeds, caches or an outage window, or a case's trials repeat each other, intervals are too narrow (in the grid suite delta coverage fell to 0.894 with shared shocks; suite pass-rate coverage to 0.871 and 0.734 with sticky trials) (README, Limitations).",
+  "The p-value tests the sharp null 'the two versions behave identically on every case' and has not been calibration-checked. 'detected' uses the interval, not the p-value; the two can disagree."
+ ],
+ "warnings": []
+}
+(exit 0)

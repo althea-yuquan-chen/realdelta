@@ -1,0 +1,9 @@
+commit: 33ced819e7a4b0201de6b304ab064246c537c79c
+started: 2026-11-17T00:54:42+00:00
+finished: 2026-11-17T01:09:36+00:00
+provider: Azure OpenAI, owner's personal subscription, Global Standard deployment (endpoint not recorded)
+deployment requested: gpt-5.6-luna
+model returned: gpt-5.6-luna
+openai SDK: 3.37.0
+python: 3.11.9
+numpy: 2.4.4
