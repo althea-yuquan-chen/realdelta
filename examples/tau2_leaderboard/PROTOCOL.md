@@ -206,3 +206,62 @@ tree) and the taubench.com page.
   tau2-bench paper.
 - This record does not approve any outward step. Each one still needs the owner's explicit approval and the
   owner's re-confirmation of the clean-room answer.
+
+### Amendment 2 (2026-11-17): D's bucket files do not reproduce D's published scores
+
+Added after `analyze.py` ran. Its output (`run_20261123/`, committed as produced in 0c59ed5) is unchanged, and
+so are the roles of the pairs: A vs C stays the only primary pair, and no descriptive pair becomes a finding.
+None of the checks below was pre-registered.
+
+Airline. After the run, a one-off check in the analyst's notes (not in the repository) computed pass^1 to
+pass^4 (the mean over tasks of C(c, k) / C(4, k), as in tau2-bench's `pass_hat_k`, read at commit c06b07d; the
+runs' commit 7324fb57 is not in the public repository) from each pinned airline `results.json` and compared
+them with the scores in the pinned `submission.json`.
+- A, B and C reproduced all four published values.
+- D did not: its results file gives 80.50, 71.00, 64.50 and 60.00; its `submission.json` publishes 52.50,
+  35.67, 27.00 and 22.00.
+- `check_published.py` re-implements this check in the repository and reads only pinned files. Its output,
+  `posthoc_published_scores.md`, is committed as produced. If it differs from the numbers above, a new
+  amendment records that, and this one is not edited.
+
+Retail and telecom. On 2026-11-17 the analyst also read the retail and telecom `results.json` of C and D from
+the bucket. These files are not pinned by the manifest, and the code for this check is not in the repository.
+- C reproduced its published pass^1 in both domains (retail 81.58, telecom 89.69).
+- D did not: retail 67.54 against 75.00 published (run arguments: reasoning_effort "medium"), telecom 61.62
+  against 57.24 (run arguments: "none").
+- SHA-256 of the files read:
+  - `gpt-5-2-none_sierra_2026-02-26/trajectories/retail/results.json`:
+    60ce2eb2c560f7cb3ec93c0d18369cfd4c6a551cfb7ed6a4f65d4edc64124c41
+  - `gpt-5-2-none_sierra_2026-02-26/trajectories/telecom/results.json`:
+    1dae7a63a2bebd4357fb9abb3586df18e3c4695705873126ed892320307ef0b0
+  - `gpt-5-2_sierra_2026-02-26/trajectories/retail/results.json`:
+    2319107cfdb702a2bdd642bc987e5a55bf6dfc3b24553d73488c35aad73f762f
+  - `gpt-5-2_sierra_2026-02-26/trajectories/telecom/results.json`:
+    e13a01e28beae037d6468653916794498ac2481dea89bccadc90263d2501e320
+
+What these data allow:
+- Explanations consistent with this include: D's published scores come from runs other than those in its
+  bucket files, or the same runs were scored differently. These data cannot tell which.
+- D's published values fit the task counts of the bucket files (50, 114 and 114 tasks, 4 trials each): airline
+  52.5 = 105/200, retail 75.0 = 342/456, telecom 57.24 = 261/456. So they do not point to a different task set.
+- The top-level `timestamp` of the pinned airline results files is A 2026-02-24T10:30:49, B 2026-02-24T09:40:24,
+  C 2026-02-24T10:31:27, D 2026-02-23T13:58:37. Its meaning (start of the run or time the file was written) is
+  not documented in the sources checked. These timestamps do not agree with the `evaluation_date` fields
+  (A and C 2026-05-05, B 2026-02-24, D 2026-05-26), which `summary.md` quotes as "evaluated ..." and on which
+  the choice of the primary pair rests. A and C also differ from their evaluation dates and still reproduce
+  their scores, so this gap cannot separate the explanations for D.
+
+How the results are read from now on:
+- A and C reproduce their published airline scores. The reason for choosing A vs C as the primary pair (the
+  same evaluation date) rests on a metadata field that the files' own timestamps do not match. The choice
+  stays as pre-registered.
+- The three pairs with D (A-D, B-D, C-D) stay descriptive. They compare the bucket files of D, whose airline
+  run arguments say reasoning_effort "medium". They say nothing about D's published scores or about the
+  configuration D's label describes.
+- Any write-up names D as "the bucket files of submission D, which do not reproduce its published scores",
+  and says so next to every D row. This is described as files that do not reproduce the published scores,
+  never as an error or a mislabelling by anyone.
+- `run_20261123/` is used outside this repository (including a push) only together with
+  `posthoc_published_scores.md` and this amendment, so that the D rows, among them B vs D "detected", never
+  appear without this note.
+- Telling the leaderboard maintainers about this is an outward step and needs the owner's approval.
