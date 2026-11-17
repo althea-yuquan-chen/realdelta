@@ -333,3 +333,39 @@ of leaderboard resolution), not the observed A vs C difference.
 - Limits: four trials cannot tell a rate of 1 from 0.97, so rows with many trials depend on the fitted Beta's
   shape near 0 and 1 and are an extrapolation. The results describe the interval under these assumptions, not
   submissions A or C, and a write-up says so next to them.
+
+### Amendment 5 (2026-11-17): upstream records explain D's mismatch
+
+Before opening an issue upstream, the analyst searched the tau2-bench issues on 2026-11-17. The data survey had
+not searched them.
+- Issue #238 (opened 2026-04-15, closed 2026-06-19) reported that the published GPT-5.2 "none" airline scores
+  could not be reproduced with reasoning_effort "none". A contributor replied: "You are correct -- we did run it
+  with medium by mistake. I will work on fixing this!"
+- Pull request #334, "Update GPT-5.2 none submission" (merged 2026-05-26), changed only D's `submission.json`,
+  "with corrected rerun results". D's `evaluation_date`, 2026-05-26, is the merge date.
+- The diff of #334 shows the values it replaced. Before #334, D's `submission.json` listed airline pass^1 to
+  pass^4 of 80.5, 71.0, 64.5 and 60.0, exactly what the pinned airline results file gives
+  (`posthoc_published_scores.md`); retail pass^1 67.54 and telecom pass^1 61.62, exactly what the unpinned files
+  of Amendment 2 give.
+- A full listing of the bucket under D's prefix on 2026-11-17 shows two airline result files, `airline/results.json`
+  and `gpt-5.2_none_airline_gpt-5.2_4trials.json` (the name given in `trajectory_files`), and 200 airline
+  simulations. The second file is not pinned; it has the same timestamp (2026-02-23T13:58:37), the same run
+  arguments (reasoning_effort "medium") and the same pass^1 to pass^4 as the pinned one.
+- So, for airline, the upstream record settles the question Amendment 2 left open: D's published airline
+  scores come from the rerun behind #334, and both airline result files in the bucket hold the run whose scores
+  #334 replaced. One airline simulation object, read as a sample, started at 2026-02-23T13:58:44, in that same
+  run; the other 199 were not read. No airline result file of the rerun is in the bucket.
+- Not checked: D's banking_knowledge files and the retail, telecom and banking_knowledge `*_4trials.json` files.
+  For retail and telecom only `results.json` pass^1 was compared (Amendment 2). D's banking_knowledge scores were
+  changed again after #334 (re-graded on 2026-07-15, according to the submission's notes).
+- Server metadata: `airline/results.json` reports Last-Modified 2026-10-27 and the `*_4trials.json` airline file
+  2026-03-23. The objects may have been re-uploaded; their content is still the earlier run.
+- That D's original airline run does not match its label is not a finding of this study: #238 reported it and
+  the maintainers acknowledged it. (D's retail file also gives reasoning_effort "medium"; its telecom file gives
+  "none".) This study adds only that the content of D's airline files in the bucket is still the earlier run.
+- Before the new issue, the tau2-bench issues were searched again on 2026-11-17 for "gpt-5-2-none", "GPT-5.2 none
+  trajectories", "trajectories S3 outdated" and "#334"; only #238 is on this topic.
+- A write-up says this and cites #238 and #334. The maintainers' word "mistake" may be quoted as theirs; this
+  study does not call anything an error.
+- The D rows stay as Amendment 2 describes them. For A and C, Amendment 3's reading of `evaluation_date`
+  remains a reading.
