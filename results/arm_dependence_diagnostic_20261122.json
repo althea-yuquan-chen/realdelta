@@ -1,0 +1,110 @@
+{
+ "meta": {
+  "seed_base": 20261122,
+  "reps": 2000,
+  "smoke": false,
+  "commit": "611d257b6d2af364e402978e3f6a3cfa5a57068f",
+  "realdelta_file": "src\\realdelta\\__init__.py",
+  "m": 30,
+  "n": 5,
+  "shock_sd": 0.3
+ },
+ "rows": [
+  {
+   "setting": "X0 within-arm shock sd=0.3, null, Beta(4,2)",
+   "coverage": 0.9155,
+   "miss_low": 0.042,
+   "miss_high": 0.0425,
+   "mean_width": 0.2006416351677565,
+   "excludes_zero": 0.0845
+  },
+  {
+   "setting": "X1 latent rho=-0.5, null, Beta(4,2)",
+   "coverage": 0.9265,
+   "miss_low": 0.037,
+   "miss_high": 0.0365,
+   "mean_width": 0.20079010037093578,
+   "excludes_zero": 0.0735
+  },
+  {
+   "setting": "X1 latent rho=0.0, null, Beta(4,2)",
+   "coverage": 0.9605,
+   "miss_low": 0.0195,
+   "miss_high": 0.02,
+   "mean_width": 0.20047625749184694,
+   "excludes_zero": 0.0395
+  },
+  {
+   "setting": "X1 latent rho=0.5, null, Beta(4,2)",
+   "coverage": 0.9865,
+   "miss_low": 0.006,
+   "miss_high": 0.0075,
+   "mean_width": 0.20064450510326595,
+   "excludes_zero": 0.0135
+  },
+  {
+   "setting": "X1 latent rho=0.9, null, Beta(4,2)",
+   "coverage": 1.0,
+   "miss_low": 0.0,
+   "miss_high": 0.0,
+   "mean_width": 0.2006213753598319,
+   "excludes_zero": 0.0
+  },
+  {
+   "setting": "X1 latent rho=1.0, null, Beta(4,2)",
+   "coverage": 1.0,
+   "miss_low": 0.0,
+   "miss_high": 0.0,
+   "mean_width": 0.2008185522522988,
+   "excludes_zero": 0.0
+  },
+  {
+   "setting": "X1 latent rho=0.0, shift +0.05, Beta(4,2)",
+   "coverage": 0.9585,
+   "miss_low": 0.0175,
+   "miss_high": 0.024,
+   "mean_width": 0.19674202638472266,
+   "excludes_zero": 0.162
+  },
+  {
+   "setting": "X1 latent rho=0.9, shift +0.05, Beta(4,2)",
+   "coverage": 1.0,
+   "miss_low": 0.0,
+   "miss_high": 0.0,
+   "mean_width": 0.19657414721929414,
+   "excludes_zero": 0.0385
+  },
+  {
+   "setting": "X1 latent rho=0.9, null, Beta(20,1)",
+   "coverage": 0.999,
+   "miss_low": 0.001,
+   "miss_high": 0.0,
+   "mean_width": 0.10275526608179317,
+   "excludes_zero": 0.001
+  },
+  {
+   "setting": "X2 arm shocks sd=0.3 correlated 0.5, null, Beta(4,2)",
+   "coverage": 0.928,
+   "miss_low": 0.038,
+   "miss_high": 0.034,
+   "mean_width": 0.20083690368894733,
+   "excludes_zero": 0.072
+  },
+  {
+   "setting": "X2 arm shocks sd=0.3 correlated 1.0, null, Beta(4,2)",
+   "coverage": 0.9605,
+   "miss_low": 0.0175,
+   "miss_high": 0.022,
+   "mean_width": 0.20102042336775514,
+   "excludes_zero": 0.0395
+  },
+  {
+   "setting": "X2 arm shocks sd=0.3 correlated 1.0, shift +0.05, Beta(4,2)",
+   "coverage": 0.948,
+   "miss_low": 0.0235,
+   "miss_high": 0.0285,
+   "mean_width": 0.19712511048240713,
+   "excludes_zero": 0.1535
+  }
+ ]
+}
