@@ -1,0 +1,22 @@
+# Rough scale only: realdelta plan for 40 cases, 5 trials, two synthetic settings (no model calls).
+# Each row simulates 300 suites (default --n-sim); 'runs' is the trial count of one comparison: 2 arms x 40 cases x 5 trials = 400.
+
+$ python -m realdelta plan --cases 40 --trials 5 --delta -0.10 --alpha 8 --beta 2 --seed 0
+Plan for 40 cases, shift -0.1
+trials         power   false alarms  realised change    runs  region
+     5  0.647+-0.028   0.070+-0.015          -0.1000     400  inside gated range
+Note: Power and false-alarm rates are simulated for a synthetic suite with Beta(alpha, beta) case pass rates; they are not coverage claims. Standard errors are Monte Carlo.
+
+$ python -m realdelta plan --cases 40 --trials 5 --delta -0.10 --alpha 20 --beta 1 --seed 0
+Plan for 40 cases, shift -0.1
+trials         power   false alarms  realised change    runs  region
+     5  0.923+-0.015   0.050+-0.013          -0.1000     400  inside gated range
+Note: Power and false-alarm rates are simulated for a synthetic suite with Beta(alpha, beta) case pass rates; they are not coverage claims. Standard errors are Monte Carlo.
+
+$ python -m realdelta plan --cases 40 --trials 5 --break-cases 3 --alpha 8 --beta 2 --seed 0
+Plan for 40 cases, 3 cases broken
+trials         power   false alarms  realised change    runs  region
+     5  0.307+-0.027   0.070+-0.015          -0.0597     400  inside gated range
+Note: Power and false-alarm rates are simulated for a synthetic suite with Beta(alpha, beta) case pass rates; they are not coverage claims. Standard errors are Monte Carlo.
+Note: The region column refers to cases and trials only. The gated delta rows are shifts of every case; none has a few cases breaking outright, so break plans have no gated calibration evidence (README, Limitations).
+
