@@ -7,14 +7,20 @@ the pass rate moved from 82% to 86%. `realdelta` tells you whether that move is
 larger than the run-to-run noise of your agent, and how many repeated trials you
 need before it can tell.
 
-**Status:** version 0.1.0, early development, not published on PyPI. The statistics
+**Status:** version 0.1.0, alpha. The statistics
 core, its calibration checks, result-file loading, the command line, a synthetic demo
-and one pre-registered demo on a real model are done; installation from a clone was
-checked on Windows and Linux.
+and one pre-registered demo on a real model are done. The test suite runs in CI on
+Linux and Windows, Python 3.10 to 3.13. Links below point to the files of this release.
 
 ## Install
 
-From a clone (Python 3.10 or later; depends on numpy and scipy):
+Python 3.10 or later; depends on numpy and scipy.
+
+```bash
+pip install realdelta
+```
+
+The tests, demos and calibration scripts live in the repository, so to run them install from a clone:
 
 ```bash
 git clone https://github.com/althea-yuquan-chen/realdelta
@@ -98,10 +104,10 @@ enumerates every sign flip) unless you pass `--seed`.
 
 ## Synthetic demo
 
-[`examples/synthetic_demo.py`](examples/synthetic_demo.py) simulates an agent with 40
+[`examples/synthetic_demo.py`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.0/examples/synthetic_demo.py) simulates an agent with 40
 cases that mostly pass (case pass rates from Beta(20,1); true pass rate 0.95507), run 5
 times each, with one fixed seed (the first one tried) and no model calls. Its full
-output is in [`examples/synthetic/transcript.txt`](examples/synthetic/transcript.txt);
+output is in [`examples/synthetic/transcript.txt`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.0/examples/synthetic/transcript.txt);
 a test re-runs it and compares the output byte for byte. The comparison runs only with
 numpy 2.4.4, the version the transcript was recorded with (other versions skip it).
 The CI workflow pins 2.4.4, and the comparison has passed there on Linux and Windows
@@ -130,14 +136,14 @@ These are simulation results for this setting, not calibration claims.
 
 ## Demo on a real model
 
-[`examples/real_model/`](examples/real_model/) runs 40 generated puzzles (arithmetic, letter
+[`examples/real_model/`](https://github.com/althea-yuquan-chen/realdelta/tree/v0.1.0/examples/real_model/) runs 40 generated puzzles (arithmetic, letter
 counting, weekdays, sorting; 10 each) on GPT-5.6 Luna served through Azure OpenAI, with reasoning
 effort low. Azure's content filtering is part of the system measured. Everything that decides the
-result was fixed in [`PROTOCOL.md`](examples/real_model/PROTOCOL.md) before any paid call; its
+result was fixed in [`PROTOCOL.md`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.0/examples/real_model/PROTOCOL.md) before any paid call; its
 Amendment 1 changed the model from Claude Haiku 5.5 to GPT-5.6 Luna before any call was made. Three
 arms, 5 trials per case each, 600 calls in one interleaved order: A1 and A2 use the same system prompt
 (an A/A pair), B adds "Answer immediately; do not show your working." The run
-([`run_20261116/summary.txt`](examples/real_model/run_20261116/summary.txt)) used 51,213 input and
+([`run_20261116/summary.txt`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.0/examples/real_model/run_20261116/summary.txt)) used 51,213 input and
 52,408 output tokens with no re-issued calls, timeouts, refusals or truncated outputs. The run
 directory is named after the local date; it started at 2026-11-17T00:54Z.
 
@@ -191,12 +197,12 @@ for this model is uncertain; `summary.txt` gives an upper estimate.
 ## How the intervals were checked
 
 The calibration grid (its settings, the 0.93 gate and the rules for failures) was
-pre-registered in [`docs/calibration_protocol.md`](docs/calibration_protocol.md)
+pre-registered in [`docs/calibration_protocol.md`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.0/docs/calibration_protocol.md)
 before any final result existed. The suite pass-rate method was replaced after the
 first final run failed; the steps are below. Each grid row simulates suites with
 known case pass rates and counts how often the 95% interval contains the truth.
 
-**Claim.** On the grid run [`results/calibration_grid_20261117.md`](results/calibration_grid_20261117.md)
+**Claim.** On the grid run [`results/calibration_grid_20261117.md`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.0/results/calibration_grid_20261117.md)
 (2000 repetitions per row, so a Monte Carlo standard error of about 0.005; 95% level),
 every gated row has an estimated coverage of at least 0.93. The lowest rows are
 0.956 for the suite pass rate (36 rows), 0.951 for the population pass rate (40 rows)
@@ -216,24 +222,24 @@ this), so the +0.05 and +0.10 delta rows also cover drops of the same realised s
 from the shifted baseline; they do not cover drops from Beta(4,2) or Beta(20,1)
 themselves, nor a few cases breaking outright.
 The table gives ranges, not a full cross of every combination;
-[`results/calibration_grid_20261117.md`](results/calibration_grid_20261117.md) lists every row.
+[`results/calibration_grid_20261117.md`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.0/results/calibration_grid_20261117.md) lists every row.
 File names carry the seed base (20261116, 20261117, 20261118), not a date; both grid
 runs started on 2026-11-16 (see their provenance files).
 
 **How we got there.** This history is part of the evidence, so it is listed in full.
 
-1. The first final grid ([`results/calibration_grid_20261116.md`](results/calibration_grid_20261116.md))
+1. The first final grid ([`results/calibration_grid_20261116.md`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.0/results/calibration_grid_20261116.md))
    failed one suite row and the population-delta width rule. With 5 cases, 1 trial
    each and rates near 100%, the Wilson interval then used covered 0.917: a single
    failure pulls its upper bound below the truth.
 2. Amendment 1 pre-registered an exact analytic check (minimum coverage >= 0.947)
    and two candidates: Clopper-Pearson on the effective sample size, and Wilson
    with a continuity correction. Both failed it, at 0.9449 and 0.9434
-   ([`results/suite_bounds_selection.md`](results/suite_bounds_selection.md)).
+   ([`results/suite_bounds_selection.md`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.0/results/suite_bounds_selection.md)).
 3. Amendment 2 added one candidate: Clopper-Pearson with the effective sample size
    capped at the number of trials run. It was designed *after* seeing step 2's
    results, so the analytic check is not independent evidence for it. It passed
-   that check with 0.9503 ([`results/suite_bounds_selection_a2.md`](results/suite_bounds_selection_a2.md)).
+   that check with 0.9503 ([`results/suite_bounds_selection_a2.md`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.0/results/suite_bounds_selection_a2.md)).
    The independent evidence is the CI coverage tests, whose gates did not change,
    and the 20261117 grid, which ran once after the implementation.
 
@@ -256,7 +262,7 @@ mode affecting a few percent of cases like them.
 - **The suite delta is gated only for 10 to 50 cases with 3 to 10 trials each**
   (plus one unequal-trials setting). It combines the two arms' Wilson-based
   intervals (MOVER), and Wilson bounds under-cover near 100%. A reported-only
-  diagnostic ([`results/delta_boundary_diagnostic_20261118.md`](results/delta_boundary_diagnostic_20261118.md))
+  diagnostic ([`results/delta_boundary_diagnostic_20261118.md`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.0/results/delta_boundary_diagnostic_20261118.md))
   covers part of the gap near 100%: with case rates from Beta(50,1) or Beta(20,1),
   5 or 20 cases and 1 or 3 trials each, under no change, a 0.05 drop and (Beta(20,1)
   only) a 0.05 rise, coverage was at least 0.971 across 20 settings. Three cases
@@ -290,7 +296,7 @@ mode affecting a few percent of cases like them.
 
 ## Reproduce
 
-After the install above, from the repository root:
+After installing from a clone (see Install), from the repository root:
 
 ```bash
 python -m pytest                                    # unit, analytic and CI coverage tests
@@ -299,7 +305,7 @@ python scripts/calibration_grid.py --smoke          # 50 repetitions; not eviden
 
 Both final grid runs are committed in `results/` with a provenance file, and each
 ran once; the diagnostic records its commit in its own header. The grid script
-refuses to overwrite existing results, and its current version uses seed base
+refuses to overwrite existing results, and in this release it uses seed base
 20261117; the 20261116 run is reproducible from commit da182ba. The selection and diagnostic scripts are `scripts/suite_bounds_selection.py`
 and `scripts/delta_boundary_diagnostic.py`.
 
