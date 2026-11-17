@@ -8,8 +8,8 @@ larger than the run-to-run noise of your agent, and how many repeated trials you
 need before it can tell.
 
 **Status:** early development, not released. The statistics core, its
-calibration checks, result-file loading, the command line and a synthetic demo are
-done; runner adapters and a demo on a real model are not.
+calibration checks, result-file loading, the command line, a synthetic demo and one
+pre-registered demo on a real model are done; packaging and release checks are not.
 
 ## What it does
 
@@ -113,6 +113,66 @@ a test re-runs it and compares the output byte for byte.
   0.85 +- 0.02 with 5 and 0.99 +- 0.01 with 10.
 
 These are simulation results for this setting, not calibration claims.
+
+## Demo on a real model
+
+[`examples/real_model/`](examples/real_model/) runs 40 generated puzzles (arithmetic, letter
+counting, weekdays, sorting; 10 each) on GPT-5.6 Luna served through Azure OpenAI, with reasoning
+effort low. Azure's content filtering is part of the system measured. Everything that decides the
+result was fixed in [`PROTOCOL.md`](examples/real_model/PROTOCOL.md) before any paid call; its
+Amendment 1 changed the model from Claude Haiku 5.5 to GPT-5.6 Luna before any call was made. Three
+arms, 5 trials per case each, 600 calls in one interleaved order: A1 and A2 use the same system prompt
+(an A/A pair), B adds "Answer immediately; do not show your working." The run
+([`run_20261116/summary.txt`](examples/real_model/run_20261116/summary.txt)) used 51,213 input and
+52,408 output tokens with no re-issued calls, timeouts, refusals or truncated outputs. The run
+directory is named after the local date; it started at 2026-11-17T00:54Z.
+
+**What "pass" measures here.** A trial passes only if its value is right *and* its last line has the
+form `ANSWER: <value>`, as the pre-registered grader requires. The prompts carry two format
+instructions side by side: the system prompt asks for that line, the user message says "Give the
+answer in this form: ...". Most failures in this run are a correct value without the prefix, so the
+pass rates below mostly measure compliance with the answer format, not puzzle-solving accuracy.
+
+| Arm | Pass rate (suite scope) | 95% interval |
+|---|---|---|
+| A1 | 0.875 | [0.821, 0.917] |
+| A2 | 0.855 | [0.798, 0.901] |
+| B | 0.820 | [0.760, 0.871] |
+
+- **A1 vs A2:** -0.020, interval [-0.086, +0.046]. The A/A pair was not flagged. It is one
+  realisation: in the synthetic demo, 4.6% of unchanged pairs were flagged.
+- **A1 vs B:** -0.055. No change detected at this scale (40 cases, 5 trials); the interval
+  [-0.123, +0.014] bounds the change. Given the point above, what this comparison measures is
+  mostly format compliance, not accuracy.
+- **Failures per arm** (pass / wrong value / no `ANSWER:` line; no other category occurred):
+  A1 175 / 1 / 24, A2 171 / 1 / 28, B 164 / 2 / 34. The grader checks the answer line first, so a
+  wrong value without the prefix counts as "no `ANSWER:` line".
+- **Population scope:** because the cases are random draws from the puzzle generator (10 per family;
+  treating that stratified sample as independent draws is usually conservative), A1's pass rate for
+  puzzles from this generator is 0.875 with interval [0.732, 0.958].
+
+Descriptive, not pre-registered, and not tested:
+
+- **Value correctness ignoring the prefix:** reading the last line's value with or without `ANSWER:`,
+  A1 has 196 of 200 trials right, A2 199 and B 197. 82 of the 86 "no `ANSWER:` line" trials carry the
+  right value.
+- **Failures by puzzle family** (any category):
+
+  | Family | A1 | A2 | B |
+  |---|---|---|---|
+  | arithmetic | 9 | 6 | 3 |
+  | letters | 0 | 5 | 21 |
+  | weekday | 15 | 17 | 6 |
+  | sort | 1 | 1 | 6 |
+
+  In this run B failed more on letter counting and sorting and less on weekdays and arithmetic, so
+  per-family differences partly cancel in the overall rate. No per-family difference was tested.
+- **Flaky cases:** 15 to 20 cases per arm passed on some trials and failed on others.
+
+A1 appears in both comparisons, so they are not independent, and each can raise a false alarm (4.6%
+of unchanged pairs in the synthetic demo; the calibration tests allow up to 7%). The task set is
+synthetic and says nothing about other tasks. Dollar cost is not quoted here because Azure's price
+for this model is uncertain; `summary.txt` gives an upper estimate.
 
 ## How the intervals were checked
 
