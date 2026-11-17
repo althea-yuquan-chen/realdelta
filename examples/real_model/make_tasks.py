@@ -1,6 +1,6 @@
-"""Generate the Haiku demo task set (examples/haiku/PROTOCOL.md, "Task set"). No model calls.
+"""Generate the real-model demo task set (examples/real_model/PROTOCOL.md, "Task set"). No model calls.
 
-    python examples/haiku/make_tasks.py        # writes examples/haiku/tasks.jsonl
+    python examples/real_model/make_tasks.py   # writes examples/real_model/tasks.jsonl
 
 Determined only by the seed and the rules below; answers are computed here.
 """

@@ -147,4 +147,67 @@ settings.
 
 ## Amendments
 
-None yet.
+### Amendment 1 (2026-11-16): GPT-5.6 Luna instead of Claude Haiku 5.5
+
+Made before any paid call: the owner has no Claude API access. No model output of any kind had been
+seen. Task set, seeds, arms, prompts, trial counts, call order, grading rule, retry and abort rules,
+analysis commands and README wording stay as above, except where this amendment says otherwise.
+The directory moved from `examples/haiku/` to `examples/real_model/`.
+
+- Model GPT-5.6 Luna (OpenAI's nano tier), served through Azure OpenAI on the owner's personal
+  subscription: a Global Standard deployment named `gpt-5.6-luna` (Microsoft lists `gpt-5.6-luna`
+  version 2026-07-09 for the Responses API). Chosen by the owner as the cheapest and lowest tier, where
+  some errors on these puzzles are more likely; that expectation is not tested before the run.
+- Endpoint and key: Microsoft's documented v1 pattern, the standard `openai.OpenAI` client with
+  `base_url` = `https://<resource>.openai.azure.com/openai/v1/` and the key, read from the environment
+  variables `AZURE_OPENAI_BASE_URL` and `AZURE_OPENAI_API_KEY`, which the owner sets outside the
+  program. Their values are never printed, logged or written; provenance records the deployment name
+  and the model id returned, not the endpoint. If either variable is missing the run does not start.
+- Request: Responses API, one request per trial: `model` = the deployment name, `instructions` = the
+  system prompt (S0 or S1),
+  `input` = the user message, `max_output_tokens=2048` (reasoning and visible output together),
+  `reasoning={"effort": "low"}`. No `temperature` or `top_p`, no tools, no previous-response chaining.
+  Reasoning items are never stored; only the message text is kept.
+- Client: `openai.OpenAI(api_key=..., base_url=..., max_retries=0, timeout=120)`.
+- Error classes: `openai.APITimeoutError` is a timeout (checked first; in the installed SDK it
+  subclasses `APIConnectionError`); `openai.APIConnectionError` is re-issued; `openai.APIStatusError`
+  with status 429 or >= 500 is re-issued; a 400 with code `content_filter` (Azure's input guardrail,
+  documented by Microsoft) is the `refusal` category for that trial, not an abort and not re-issued;
+  any other error aborts.
+- Text and stop reason: the text is built from the `output_text` parts of the response's `message`
+  items (see "Text" below). A `refusal` content part, `status="incomplete"` with
+  `incomplete_details.reason="content_filter"`, or an Azure `content_filters` entry with
+  `blocked=true` and `source_type="completion"` is the `refusal` category.
+  `status="incomplete"` with reason `max_output_tokens` is the `max_tokens` category. Any other
+  incomplete reason is a new category `incomplete_other` (a fail), placed after `max_tokens` in the
+  precedence order: `timeout`, `refusal`, `max_tokens`, `incomplete_other`, `empty`,
+  `no_answer_line`, `wrong_value`, `pass`.
+- A response whose `status` is not `completed` or `incomplete` (failed, cancelled, queued,
+  in_progress), or that has no usage, is not an answer attempt: it is treated like a server error,
+  re-issued under the same backoff and counted toward the re-issue limits; only its status and
+  `error.code` are recorded. It is never graded.
+- A 429 with code or type `insufficient_quota` (no credit) aborts at once instead of being re-issued;
+  it is an account cause, so a re-run is allowed.
+- Text: the `output_text` parts of all `message` items, joined with a newline (so an answer line in a
+  separate part stays on its own line); the grading rule then takes the last non-empty line as above.
+- `store=False` is sent, so responses are not kept on the provider's side. Automatic prompt caching
+  does not apply to prompts this short (each request is about 100 tokens); no caching is requested.
+- Usage: `usage.input_tokens` and `usage.output_tokens` (the latter includes reasoning tokens).
+- Price on Azure is uncertain: Microsoft's Foundry blog lists Luna Global Standard at $0.20 / $1.20
+  per million input / output tokens from 2026-08-01, users in Microsoft Q&A report being billed at
+  the older $1 / $6, and the public pricing page shows placeholders. The cost limit therefore uses
+  $1 / $6. Expected cost about $2.35 (300 input and 600 output tokens per call, an assumption);
+  worst case, every call at 2,048 output tokens, about $7.58. The Azure bill is authoritative.
+- Limits: 60 re-issues; 1,400,000 output tokens; $8.00 estimated at $1 / $6 per million (at this
+  price the cost limit binds before the token limit). The owner chose the $8.00 cap.
+- Sequential calls stay far below the documented Global Standard quota for Luna (250 requests and
+  250,000 tokens per minute at tier 1), so throttling is not expected; if it happens, the re-issue
+  rules above apply.
+- Preflight: if either preflight call is a refusal (including Azure's 400 `content_filter`), the run
+  aborts before any task call. The preflight question is outside the task set, so this is a
+  configuration cause: a re-run is allowed after the fix. Each record notes whether the response
+  carried Azure's `content_filters` field, so a missing filter signal is visible.
+- `summary.txt` gives the cost as an upper estimate at $1 / $6; the README quotes token counts, and
+  any dollar amount it quotes comes from the Azure bill.
+- README wording above that names the model refers to GPT-5.6 Luna served through Azure OpenAI; Azure's
+  content filtering is part of the system measured and feeds the `refusal` category.

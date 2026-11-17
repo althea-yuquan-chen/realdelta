@@ -19,7 +19,7 @@ realdelta = "realdelta.cli:main"
 
 [project.optional-dependencies]
 dev = ["pytest>=8"]
-demo = ["anthropic"]  # examples/haiku only; the library itself does not call any model
+demo = ["openai"]  # examples/real_model only; the library itself does not call any model
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/realdelta"]
