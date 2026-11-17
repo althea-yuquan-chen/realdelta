@@ -298,3 +298,14 @@ to the script uses a new seed base and earlier output stays. Disposition, fixed 
   includes these 23 settings as gated rows with a new seed base; or (b) release with the disclosure
   and the docstring warning. Re-running with another seed or dropping rows is not an option. This
   diagnostic is not reused to choose a fix.
+
+## Note on cited commit hashes (2026-11-16; no rule or result changes)
+
+The commit messages in this repository were edited after the fact, and one commit that only
+recorded that edit was dropped. A commit's hash covers its message, so the commit hashes cited in
+this protocol, in `README.md`, in two docstrings, in later commit messages, in the provenance files
+under `results/` and `examples/real_model/run_20261116/`, and in the diagnostic's two output files
+under `results/` were then updated mechanically to the edited commits. Apart from those hash
+strings, no file content changed, and every commit kept its author and commit dates and its order.
+Each cited commit therefore has the same timestamps, and the same files apart from cited hash
+strings, as the commit the citation originally named.
