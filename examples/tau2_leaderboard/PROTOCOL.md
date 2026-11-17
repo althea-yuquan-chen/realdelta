@@ -369,3 +369,31 @@ not searched them.
   study does not call anything an error.
 - The D rows stay as Amendment 2 describes them. For A and C, Amendment 3's reading of `evaluation_date`
   remains a reading.
+
+### Amendment 6 (2026-11-17): commit hashes changed before the first push
+
+Before the commits listed here were accepted by the remote, their author and committer email was changed to the
+account's GitHub no-reply address. Because of that, each commit hash changed, and so did the parent pointer of every
+commit after the first. Each new commit has the same tree (the same files, byte for byte), the same message, the
+same author and committer names and the same author and committer dates as the old one; the first new commit has
+the same parent, 7c4ef90.
+- Which hashes this affects: the commits from 8abbb32 to a9d6cec, cited in Amendments 1 to 5, and the commits
+  recorded as "Run at commit ..." inside `run_20261123/`, `posthoc_published_scores.md` and `posthoc_power.md`
+  (the HEAD when each script ran). To follow one, find it by prefix in the "old commit" column and take the new
+  commit on the same row, which has the same tree. 7c4ef90 and earlier commits, and the upstream commits c06b07d
+  and 7324fb57, are unchanged and not in the table.
+- `git rev-parse <new commit>^{tree}` prints the tree listed here. The old commits were never accepted by the
+  remote, so that the old commits had these trees is the analyst's statement and cannot be checked from the
+  repository.
+
+| old commit | new commit | tree |
+|---|---|---|
+| 8abbb32e0b797ccecd92349dbed08ec9b3ae2922 | 55ab070229388c085542f4d3ffb29aa9471e8486 | 464cd4115211049aa5e1db70dab71078d6aa1e21 |
+| f2449b1c0af12534ec8adc28c3fe185bb70548ee | 29d978a36ba9daa064c6670ed110f605c5eda93d | 2ebc57fb3679a66b732b550162a44241e4f7d55f |
+| 0c59ed588fd2e066277424f72a57e3f0c308fb34 | 111e82290d870e74592f2337fa2f65c5fcd5886b | 95e789b36cca4f499fa4049612bbb11a949f95be |
+| 88f0b1bc3d650be7bd2ac093844ceff27936ac53 | 7b2de75cef63d05bcabbaf4053338838fc86eaf6 | 428460a16c4696942577d089a5305c3baa1ff097 |
+| 09307293fad34ac214afd657b814c8cb68298fd9 | c795111fda08ab01bd22e1f7b7612157ce545cfe | 58b9515ee764f210947e3f0f764b010179471806 |
+| fc6b40c241bb0a2b8e87e8ce7c805da163e0df87 | aac0568d2aa244fe26946fb12976cf9e7157f8ae | a3ccedfbfb0a33ebfde1d90f5eb52fdc57581915 |
+| dc3703e5dd3309d2a827ece4b3ff11dc4c543715 | 427ddb5339c996c22ca465c49830280c576ffe3b | 6dd8bf657f62a93a0f959e3ca95545fd045bc8a3 |
+| 7819263bebef8289c60a23713f5a7573854ba50a | d6091315326ffb14539fe0c2c3d8a6e2bdf0e174 | feafe99317d7ded560c9312ea7133dedafaad3cb |
+| a9d6cec8e190902096e52d28956b14dab654c613 | 3a88a3ebcd6a37cc86f1f8eefcb55a03d30ce1e9 | 1e552b24a88914167c04225fd07fa49e0cb20c4d |
