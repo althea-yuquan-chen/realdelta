@@ -23,10 +23,11 @@ from .stats import compare, pass_rate_interval
 README = "README, Limitations"
 
 NOTE_ASSUMPTIONS = (
-    "Assumptions A1 and A3 cannot be checked from result files: if the two arms share seeds, caches "
-    "or an outage window, or a case's trials repeat each other, intervals are too narrow (in the grid "
-    "suite delta coverage fell to 0.894 with shared shocks; suite pass-rate coverage to 0.871 and "
-    f"0.734 with sticky trials) ({README})."
+    "Assumptions A1, A3 and A5 cannot be checked from result files. In the tested settings: a case's trials "
+    "that repeat each other (A1), or a run-level shock shared by one arm's cases such as an outage during one "
+    "run (A5), made intervals too narrow; positive coupling between the arms (A3), modelled as a latent "
+    "correlation, did not narrow them but cut power; negative coupling narrowed them; sharing run-level "
+    f"shocks between the arms offset the A5 effect, fully only when both runs saw the same shock ({README})."
 )
 NOTE_P_VALUE = (
     "The p-value tests the sharp null 'the two versions behave identically on every case' and has not "

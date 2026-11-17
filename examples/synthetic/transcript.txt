@@ -13,7 +13,7 @@ Change in pass rate (candidate - baseline, suite scope): +0.0150, 95% interval [
 Detected: no (interval contains 0)
 p-value: 0.6173 (sign-flip permutation, 10000 random sign flips, seed 0)
 Region: inside gated range
-Note: Assumptions A1 and A3 cannot be checked from result files: if the two arms share seeds, caches or an outage window, or a case's trials repeat each other, intervals are too narrow (in the grid suite delta coverage fell to 0.894 with shared shocks; suite pass-rate coverage to 0.871 and 0.734 with sticky trials) (README, Limitations).
+Note: Assumptions A1, A3 and A5 cannot be checked from result files. In the tested settings: a case's trials that repeat each other (A1), or a run-level shock shared by one arm's cases such as an outage during one run (A5), made intervals too narrow; positive coupling between the arms (A3), modelled as a latent correlation, did not narrow them but cut power; negative coupling narrowed them; sharing run-level shocks between the arms offset the A5 effect, fully only when both runs saw the same shock (README, Limitations).
 Note: The p-value tests the sharp null 'the two versions behave identically on every case' and has not been calibration-checked. 'detected' uses the interval, not the p-value; the two can disagree.
 
 $ python -m realdelta compare baseline.jsonl regression.jsonl    # cwd: examples/synthetic
@@ -23,7 +23,7 @@ Change in pass rate (candidate - baseline, suite scope): -0.1000, 95% interval [
 Detected: yes (interval excludes 0)
 p-value: 0.0438 (sign-flip permutation, 10000 random sign flips, seed 0)
 Region: inside gated range
-Note: Assumptions A1 and A3 cannot be checked from result files: if the two arms share seeds, caches or an outage window, or a case's trials repeat each other, intervals are too narrow (in the grid suite delta coverage fell to 0.894 with shared shocks; suite pass-rate coverage to 0.871 and 0.734 with sticky trials) (README, Limitations).
+Note: Assumptions A1, A3 and A5 cannot be checked from result files. In the tested settings: a case's trials that repeat each other (A1), or a run-level shock shared by one arm's cases such as an outage during one run (A5), made intervals too narrow; positive coupling between the arms (A3), modelled as a latent correlation, did not narrow them but cut power; negative coupling narrowed them; sharing run-level shocks between the arms offset the A5 effect, fully only when both runs saw the same shock (README, Limitations).
 Note: The p-value tests the sharp null 'the two versions behave identically on every case' and has not been calibration-checked. 'detected' uses the interval, not the p-value; the two can disagree.
 
 $ python -m realdelta plan --cases 40 --break-cases 3 --trials 1,3,5,10 --alpha 20 --beta 1 --seed 20261119    # cwd: any

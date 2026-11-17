@@ -125,7 +125,7 @@ def test_compare_notes_on_stdout_warnings_on_stderr(tmp_path, capsys):
     cand = suite(tmp_path, "c.jsonl", 5, 3, 3)
     assert main(["compare", str(base), str(cand)]) == 0
     captured = capsys.readouterr()
-    assert "Note: Assumptions A1 and A3" in captured.out
+    assert "Note: Assumptions A1, A3 and A5" in captured.out
     assert "Note:" not in captured.err
     assert "Warning: Fewer than 10 cases" in captured.err
 

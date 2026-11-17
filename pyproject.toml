@@ -6,7 +6,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "realdelta"
-version = "0.1.0"
+version = "0.1.1"
 description = "Is that change in your agent eval real, or noise? Intervals, paired comparisons and trial planning for repeated agent evals; interval coverage checked on a pre-registered simulation grid."
 readme = "README.md"
 license = "Apache-2.0"

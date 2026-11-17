@@ -7,7 +7,9 @@ the pass rate moved from 82% to 86%. `realdelta` tells you whether that move is
 larger than the run-to-run noise of your agent, and how many repeated trials you
 need before it can tell.
 
-**Status:** version 0.1.0, alpha. The statistics
+**Status:** version 0.1.1, alpha. Version 0.1.1 corrects the 0.1.0 description of assumption A3
+(see Limitations): 0.1.0 said shared seeds between the arms make intervals too narrow, citing a
+row that measures a shock within one arm. The statistics
 core, its calibration checks, result-file loading, the command line, a synthetic demo
 and one pre-registered demo on a real model are done. The test suite runs in CI on
 Linux and Windows, Python 3.10 to 3.13. Links below point to the files of this release.
@@ -104,10 +106,10 @@ enumerates every sign flip) unless you pass `--seed`.
 
 ## Synthetic demo
 
-[`examples/synthetic_demo.py`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.0/examples/synthetic_demo.py) simulates an agent with 40
+[`examples/synthetic_demo.py`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.1/examples/synthetic_demo.py) simulates an agent with 40
 cases that mostly pass (case pass rates from Beta(20,1); true pass rate 0.95507), run 5
 times each, with one fixed seed (the first one tried) and no model calls. Its full
-output is in [`examples/synthetic/transcript.txt`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.0/examples/synthetic/transcript.txt);
+output is in [`examples/synthetic/transcript.txt`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.1/examples/synthetic/transcript.txt);
 a test re-runs it and compares the output byte for byte. The comparison runs only with
 numpy 2.4.4, the version the transcript was recorded with (other versions skip it).
 The CI workflow pins 2.4.4, and the comparison has passed there on Linux and Windows
@@ -136,14 +138,19 @@ These are simulation results for this setting, not calibration claims.
 
 ## Demo on a real model
 
-[`examples/real_model/`](https://github.com/althea-yuquan-chen/realdelta/tree/v0.1.0/examples/real_model/) runs 40 generated puzzles (arithmetic, letter
+The protocol and the run outputs below are frozen and use the 0.1.0 wording of assumption A3:
+the protocol's "Call order (A3)" interleaving keeps run-level drift alike in both arms (a shock
+shared by both runs: Diagnostic AD's correlation-1 row, coverage 0.961), and the CLI notes inside
+`summary.txt` carry the 0.1.0 text corrected in 0.1.1 (see Limitations).
+
+[`examples/real_model/`](https://github.com/althea-yuquan-chen/realdelta/tree/v0.1.1/examples/real_model/) runs 40 generated puzzles (arithmetic, letter
 counting, weekdays, sorting; 10 each) on GPT-5.6 Luna served through Azure OpenAI, with reasoning
 effort low. Azure's content filtering is part of the system measured. Everything that decides the
-result was fixed in [`PROTOCOL.md`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.0/examples/real_model/PROTOCOL.md) before any paid call; its
+result was fixed in [`PROTOCOL.md`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.1/examples/real_model/PROTOCOL.md) before any paid call; its
 Amendment 1 changed the model from Claude Haiku 5.5 to GPT-5.6 Luna before any call was made. Three
 arms, 5 trials per case each, 600 calls in one interleaved order: A1 and A2 use the same system prompt
 (an A/A pair), B adds "Answer immediately; do not show your working." The run
-([`run_20261116/summary.txt`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.0/examples/real_model/run_20261116/summary.txt)) used 51,213 input and
+([`run_20261116/summary.txt`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.1/examples/real_model/run_20261116/summary.txt)) used 51,213 input and
 52,408 output tokens with no re-issued calls, timeouts, refusals or truncated outputs. The run
 directory is named after the local date; it started at 2026-11-17T00:54Z.
 
@@ -197,12 +204,12 @@ for this model is uncertain; `summary.txt` gives an upper estimate.
 ## How the intervals were checked
 
 The calibration grid (its settings, the 0.93 gate and the rules for failures) was
-pre-registered in [`docs/calibration_protocol.md`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.0/docs/calibration_protocol.md)
+pre-registered in [`docs/calibration_protocol.md`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.1/docs/calibration_protocol.md)
 before any final result existed. The suite pass-rate method was replaced after the
 first final run failed; the steps are below. Each grid row simulates suites with
 known case pass rates and counts how often the 95% interval contains the truth.
 
-**Claim.** On the grid run [`results/calibration_grid_20261117.md`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.0/results/calibration_grid_20261117.md)
+**Claim.** On the grid run [`results/calibration_grid_20261117.md`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.1/results/calibration_grid_20261117.md)
 (2000 repetitions per row, so a Monte Carlo standard error of about 0.005; 95% level),
 every gated row has an estimated coverage of at least 0.93. The lowest rows are
 0.956 for the suite pass rate (36 rows), 0.951 for the population pass rate (40 rows)
@@ -222,24 +229,24 @@ this), so the +0.05 and +0.10 delta rows also cover drops of the same realised s
 from the shifted baseline; they do not cover drops from Beta(4,2) or Beta(20,1)
 themselves, nor a few cases breaking outright.
 The table gives ranges, not a full cross of every combination;
-[`results/calibration_grid_20261117.md`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.0/results/calibration_grid_20261117.md) lists every row.
-File names carry the seed base (20261116, 20261117, 20261118), not a date; both grid
+[`results/calibration_grid_20261117.md`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.1/results/calibration_grid_20261117.md) lists every row.
+File names carry the seed base (20261116, 20261117, 20261118, 20261122), not a date; both grid
 runs started on 2026-11-16 (see their provenance files).
 
 **How we got there.** This history is part of the evidence, so it is listed in full.
 
-1. The first final grid ([`results/calibration_grid_20261116.md`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.0/results/calibration_grid_20261116.md))
+1. The first final grid ([`results/calibration_grid_20261116.md`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.1/results/calibration_grid_20261116.md))
    failed one suite row and the population-delta width rule. With 5 cases, 1 trial
    each and rates near 100%, the Wilson interval then used covered 0.917: a single
    failure pulls its upper bound below the truth.
 2. Amendment 1 pre-registered an exact analytic check (minimum coverage >= 0.947)
    and two candidates: Clopper-Pearson on the effective sample size, and Wilson
    with a continuity correction. Both failed it, at 0.9449 and 0.9434
-   ([`results/suite_bounds_selection.md`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.0/results/suite_bounds_selection.md)).
+   ([`results/suite_bounds_selection.md`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.1/results/suite_bounds_selection.md)).
 3. Amendment 2 added one candidate: Clopper-Pearson with the effective sample size
    capped at the number of trials run. It was designed *after* seeing step 2's
    results, so the analytic check is not independent evidence for it. It passed
-   that check with 0.9503 ([`results/suite_bounds_selection_a2.md`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.0/results/suite_bounds_selection_a2.md)).
+   that check with 0.9503 ([`results/suite_bounds_selection_a2.md`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.1/results/suite_bounds_selection_a2.md)).
    The independent evidence is the CI coverage tests, whose gates did not change,
    and the 20261117 grid, which ran once after the implementation.
 
@@ -262,7 +269,7 @@ mode affecting a few percent of cases like them.
 - **The suite delta is gated only for 10 to 50 cases with 3 to 10 trials each**
   (plus one unequal-trials setting). It combines the two arms' Wilson-based
   intervals (MOVER), and Wilson bounds under-cover near 100%. A reported-only
-  diagnostic ([`results/delta_boundary_diagnostic_20261118.md`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.0/results/delta_boundary_diagnostic_20261118.md))
+  diagnostic ([`results/delta_boundary_diagnostic_20261118.md`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.1/results/delta_boundary_diagnostic_20261118.md))
   covers part of the gap near 100%: with case rates from Beta(50,1) or Beta(20,1),
   5 or 20 cases and 1 or 3 trials each, under no change, a 0.05 drop and (Beta(20,1)
   only) a 0.05 rise, coverage was at least 0.971 across 20 settings. Three cases
@@ -279,16 +286,40 @@ mode affecting a few percent of cases like them.
   delta) and one exact, reported-only suite pass-rate configuration (5 cases with
   1, 1, 3, 3 and 10 trials, homogeneous rate: minimum coverage 0.958).
 - **Assumptions.** A1: trials within a case are independent and identically
-  distributed. A2: cases are an independent draw from a population. A3: the two arms
-  share no randomness (seeds, caches, outage windows). A4: the number of trials per
-  case does not depend on outcomes. The suite scope needs A1, A3 and A4; the
-  population pass rate needs A2 and A4. The grid includes violations, reported and
-  not gated: trials that repeat the previous outcome (violates A1) drop suite
-  pass-rate coverage to 0.871 and 0.734; a shared per-trial shock in each arm
-  (violates A3) drops suite delta coverage to 0.894, with a false-alarm rate of
-  0.105. A2 holds only if your cases were sampled from the population you care
-  about; for a hand-picked suite, the population scope describes a hypothetical
+  distributed. A2: cases are an independent draw from a population. A3: the two arms'
+  trial noise is independent. A4: the number of trials per case does not depend on
+  outcomes. A5: within an arm, cases do not share a run-level shock (an outage window,
+  provider change or bad batch that hits all of that arm's cases on a trial). The
+  suite scope needs A1, A4 and A5, and comparisons also A3; the population pass rate
+  needs A2 and A4. A2 holds only if your cases were sampled from the population you
+  care about; for a hand-picked suite, the population scope describes a hypothetical
   population of similar cases.
+- **Measured violations** (reported, not gated; 30 cases, 5 trials, Beta(4,2) rates
+  unless noted; they hold for the tested settings only):
+  - A1: trials that repeat the previous outcome drop suite pass-rate coverage to
+    0.871 and 0.734 (grid).
+  - A5: a shock shared by all cases of one arm's trial drops suite delta coverage to
+    0.894 with a false-alarm rate of 0.105 (grid row V2) and to 0.915 with 0.085
+    (Diagnostic AD, X0). Its effect on pass-rate intervals is not measured.
+  - A3, positive coupling between the arms, modelled as a latent correlation per case
+    and trial (whether shared seeds in a real model run produce it was not tested):
+    coverage at least 0.987 and false alarms at most 0.013
+    (latent correlation 0.5 to 1; also Beta(20,1) at 0.9). Intervals were not too
+    narrow, but power drops: a +0.05 change was detected in 3.8% of runs at
+    correlation 0.9 against 16.2% with independent arms.
+  - A3, negative coupling (latent correlation -0.5): coverage 0.926, false alarms
+    0.073, so intervals can be too narrow.
+  - A3 with A5, run-level shocks in both runs, correlated between the arms: coverage
+    0.928 and false alarms 0.072 at correlation 0.5, and 0.961 and 0.040 when one
+    shock hits both runs (power 0.153 against 16.2%). Every such row also violates
+    A5, and coverage rises with the correlation: 0.915 at 0 (the A5 row above), 0.928
+    at 0.5, 0.961 at 1. The narrowing comes from the shocks within each arm; sharing
+    them between the arms offsets it, fully only when both runs see the same shock.
+
+  Sources: [`results/arm_dependence_diagnostic_20261122.md`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.1/results/arm_dependence_diagnostic_20261122.md)
+  and the calibration grid; the diagnostic's design is in
+  [`docs/calibration_protocol.md`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.1/docs/calibration_protocol.md)
+  (Diagnostic AD).
 - **Not checked:** confidence levels other than 95%, and the calibration of the
   p-value from `compare`. It tests the sharp null "the two versions behave
   identically on every case", and in the synthetic demo's setting (3 of 40 cases

@@ -380,3 +380,16 @@ Disposition, fixed now:
 - Not changed: examples/real_model/PROTOCOL.md "Call order (A3)". It is a committed pre-registration, and its
   interleaving puts drift on both arms alike (X2's structure). The README's real-model section gets a
   one-line pointer if its A3 wording conflicts with the new text.
+
+### Outcome record for Diagnostic AD (appended after the run; no rule changes)
+
+Run once at commit 611d257 (seed base 20261122, 2000 reps); output committed as produced in
+`results/arm_dependence_diagnostic_20261122.{json,md}`. By type:
+- Within-arm shock (X0): 0.915 coverage, 0.085 false alarms.
+- Positive latent coupling: every null row covers at least 0.987, with at most 0.013 false alarms; power for
+  a +0.05 shift is 0.038 at rho 0.9 against 0.162 at rho 0.
+- Negative latent coupling (rho -0.5): 0.926 coverage, 0.073 false alarms, below 0.93.
+- Correlated run-level shocks: 0.928 coverage at c 0.5 (below 0.93) and 0.961 at c 1; power 0.153 at c 1.
+  Every X2 row also violates A5, and coverage rises with c from X0's 0.915.
+The disposition was applied in version 0.1.1: README Limitations, the command-line note, the stats.py docstrings,
+the test of the note's first words, and a pointer in the README's real-model section.

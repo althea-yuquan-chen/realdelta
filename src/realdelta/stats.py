@@ -28,11 +28,13 @@ v0.1: MOVER over the two arms' Wilson-based suite intervals. The
 population-scope delta failed the pre-registered width rule and raises
 NotImplementedError.
 
-Assumptions (docs/calibration_protocol.md): A1 trials within a case are i.i.d.;
-A2 cases are an i.i.d. draw from the population; A3 compared arms share no
-randomness (seeds, caches, outage windows); A4 the number of trials per case
-does not depend on outcomes. The suite scope needs A1, A3 and A4; the
-population scope needs A2 and A4.
+Assumptions (docs/calibration_protocol.md, README Limitations): A1 trials within a
+case are i.i.d.; A2 cases are an i.i.d. draw from the population; A3 the two
+arms' trial noise is independent; A4 the number of trials per case does not
+depend on outcomes; A5 within an arm, cases do not share a run-level shock. The
+suite scope needs A1, A4 and A5 (comparisons also A3); the population scope
+needs A2 and A4. Measured violations are in README Limitations (grid rows V1
+and V2, Diagnostic AD).
 
 Validity evidence is limited to what the tests and the pre-registered grid
 show: the floor is exact when every case is deterministic; otherwise coverage
@@ -239,7 +241,8 @@ def _delta_interval(pa, ta, pb, tb, scope: Scope, conf: float) -> Interval:
     diffs = pb / tb - pa / ta
     estimate = float(diffs.mean())
     # MOVER (Newcombe's hybrid score method): combine the two arms' suite
-    # intervals. Valid in the suite scope because the arms' trial noise is independent.
+    # intervals. Valid in the suite scope when the arms' trial noise is independent (A3) and no
+    # arm has a run-level shock shared by its cases (A5); Diagnostic AD measures violations.
     a = _suite_interval(pa, ta, conf)
     b = _suite_interval(pb, tb, conf)
     low = estimate - math.hypot(b.estimate - b.low, a.high - a.estimate)
