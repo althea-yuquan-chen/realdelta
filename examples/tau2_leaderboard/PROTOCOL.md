@@ -170,3 +170,39 @@ No per-task outcome of B, C or D was read before this protocol was committed.
   on files that do not match `manifest.json`;
 - records the commit, the realdelta version and the manifest's fetch time.
 A bug found after the run is fixed in a new run with a new output name; the earlier output stays.
+
+## Amendments
+
+### Amendment 1 (2026-11-17): fetch record and terms check
+
+Fetch. `fetch_data.py` ran twice, unchanged from 7c4ef90, on 2026-11-16 and 2026-11-17 (US Eastern); the
+run logs carry no timestamps.
+- The first run stopped on a network error (TLS handshake timeout) while downloading submission C's
+  simulation files. A and B had passed their per-submission checks; the checks across submissions had not
+  run, and no manifest was written.
+- The second run passed every check and wrote `manifest.json` (fetched 2026-11-17T05:18:11+00:00),
+  committed as produced in 8abbb32. It rewrote every file the first run had written, so all hashes in the
+  manifest come from the second run.
+- As of this amendment, the content of no file in `data/` has been displayed or parsed outside
+  `fetch_data.py`: only file names, sizes and SHA-256 hashes were listed. This is the analyst's statement and
+  cannot be checked from the repository. `fetch_data.py` prints no reward.
+
+Terms of use (the check required under "Before any outward publication"), done on 2026-11-16 and
+2026-11-17. Sources checked: the tau2-bench repository at commit c06b07dd7c4d4ec61ba6ff9bcdf0b15dd7ef36d4
+(`LICENSE`, `README.md`, `docs/leaderboard-submission.md`, the leaderboard maintainer notes, the full file
+tree) and the taubench.com page.
+- The repository is MIT-licensed ("Copyright (c) 2025 Sierra Research"). Its README asks users to cite the
+  paper of the component they use.
+- `submission.json` of A, B, C and D is committed in that repository under
+  `web/leaderboard/public/submissions/`. Their `results.json` and simulation files are not in the repository;
+  they are in the public S3 bucket, which states no licence.
+- `docs/leaderboard-submission.md` (the "Submit Results" link on taubench.com) states no terms of use or
+  licence for submitted data. The taubench.com page text, read on 2026-11-16 and 2026-11-17, contains no
+  terms, licence, copyright or privacy text; the page is rendered by script, so a link added by script may
+  not have been seen.
+- In the sources checked, no stated term was found that restricts reuse, and none grants it for the bucket
+  files. This is a reading, not a legal opinion; the owner decides. The plan above stands: commit only
+  derived statistics and the hash manifest, do not redistribute raw files, and cite the source and the
+  tau2-bench paper.
+- This record does not approve any outward step. Each one still needs the owner's explicit approval and the
+  owner's re-confirmation of the clean-room answer.
