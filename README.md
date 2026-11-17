@@ -104,8 +104,8 @@ times each, with one fixed seed (the first one tried) and no model calls. Its fu
 output is in [`examples/synthetic/transcript.txt`](examples/synthetic/transcript.txt);
 a test re-runs it and compares the output byte for byte. The comparison runs only with
 numpy 2.4.4, the version the transcript was recorded with (other versions skip it).
-It has passed in clean Linux installs with Python 3.11 and 3.13; the CI workflow pins
-2.4.4 so that it also runs there.
+The CI workflow pins 2.4.4, and the comparison has passed there on Linux and Windows
+with Python 3.11, 3.12 and 3.13.
 
 - **Noise alone moves the number.** Across 500 pairs of runs of the *unchanged*
   agent, the pass rate moved by 2 points or more in 184 pairs (36.8%) and by 4 points
