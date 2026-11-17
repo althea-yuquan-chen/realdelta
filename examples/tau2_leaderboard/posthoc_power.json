@@ -1,0 +1,343 @@
+{
+ "meta": {
+  "commit": "dc3703e5dd3309d2a827ece4b3ff11dc4c543715",
+  "realdelta_version": "0.1.1",
+  "manifest_fetched_at": "2026-11-17T05:18:11+00:00",
+  "seed": 20261117,
+  "n_sim": 1000,
+  "n_cases": 50,
+  "fit_from": {
+   "A": "claude-opus-4-5_sierra_2026-02-26",
+   "C": "gpt-5-2_sierra_2026-02-26"
+  },
+  "power_target": 0.8,
+  "numpy": "2.4.4",
+  "scipy": "1.18.1"
+ },
+ "fit": {
+  "alpha": 0.5860225593781883,
+  "beta": 0.12025784238567681,
+  "loglik": -98.18154682024577,
+  "observed_count_histogram": {
+   "0": 8,
+   "1": 5,
+   "2": 3,
+   "3": 13,
+   "4": 71
+  },
+  "fitted_expected": {
+   "0": 7.373470357307564,
+   "1": 5.539311414065481,
+   "2": 6.215380523892111,
+   "3": 9.56512786120492,
+   "4": 71.30670984353
+  },
+  "sensitivity_fit_A_only": {
+   "alpha": 0.7870638556254297,
+   "beta": 0.15310387270784556
+  }
+ },
+ "one_point": [
+  {
+   "trials": 4,
+   "power": 0.004,
+   "power_se": 0.001995995991979944,
+   "false_alarm_rate": 0.003,
+   "false_alarm_se": 0.001729450779872038,
+   "realised_change": -0.00992100901813897,
+   "total_runs": 400
+  },
+  {
+   "trials": 16,
+   "power": 0.05,
+   "power_se": 0.006892024376045111,
+   "false_alarm_rate": 0.015,
+   "false_alarm_se": 0.003843826218756514,
+   "realised_change": -0.009923872034806545,
+   "total_runs": 1600
+  },
+  {
+   "trials": 64,
+   "power": 0.295,
+   "power_se": 0.01442133835675455,
+   "false_alarm_rate": 0.03,
+   "false_alarm_se": 0.005394441583704471,
+   "realised_change": -0.009924543618921559,
+   "total_runs": 6400
+  },
+  {
+   "trials": 128,
+   "power": 0.563,
+   "power_se": 0.01568537535413163,
+   "false_alarm_rate": 0.028,
+   "false_alarm_se": 0.005216895628628198,
+   "realised_change": -0.00991897609999749,
+   "total_runs": 12800
+  },
+  {
+   "trials": 256,
+   "power": 0.867,
+   "power_se": 0.010738295954200556,
+   "false_alarm_rate": 0.043,
+   "false_alarm_se": 0.006414904519944158,
+   "realised_change": -0.009921744925803062,
+   "total_runs": 25600
+  },
+  {
+   "trials": 512,
+   "power": 0.995,
+   "power_se": 0.002230470802319547,
+   "false_alarm_rate": 0.045,
+   "false_alarm_se": 0.0065555320150236475,
+   "realised_change": -0.00991995241307174,
+   "total_runs": 51200
+  },
+  {
+   "trials": 1024,
+   "power": 1.0,
+   "power_se": 0.0,
+   "false_alarm_rate": 0.058,
+   "false_alarm_se": 0.007391616873188166,
+   "realised_change": -0.0099259294665032,
+   "total_runs": 102400
+  }
+ ],
+ "change_sizes": [
+  {
+   "delta": -0.01,
+   "trials": 4,
+   "power": 0.004,
+   "power_se": 0.001995995991979944,
+   "false_alarm_rate": 0.003,
+   "false_alarm_se": 0.001729450779872038,
+   "realised_change": -0.00992100901813897,
+   "total_runs": 400
+  },
+  {
+   "delta": -0.02,
+   "trials": 4,
+   "power": 0.026,
+   "power_se": 0.0050322956987840055,
+   "false_alarm_rate": 0.003,
+   "false_alarm_se": 0.001729450779872038,
+   "realised_change": -0.01976392261597689,
+   "total_runs": 400
+  },
+  {
+   "delta": -0.05,
+   "trials": 4,
+   "power": 0.184,
+   "power_se": 0.012253326079069307,
+   "false_alarm_rate": 0.003,
+   "false_alarm_se": 0.001729450779872038,
+   "realised_change": -0.04898815064494949,
+   "total_runs": 400
+  },
+  {
+   "delta": -0.06,
+   "trials": 4,
+   "power": 0.285,
+   "power_se": 0.014274978108564651,
+   "false_alarm_rate": 0.003,
+   "false_alarm_se": 0.001729450779872038,
+   "realised_change": -0.05864182931699487,
+   "total_runs": 400
+  },
+  {
+   "delta": -0.07,
+   "trials": 4,
+   "power": 0.396,
+   "power_se": 0.01546557467409472,
+   "false_alarm_rate": 0.003,
+   "false_alarm_se": 0.001729450779872038,
+   "realised_change": -0.06825667044105128,
+   "total_runs": 400
+  },
+  {
+   "delta": -0.08,
+   "trials": 4,
+   "power": 0.515,
+   "power_se": 0.01580427157448264,
+   "false_alarm_rate": 0.003,
+   "false_alarm_se": 0.001729450779872038,
+   "realised_change": -0.0778343660612321,
+   "total_runs": 400
+  },
+  {
+   "delta": -0.09,
+   "trials": 4,
+   "power": 0.662,
+   "power_se": 0.014958475858188226,
+   "false_alarm_rate": 0.003,
+   "false_alarm_se": 0.001729450779872038,
+   "realised_change": -0.08737641850470669,
+   "total_runs": 400
+  },
+  {
+   "delta": -0.1,
+   "trials": 4,
+   "power": 0.763,
+   "power_se": 0.013447341744746431,
+   "false_alarm_rate": 0.003,
+   "false_alarm_se": 0.001729450779872038,
+   "realised_change": -0.09688467109417714,
+   "total_runs": 400
+  },
+  {
+   "delta": -0.12,
+   "trials": 4,
+   "power": 0.897,
+   "power_se": 0.009612023720320294,
+   "false_alarm_rate": 0.003,
+   "false_alarm_se": 0.001729450779872038,
+   "realised_change": -0.11580426131006707,
+   "total_runs": 400
+  },
+  {
+   "delta": -0.15,
+   "trials": 4,
+   "power": 0.981,
+   "power_se": 0.004317290817167639,
+   "false_alarm_rate": 0.003,
+   "false_alarm_se": 0.001729450779872038,
+   "realised_change": -0.14396698588540274,
+   "total_runs": 400
+  },
+  {
+   "delta": -0.2,
+   "trials": 4,
+   "power": 1.0,
+   "power_se": 0.0,
+   "false_alarm_rate": 0.003,
+   "false_alarm_se": 0.001729450779872038,
+   "realised_change": -0.19035530105422213,
+   "total_runs": 400
+  }
+ ],
+ "default_beta_contrast": [
+  {
+   "trials": 4,
+   "power": 0.041,
+   "power_se": 0.006270486424512854,
+   "false_alarm_rate": 0.051,
+   "false_alarm_se": 0.00695693898205238,
+   "realised_change": -0.009999999999999884,
+   "total_runs": 400
+  },
+  {
+   "trials": 16,
+   "power": 0.075,
+   "power_se": 0.008329165624478841,
+   "false_alarm_rate": 0.04,
+   "false_alarm_se": 0.0061967733539318665,
+   "realised_change": -0.009999999999999884,
+   "total_runs": 1600
+  },
+  {
+   "trials": 64,
+   "power": 0.177,
+   "power_se": 0.012069424178476784,
+   "false_alarm_rate": 0.047,
+   "false_alarm_se": 0.006692607862410586,
+   "realised_change": -0.00999999999999989,
+   "total_runs": 6400
+  },
+  {
+   "trials": 128,
+   "power": 0.327,
+   "power_se": 0.014834790190629594,
+   "false_alarm_rate": 0.055,
+   "false_alarm_se": 0.00720936890441875,
+   "realised_change": -0.009999999999999882,
+   "total_runs": 12800
+  },
+  {
+   "trials": 256,
+   "power": 0.56,
+   "power_se": 0.015697133496278867,
+   "false_alarm_rate": 0.057,
+   "false_alarm_se": 0.007331507348424334,
+   "realised_change": -0.009999999999999875,
+   "total_runs": 25600
+  },
+  {
+   "trials": 512,
+   "power": 0.809,
+   "power_se": 0.012430567163247216,
+   "false_alarm_rate": 0.044,
+   "false_alarm_se": 0.006485676526007136,
+   "realised_change": -0.009999999999999891,
+   "total_runs": 51200
+  },
+  {
+   "trials": 1024,
+   "power": 0.983,
+   "power_se": 0.004087909000944127,
+   "false_alarm_rate": 0.068,
+   "false_alarm_se": 0.007960904471226871,
+   "realised_change": -0.009999999999999884,
+   "total_runs": 102400
+  }
+ ],
+ "break_contrast": [
+  {
+   "k": 1,
+   "trials": 4,
+   "power": 0.013,
+   "power_se": 0.003582038525755969,
+   "false_alarm_rate": 0.003,
+   "false_alarm_se": 0.001729450779872038,
+   "realised_change": -0.016710430786560034,
+   "total_runs": 400
+  },
+  {
+   "k": 2,
+   "trials": 4,
+   "power": 0.071,
+   "power_se": 0.008121514637061242,
+   "false_alarm_rate": 0.003,
+   "false_alarm_se": 0.001729450779872038,
+   "realised_change": -0.033505966181886476,
+   "total_runs": 400
+  },
+  {
+   "k": 5,
+   "trials": 4,
+   "power": 0.629,
+   "power_se": 0.015276092432294327,
+   "false_alarm_rate": 0.003,
+   "false_alarm_se": 0.001729450779872038,
+   "realised_change": -0.08301509671106268,
+   "total_runs": 400
+  },
+  {
+   "k": 10,
+   "trials": 4,
+   "power": 0.998,
+   "power_se": 0.0014127986409959495,
+   "false_alarm_rate": 0.003,
+   "false_alarm_se": 0.001729450779872038,
+   "realised_change": -0.16576269918934733,
+   "total_runs": 400
+  }
+ ],
+ "first_reaching_target_one_point": {
+  "trials": 256,
+  "power": 0.867,
+  "power_se": 0.010738295954200556,
+  "false_alarm_rate": 0.043,
+  "false_alarm_se": 0.006414904519944158,
+  "realised_change": -0.009921744925803062,
+  "total_runs": 25600
+ },
+ "first_reaching_target_at_4_trials": {
+  "delta": -0.12,
+  "trials": 4,
+  "power": 0.897,
+  "power_se": 0.009612023720320294,
+  "false_alarm_rate": 0.003,
+  "false_alarm_se": 0.001729450779872038,
+  "realised_change": -0.11580426131006707,
+  "total_runs": 400
+ }
+}
