@@ -292,3 +292,44 @@ Other records:
 - The directory name `run_20261123` is the permutation seed, not a date. The analysis ran on 2026-11-17.
 - The retail and telecom checks of Amendment 2 compare pass^1 only. If a write-up or a message to the
   leaderboard maintainers cites them, those four files are first pinned and the check code is committed.
+
+### Amendment 4 (2026-11-17): post-hoc power calculation, fixed before it runs
+
+The primary result is "not detected" with a 95% interval about 7 points wide on each side. This amendment adds
+one post-hoc calculation, fixed here with `plan_power.py` before the script runs; the script runs once and its
+output is committed as produced. It changes no earlier result and no role of any pair.
+
+Question: with realdelta 0.1.1's suite-scope interval (95%), two independent arms (assumptions A3 and A5 hold) and
+per-task pass rates like those observed, how many trials per task does a 50-task comparison need to detect a
+1-point change, and which changes does it detect at 4 trials? The 1-point change is a design target (one point
+of leaderboard resolution), not the observed A vs C difference.
+- Rate distribution: a Beta distribution fitted by beta-binomial maximum likelihood to the per-task pass counts
+  (out of 4) of A and C from the pinned files: 50 tasks observed twice, not 100 independent tasks. The output
+  shows the observed and fitted count histograms and, as a sensitivity check, the fit on A alone. The fit is
+  run from two starting points and must agree; a degenerate fit stops the script.
+- Method: `realdelta.planner.plan_trials`, 50 tasks, suite scope, 95%, 1,000 simulations per row, seed 20261117.
+  The script refuses to run with a realdelta other than 0.1.1 from this repository's `src/`.
+- Criterion: "detects" means power at least 0.8. If no option in a grid reaches it, the output says "not
+  reached within the grid" and gives the grid's end.
+- Reported:
+  1. a shift of -0.01 at 4, 16, 64, 128, 256, 512 and 1024 trials per task, and the first option reaching 0.8;
+  2. at 4 trials, shifts of -0.01, -0.02, -0.05, -0.06, -0.07, -0.08, -0.09, -0.10, -0.12, -0.15 and -0.20, and the
+     first reaching 0.8;
+  3. for contrast, (1) with the planner's default Beta(8, 2);
+  4. for contrast, at 4 trials, 1, 2, 5 and 10 tasks breaking (rate set to 0), the planner's "break" model, since
+     with rates near 0 or 1 a change is more likely a few tasks flipping than every task moving.
+  Each row shows power, false-alarm rate, Monte Carlo standard errors and the realised change (the shift model
+  clips rates to [0, 1], so the realised change can be smaller than the shift).
+- Reading the false-alarm column: only the 4-trial rows are read against the calibration gate, since this is
+  the study's setting (50 tasks, 4 trials) and its first simulation. A rate more than 2 Monte Carlo SE below 0.05
+  means the interval is conservative here; more than 2 SE above 0.07 means it exceeds the gate here; otherwise it
+  is "not distinguishable from 0.05-0.07 at this simulation size". Rows with 16 or more trials lie outside the
+  gated range (3-10 trials); their false-alarm rates are reported, not judged. In tables 2 and 4 all rows share
+  one seed and the same null runs, so that column repeats one estimate.
+- Power is compared with 0.8 as a point estimate. The output gives the first row reaching it with its SE, the
+  row before it, and for a shift also the realised change, which a write-up quotes.
+- If the sensitivity fit on A alone fails, the output says "not available" with the reason; the main result
+  still runs.
+- Limits: four trials cannot tell a rate of 1 from 0.97, so rows with many trials depend on the fitted Beta's
+  shape near 0 and 1 and are an extrapolation. The results describe the interval under these assumptions, not
+  submissions A or C, and a write-up says so next to them.
