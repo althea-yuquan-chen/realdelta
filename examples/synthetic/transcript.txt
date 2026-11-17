@@ -1,0 +1,50 @@
+# Synthetic demo, seed 20261119, numpy 2.4.4
+
+Commands run from the directory holding the result files, with the repository's src on PYTHONPATH.
+Simulated agent: 40 cases, 5 trials each, case pass rates from Beta(20, 1).
+True pass rate: 0.95507. Regression: 3 cases set to rate 0, true change -0.07261.
+
+Observed pass rates: baseline.jsonl 0.955, rerun.jsonl 0.970, regression.jsonl 0.855
+
+$ python -m realdelta compare baseline.jsonl rerun.jsonl    # cwd: examples/synthetic
+Baseline baseline.jsonl: 40 cases, trials per case min 5 / median 5 / max 5, 200 trials in total
+Candidate rerun.jsonl: 40 cases, trials per case min 5 / median 5 / max 5, 200 trials in total
+Change in pass rate (candidate - baseline, suite scope): +0.0150, 95% interval [-0.0246, +0.0562]
+Detected: no (interval contains 0)
+p-value: 0.6173 (sign-flip permutation, 10000 random sign flips, seed 0)
+Region: inside gated range
+Note: Assumptions A1 and A3 cannot be checked from result files: if the two arms share seeds, caches or an outage window, or a case's trials repeat each other, intervals are too narrow (in the grid suite delta coverage fell to 0.894 with shared shocks; suite pass-rate coverage to 0.871 and 0.734 with sticky trials) (README, Limitations).
+Note: The p-value tests the sharp null 'the two versions behave identically on every case' and has not been calibration-checked. 'detected' uses the interval, not the p-value; the two can disagree.
+
+$ python -m realdelta compare baseline.jsonl regression.jsonl    # cwd: examples/synthetic
+Baseline baseline.jsonl: 40 cases, trials per case min 5 / median 5 / max 5, 200 trials in total
+Candidate regression.jsonl: 40 cases, trials per case min 5 / median 5 / max 5, 200 trials in total
+Change in pass rate (candidate - baseline, suite scope): -0.1000, 95% interval [-0.1555, -0.0451]
+Detected: yes (interval excludes 0)
+p-value: 0.0438 (sign-flip permutation, 10000 random sign flips, seed 0)
+Region: inside gated range
+Note: Assumptions A1 and A3 cannot be checked from result files: if the two arms share seeds, caches or an outage window, or a case's trials repeat each other, intervals are too narrow (in the grid suite delta coverage fell to 0.894 with shared shocks; suite pass-rate coverage to 0.871 and 0.734 with sticky trials) (README, Limitations).
+Note: The p-value tests the sharp null 'the two versions behave identically on every case' and has not been calibration-checked. 'detected' uses the interval, not the p-value; the two can disagree.
+
+$ python -m realdelta plan --cases 40 --break-cases 3 --trials 1,3,5,10 --alpha 20 --beta 1 --seed 20261119    # cwd: any
+Plan for 40 cases, 3 cases broken
+trials         power   false alarms  realised change    runs  region
+     1  0.133+-0.020   0.020+-0.008          -0.0715      80  below gated range
+     3  0.543+-0.029   0.043+-0.012          -0.0715     240  inside gated range
+     5  0.847+-0.021   0.037+-0.011          -0.0716     400  inside gated range
+    10  0.990+-0.006   0.040+-0.011          -0.0713     800  inside gated range
+Note: Power and false-alarm rates are simulated for a synthetic suite with Beta(alpha, beta) case pass rates; they are not coverage claims. Standard errors are Monte Carlo.
+Note: The region column refers to cases and trials only. The gated delta rows are shifts of every case; none has a few cases breaking outright, so break plans have no gated calibration evidence (README, Limitations).
+[stderr]
+Warning: Some rows fall outside the suite delta's gated range (10-50 cases, 3-10 trials); their intervals have no gated calibration evidence (README, Limitations).
+
+Noise only, 500 pairs of runs of the same agent (truth: no change):
+  pass rate moved by 2 points or more: 184/500 = 0.368
+  pass rate moved by 4 points or more: 35/500 = 0.070
+  95th percentile of the move: 4.0 points
+  compare flagged a change:            23/500 = 0.046
+  sign-flip p-value below 0.05:        14/500 = 0.028
+
+Regression (3 cases broken), 500 pairs of runs:
+  interval excludes 0 (detected): 423/500 = 0.846
+  sign-flip p-value below 0.05:   76/500 = 0.152

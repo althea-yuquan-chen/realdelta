@@ -8,8 +8,8 @@ larger than the run-to-run noise of your agent, and how many repeated trials you
 need before it can tell.
 
 **Status:** early development, not released. The statistics core, its
-calibration checks, result-file loading and the command line are done; runner
-adapters and a demo are not.
+calibration checks, result-file loading, the command line and a synthetic demo are
+done; runner adapters and a demo on a real model are not.
 
 ## What it does
 
@@ -84,6 +84,35 @@ tell you; warnings (on stderr) flag settings outside the tested range below, suc
 as fewer than 10 cases or fewer than 3 trials per case for a comparison. `compare`
 uses seed 0 for its permutation p-value (with more than 16 cases; up to 16 it
 enumerates every sign flip) unless you pass `--seed`.
+
+## Synthetic demo
+
+[`examples/synthetic_demo.py`](examples/synthetic_demo.py) simulates an agent with 40
+cases that mostly pass (case pass rates from Beta(20,1); true pass rate 0.95507), run 5
+times each, with one fixed seed (the first one tried) and no model calls. Its full
+output is in [`examples/synthetic/transcript.txt`](examples/synthetic/transcript.txt);
+a test re-runs it and compares the output byte for byte.
+
+- **Noise alone moves the number.** Across 500 pairs of runs of the *unchanged*
+  agent, the pass rate moved by 2 points or more in 184 pairs (36.8%) and by 4 points
+  or more in 35 (7.0%); the 95th percentile of the move is 4.0 points. `compare`
+  flagged a change in 23 of the 500 (4.6%); its sign-flip p-value was below 0.05 in
+  14 (2.8%).
+- **A regression in a few cases is caught by the interval much more often than by
+  the p-value.**
+  In a candidate where 3 of the 40 cases fail every time (true change -0.073), the
+  interval excluded 0 in 423 of 500 pairs of runs (84.6%); the sign-flip p-value was
+  below 0.05 in 76 (15.2%). The sign-flip test asks whether cases moved in a
+  consistent direction across the suite, and only 3 cases moved; the interval
+  measures the trial-to-trial noise of this fixed suite, which is the suite scope's
+  question. A permutation test within cases would match that scope; it is not
+  implemented.
+- **How many trials?** `plan` for suites like this one (40 cases, Beta(20,1), 3 cases
+  broken; it draws a new suite in every simulation) gives a simulated power of
+  0.13 +- 0.02 with 1 trial per case (below the gated range), 0.54 +- 0.03 with 3,
+  0.85 +- 0.02 with 5 and 0.99 +- 0.01 with 10.
+
+These are simulation results for this setting, not calibration claims.
 
 ## How the intervals were checked
 
@@ -182,7 +211,8 @@ mode affecting a few percent of cases like them.
   population of similar cases.
 - **Not checked:** confidence levels other than 95%, and the calibration of the
   p-value from `compare`. It tests the sharp null "the two versions behave
-  identically on every case".
+  identically on every case", and in the synthetic demo's setting (3 of 40 cases
+  broken) it rejected in 15.2% of runs against 84.6% for the interval.
 
 ## Reproduce
 
