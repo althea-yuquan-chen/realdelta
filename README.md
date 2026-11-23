@@ -105,6 +105,7 @@ print(result.delta, result.detected, result.p_value)
 ```bash
 python -m realdelta interval results.jsonl                    # pass rate with its interval
 python -m realdelta compare baseline.jsonl candidate.jsonl    # paired change, suite scope
+python -m realdelta compare base/results.json cand/results.json   # tau2-bench result files, read directly
 python -m realdelta plan --cases 40 --delta -0.05             # power per trials option
 python -m realdelta plan --cases 40 --break-cases 2 --trials 3,5,10 \
     --input-tokens 3000 --output-tokens 500 --usd-per-m-input 1 --usd-per-m-output 5
@@ -143,6 +144,21 @@ timed-out runs as failures: dropping or re-running a trial because of its outcom
 breaks assumption A4 below. Without `trial`, a file concatenated twice cannot be
 detected, so every command prints the number of cases and trials it read; check it.
 `load_outcomes(path)` reads a file into the dictionary the Python API takes.
+
+**tau2-bench result files** (`.json`, or a `dir`-format folder holding `results.json`) are read directly by
+`interval` and `compare`, and by `load_tau2_results(path)` in Python. Both of tau2's storage formats are
+accepted; in the `dir` format only the index in `results.json` is read. A trial passes when tau2's own success
+rule holds for its reward (within 1e-6 of 1). A simulation without a reward that did not end in an
+infrastructure error counts as a failure, as in tau2's metrics. Simulations ended by an infrastructure error are
+dropped by default, as tau2's metrics are written to do, and the report counts them per file; `--infra-errors fail`
+counts them as failures and `--infra-errors error` refuses the file. In our check, tau2 at commit 768f3d8 under
+pandas 3.1.1 did not drop them and counted them as failures, the same as `--infra-errors fail`; under pandas 2.3.3,
+the version its lock file pins, it dropped them. Unlike tau2, which removes a task whose every
+simulation was an infrastructure error, realdelta stops with an error, because removing it would change the
+suite. A task listed in the file with no simulation also stops it. `compare` refuses two different domains and
+warns when the runs differ in trial count or user simulator. The reader was checked against files written by
+tau2's own code and against tau2's own metrics on them (`tests/fixtures/tau2/`), and against the published
+airline pass^1 of three leaderboard submissions.
 
 ## How the intervals were checked
 

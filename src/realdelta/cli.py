@@ -16,7 +16,7 @@ import sys
 from pathlib import Path
 from typing import Sequence
 
-from .io import ResultFileError, load_outcomes
+from .io import INFRA_MODES, ResultFileError, load_outcomes, load_tau2_results
 from .planner import estimate_cost, plan_trials
 from .stats import compare, pass_rate_interval
 
@@ -44,6 +44,12 @@ NOTE_BREAK = (
 )
 REGION_UNEQUAL = "unequal trials (one gated setting)"
 WARN_CONF = "Only the 95% level was checked; other levels are untested."
+NOTE_TAU2_INFRA = (
+    "tau2-bench files: simulations ended by an infrastructure error were dropped, as tau2's metrics are written to "
+    "do (under pandas 3, tau2 at commit 768f3d8 counted them as failures instead; README, Result files). This "
+    "keeps assumption A4 only if those errors do not depend on how the trial would have gone; use "
+    "--infra-errors fail to count them as failures instead."
+)
 WARN_ARMS = (
     "Some cases have different trial counts in the two arms: the p-value is not exact and the grid "
     "has no evidence for unequal arms."
@@ -128,14 +134,43 @@ def _fmt_summary(label: str, s: dict) -> str:
             f"{s['trials_median']:g} / max {s['trials_max']}, {s['trials_total']} trials in total")
 
 
+def _is_tau2(path: str) -> bool:
+    p = Path(path)
+    return p.is_dir() or p.suffix.lower() == ".json"
+
+
+def _read(path: str, args, label: str) -> tuple[dict, dict | None, list[str]]:
+    """Outcomes, tau2 metadata (None for .jsonl/.csv) and warnings for one input file."""
+    if not _is_tau2(path):
+        return load_outcomes(path), None, []
+    res = load_tau2_results(path, infra_errors=args.infra_errors)
+    meta = {"format": "tau2", "domain": res.domain, "num_trials": res.num_trials, "user_llm": res.user_llm,
+            "infra_errors": args.infra_errors, "infra_dropped": res.infra_dropped,
+            "unscored_failures": res.unscored_failures, "trials_from_file_order": res.trials_from_file_order}
+    warnings = []
+    if res.infra_dropped:
+        warnings.append(f"{label}: {res.infra_dropped} simulation(s) ended by an infrastructure error were dropped.")
+    if res.unscored_failures:
+        warnings.append(f"{label}: {res.unscored_failures} simulation(s) without a reward were counted as failures.")
+    if res.trials_from_file_order:
+        warnings.append(f"{label}: no trial numbers in the file; trials were numbered in file order, so repeated "
+                        "trials could not be detected.")
+    if res.domain is None:
+        warnings.append(f"{label}: the file does not name its domain.")
+    return res.outcomes, meta, warnings
+
+
 def _cmd_interval(args) -> int:
-    outcomes = load_outcomes(args.file)
+    outcomes, meta, read_warnings = _read(args.file, args, Path(args.file).name)
     s = _summary(outcomes)
     iv = pass_rate_interval(outcomes, scope=args.scope, conf=args.conf)
     notes = [NOTE_POPULATION] if args.scope == "population" else []
-    warnings = ([WARN_CONF] if args.conf != 0.95 else []) + _rate_warnings(s)
+    if meta and meta["infra_dropped"]:
+        notes.append(NOTE_TAU2_INFRA)
+    warnings = ([WARN_CONF] if args.conf != 0.95 else []) + read_warnings + _rate_warnings(s)
+    summary = {**s, "tau2": meta} if meta else s
     payload = {"command": "interval", "file": Path(args.file).name, "scope": args.scope, "conf": args.conf,
-               "estimate": iv.estimate, "low": iv.low, "high": iv.high, "summary": s,
+               "estimate": iv.estimate, "low": iv.low, "high": iv.high, "summary": summary,
                "notes": notes, "warnings": warnings}
     lines = [_fmt_summary(Path(args.file).name, s),
              f"Pass rate ({args.scope} scope): {iv.estimate:.4f}, {args.conf:.0%} interval [{iv.low:.4f}, {iv.high:.4f}]"]
@@ -143,8 +178,17 @@ def _cmd_interval(args) -> int:
 
 
 def _cmd_compare(args) -> int:
-    base = load_outcomes(args.baseline)
-    cand = load_outcomes(args.candidate)
+    base, mb, wb = _read(args.baseline, args, "baseline")
+    cand, mc, wc = _read(args.candidate, args, "candidate")
+    if mb and mc:
+        if mb["domain"] and mc["domain"] and mb["domain"] != mc["domain"]:
+            raise ValueError(f"baseline and candidate are different tau2-bench domains ({_short(mb['domain'])!a} and "
+                             f"{_short(mc['domain'])!a}); a paired comparison needs the same tasks")
+        if mb["num_trials"] != mc["num_trials"]:
+            wc.append("baseline and candidate tau2-bench runs were set up with different numbers of trials.")
+        if mb["user_llm"] != mc["user_llm"]:
+            wc.append("baseline and candidate tau2-bench runs used different user simulators; the change includes "
+                      "that difference.")
     only_base, only_cand = set(base) - set(cand), set(cand) - set(base)
     if only_base or only_cand:
         sample = sorted(only_base | only_cand)[:3]
@@ -155,15 +199,19 @@ def _cmd_compare(args) -> int:
     unequal = _unequal(sb) or _unequal(sc)
     region, region_warnings = _delta_region(sb["cases"], min(sb["trials_min"], sc["trials_min"]),
                                             max(sb["trials_max"], sc["trials_max"]), unequal)
-    warnings = ([WARN_CONF] if args.conf != 0.95 else []) + region_warnings
+    warnings = ([WARN_CONF] if args.conf != 0.95 else []) + wb + wc + region_warnings
     if any(len(base[c]) != len(cand[c]) for c in base):
         warnings.append(WARN_ARMS)
     d = result.delta
-    payload = {"command": "compare", "baseline": {"file": Path(args.baseline).name, **sb},
-               "candidate": {"file": Path(args.candidate).name, **sc}, "scope": args.scope, "conf": args.conf,
+    notes = [NOTE_ASSUMPTIONS, NOTE_P_VALUE]
+    if (mb and mb["infra_dropped"]) or (mc and mc["infra_dropped"]):
+        notes.append(NOTE_TAU2_INFRA)
+    payload = {"command": "compare", "baseline": {"file": Path(args.baseline).name, **sb, **({"tau2": mb} if mb else {})},
+               "candidate": {"file": Path(args.candidate).name, **sc, **({"tau2": mc} if mc else {})},
+               "scope": args.scope, "conf": args.conf,
                "delta": {"estimate": d.estimate, "low": d.low, "high": d.high}, "detected": result.detected,
                "p_value": result.p_value, "n_perm": args.n_perm, "seed": args.seed, "region": region,
-               "notes": [NOTE_ASSUMPTIONS, NOTE_P_VALUE], "warnings": warnings}
+               "notes": notes, "warnings": warnings}
     lines = [_fmt_summary(f"Baseline {Path(args.baseline).name}", sb),
              _fmt_summary(f"Candidate {Path(args.candidate).name}", sc),
              f"Change in pass rate (candidate - baseline, suite scope): {d.estimate:+.4f}, "
@@ -250,15 +298,19 @@ def build_parser() -> argparse.ArgumentParser:
     common = argparse.ArgumentParser(add_help=False)
     common.add_argument("--json", action="store_true", help="print one JSON object instead of text")
     common.add_argument("--conf", type=float, default=0.95, help="confidence level (only 0.95 was checked)")
+    files = argparse.ArgumentParser(add_help=False)
+    files.add_argument("--infra-errors", choices=INFRA_MODES, default="drop",
+                       help="tau2-bench files only: drop simulations ended by an infrastructure error (as tau2's "
+                            "metrics are written to do), count them as failures, or refuse the file")
     parser = argparse.ArgumentParser(prog="realdelta", description="Is that change in your agent eval real, or noise?")
     sub = parser.add_subparsers(dest="command", required=True)
 
-    p = sub.add_parser("interval", parents=[common], help="pass-rate interval for one result file")
+    p = sub.add_parser("interval", parents=[common, files], help="pass-rate interval for one result file")
     p.add_argument("file")
     p.add_argument("--scope", choices=("suite", "population"), default="suite")
     p.set_defaults(func=_cmd_interval)
 
-    p = sub.add_parser("compare", parents=[common], help="paired comparison of two result files")
+    p = sub.add_parser("compare", parents=[common, files], help="paired comparison of two result files")
     p.add_argument("baseline")
     p.add_argument("candidate")
     p.add_argument("--scope", choices=("suite", "population"), default="suite",
