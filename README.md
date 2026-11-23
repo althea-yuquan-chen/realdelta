@@ -222,6 +222,13 @@ before the data were fetched. The leaderboard's pass rates are public, and the p
 section lists what was read before it was fixed. Everything added later is a dated amendment there.
 Amendment 6 maps the commit hashes recorded inside the output files to the published ones.
 
+Upstream issue [#540](https://github.com/sierra-research/tau2-bench/issues/540) (Amendment 10) computes, for
+eight submissions in the same bucket, four of them with the names of A to D, how far apart two single-run scores
+must be before the gap exceeds trial-to-trial noise. Its per-trial airline scores for those four equal those of
+the files used here. It gives no interval for the difference between two named submissions. A comment there
+applies a paired bootstrap over tasks to the June 2025 baseline files, where no airline pair's 95% interval
+excludes 0. This study adds pre-registered paired comparisons between the leaderboard submissions.
+
 - **Primary pair, A vs C:** change -0.010, 95% interval (suite scope) [-0.079, +0.059]. Not detected
   at this scale. The interval reaches about 7 points on either side of the estimate. No correlation
   between the arms was visible at this size (4 informative tasks). If shared seeds couple the arms

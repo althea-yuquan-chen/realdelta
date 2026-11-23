@@ -493,3 +493,70 @@ machine's reflog of the site's `origin/main` and is the analyst's statement. In 
   its wording unchanged.
 The site commit before it, 3f2c0d6 (pushed at 15:44 -0500), adds a Related work section and does not change the
 tau2 section. The tau2 section of 69aa528 does not mention D. This amendment was not pushed when it was written.
+
+### Amendment 10 (2026-11-23): prior work on the same submissions' airline results, upstream issue #540
+
+How it was found. On 2026-11-23 the site's working session found upstream issue #540, and the analyst read it the
+same day (`gh issue view 540`; the gist it links, through the GitHub API; copies are kept in the analyst's notes).
+This study did not cite it. Neither the data survey nor any later step searched for prior analyses of these files.
+The issue searches of 2026-11-17 (Amendment 5) looked for D's reasoning setting, and Amendment 5's "only #238 is
+on this topic" refers to that setting. #540 was not read before this protocol was committed, so the Disclosure
+section stands as written (analyst's statement).
+
+What #540 covers.
+- #540, "Run-to-run noise floor of the published baselines and leaderboard submissions, computed from the
+  released trajectory files", was opened on 2026-09-12. It links a gist created on 2026-09-05. The gist's
+  `current-instrument.md` analyzes eight leaderboard submissions from the bucket `sierra-tau-bench-public`,
+  airline and retail, 4 trials each, four of them with the names of this study's A to D. For each submission it
+  reports per-trial suite scores, the single-run standard deviation, a 95% minimum detectable difference (how far
+  apart two single-run scores must be before the gap exceeds what repetition alone produces) and how many tasks
+  flip between trials. The gist's script (`analyze.py`) uses a bootstrap for the precision of each
+  configuration's own estimate. No file of the gist gives an interval for the difference between two named
+  submissions (per-file search counts in the analyst's notes).
+- Its 16 per-trial airline scores for A to D equal those computed from this study's pinned files (script and
+  output in the analyst's notes). This is consistent with the gist using the same airline results, D's among
+  them, the run whose scores #334 replaced (Amendment 5). Identity of the files cannot be shown: the gist gives
+  no file names beyond the submission names and no hashes. Retail is outside this study and was not compared.
+- A comment on #540 dated 2026-11-04 applies a paired bootstrap over tasks to other files, the June 2025 baseline
+  results in the tau2-bench repository (four models, 4 trials). It reports that on the 50 airline tasks no 95%
+  interval for the gap between any two models excludes zero, and that on the 114 retail tasks 3 of 6 pairs do.
+  Other comments measure the variance of the agent and the LLM judge on newly generated retail trajectories.
+
+Search made now. On 2026-11-23 the analyst searched the issues and pull requests of the tau2-bench repository
+(all states) for "noise", "variance", "bootstrap", "confidence interval", "pass^k", "passk", "leaderboard gap",
+"statistical significance", "error bars", "run-to-run" and "standard error", with a limit of 30 results per query.
+Two queries reached the limit and were run again with a limit of 200: "pass^k" returned 63 hits, and
+"run-to-run" reached the new limit because GitHub splits it into "run". Both were then run as exact phrases
+("pass^k" 46 hits, "run-to-run" 3 hits), and the exact-phrase results are the ones read for these two terms.
+Commands and results are in the analyst's notes. The search covers that repository only, not
+papers, blogs or other repositories.
+- The hits were read by title. #205, #224, #497 and #652 were also read by their opening text.
+- Only #540 analyzes run-to-run noise in the leaderboard submissions' published files.
+- #652 (a pull request) adds an offline Bayes@N analysis of repeated trials over a fixed task set. It is a
+  method, not an analysis of these files. #205 proposes a reliability framework for new runs, #224 questions what
+  airline rewards measure, #497 audits pass^k conventions, and by their titles #51 and #74 report differences
+  between re-runs.
+
+Outward step. As the site's working session reports, with the owner's approval it posted a comment on #540
+from the owner's account at 2026-11-23T21:12:12Z (issuecomment-7114143747; text read back through the GitHub API
+and kept in the analyst's notes). The comment covers airline only and does not mention this study or realdelta.
+It says:
+- the gist's gpt-5-2-none airline row comes from files that predate the rerun behind #334. Re-fetched that day,
+  D's `trajectories/airline/results.json` has `timestamp` 2026-02-23T13:58:37, agent `reasoning_effort`
+  "medium" and pass^1 to pass^4 of 80.5 / 71.0 / 64.5 / 60.0, the values D's `submission.json` listed before
+  #334, against 52.5 / 35.67 / 27.0 / 22.0 listed now. It links #764.
+- in #764's listing of 2026-11-17 the files of the other three submissions reproduce their listed airline pass^1
+  to pass^4, so their rows in the gist should be unaffected (the check is `posthoc_published_scores.md`,
+  Amendment 2).
+The site session's re-fetch was not checked from this repository. The analyst re-fetched the four submissions'
+`submission.json` and airline `results.json` at 2026-11-23T21:15:06Z, three minutes after the comment, and all
+eight files have the sha256 recorded in `manifest.json` (script and output in the analyst's notes). So the
+bucket still held the pinned files, and the values the comment quotes are those of the pinned D files
+(Amendments 2 and 5). Amendment 8's "The bucket and D's `submission.json` were not re-checked" described the
+state earlier that day. This check was made later. The four `submission.json` files show a Last-Modified time of 2026-11-21 with
+unchanged content.
+
+What changes. This study's design, data and results are unchanged. Relative to #540, it adds pre-registered paired
+comparisons between the leaderboard submissions, computed with realdelta 0.1.1's suite-scope interval (the gated
+calibration grid has no row for 50 tasks x 4 trials; see Analysis and Amendment 4), and the record that D's
+airline files predate #334 (#764). The README section on this study cites #540.
