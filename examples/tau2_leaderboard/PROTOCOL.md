@@ -560,3 +560,17 @@ What changes. This study's design, data and results are unchanged. Relative to #
 comparisons between the leaderboard submissions, computed with realdelta 0.1.1's suite-scope interval (the gated
 calibration grid has no row for 50 tasks x 4 trials; see Analysis and Amendment 4), and the record that D's
 airline files predate #334 (#764). The README section on this study cites #540.
+
+### Amendment 11 (2026-11-23): the site cites #540; the README section on this study moves
+
+Site. The owner's personal site cites #540 in its section on this study in commit 752a3eb, pushed on 2026-11-23 at
+16:19 -0500 with the owner's approval, as the site's working session reports. The push time comes from this
+machine's reflog of the site's `origin/main` and is the analyst's statement. The paragraph's text equals the README
+paragraph of Amendment 10, except that #540 is a link and "(Amendment 10)" is left out.
+
+README. The README was reorganized around a new opening section on how `realdelta` differs from related work. The
+section on this study moved, unchanged except that its heading became a subsection of "Applications". The new
+opening section mentions this study only as a pointer ("a pre-registered study of four tau2-bench airline
+leaderboard submissions") and gives none of its results or D's files. Its descriptions of other projects
+(Miller's paper, errorbars, agentrel, agentrial, passk-compare, Bayes@N) do not concern this study. This amendment
+and the README change were not pushed when this amendment was written.

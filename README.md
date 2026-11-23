@@ -7,19 +7,51 @@ the pass rate moved from 82% to 86%. `realdelta` tells you whether that move is
 larger than the run-to-run noise of your agent, and how many repeated trials you
 need before it can tell.
 
-Evan Miller's "Adding Error Bars to Evals" (2024) and several Python libraries also ask
-whether a change in an eval score is real. `realdelta` compares versions on the fixed
-suite of cases and publishes a pre-registered calibration check of its intervals,
-including the rows that failed. The [Related work](#related-work) section describes how
-`realdelta` relates to them.
+## What is different
 
-**Status:** version 0.1.1, alpha. Version 0.1.1 corrects the 0.1.0 description of assumption A3
-(see Limitations): 0.1.0 said shared seeds between the arms make intervals too narrow, citing a
-row that measures a shock within one arm. The statistics
-core, its calibration checks, result-file loading, the command line, a synthetic demo
-and one pre-registered demo on a real model are done. The test suite runs in CI on
-Linux and Windows, Python 3.10 to 3.13. Links below point to the files of this release,
-except in the tau2-bench study section (`main` branch).
+Evan Miller's "Adding Error Bars to Evals" (2024) sets out how to put error bars on eval scores, and several
+libraries put intervals on agent and LLM eval results ([Related work](#related-work)). Three choices shape
+`realdelta`.
+
+- **The comparison is about the fixed suite.** Miller's paper treats eval questions as drawn from a larger
+  population, and errorbars follows it. agentrel and passk-compare build their intervals by resampling tasks,
+  which also counts the choice of tasks (passk-compare's README: "the population I care about is every task of
+  this kind"). agentrial's Wilson intervals and Fisher's exact test do not resample tasks. Miller writes a
+  question's score as its conditional mean plus a random component, so the score's variance splits into the
+  variance of the conditional means, from choosing questions, and the mean conditional variance. `compare` holds
+  the cases fixed and counts only the second part, the trial-to-trial noise. That is the question when the suite
+  itself is the target, for example a regression suite of hand-written cases that a release must pass. The
+  answer does not extend to other tasks.
+- **A pre-registered coverage check, with its failures published.** The protocol, the grid and a 0.93 gate on
+  estimated coverage (2000 repetitions per row) were committed before any final result. The first final run
+  failed twice. With 5 cases, 1 trial each and rates near 100%, the suite pass-rate interval then used (Wilson)
+  covered 0.917, and the population-scope comparison failed its width rule, so it is not shipped. The pass-rate
+  method now used was designed after that failure, and the rerun grid is its independent evidence (see
+  [How the intervals were checked](#how-the-intervals-were-checked)). The comparison is gated for 10 to 50 cases
+  with 3 to 10 trials per case.
+- **Measured behavior when assumptions fail** (reported, not gated). Simulations, mostly at 30 cases, 5 trials
+  and Beta(4,2) rates, report how pass-rate coverage falls when trials repeat each other, and how coverage,
+  false-alarm rate and power change when one arm's cases share a shock or the two arms are coupled (see
+  [Limitations](#limitations)).
+
+`plan` also simulates power for a regression confined to a few cases (k cases break outright), with 1, 3, 5, 10
+or 20 trials per case (1 and 20 are outside the gated range of 3 to 10 trials, and no gated row has cases breaking
+outright).
+
+The command line warns about settings outside the gated range, such as fewer than 10 cases. The Python API
+does not.
+
+It takes pass/fail outcomes only, was checked at the 95% level only, and has no pass^k, no multiple-comparison
+correction and an uncalibrated p-value, and for pass rates closer to 100% than its gated rows the comparison rests
+on a reported-only diagnostic and has low power (see [Limitations](#limitations)).
+
+It has been applied to public leaderboard data in a pre-registered study of four tau2-bench airline leaderboard
+submissions (see [the study](#study-on-public-leaderboard-data-tau2-bench-airline)).
+
+**Status:** version 0.1.1, alpha. The statistics core, its calibration checks, result-file loading, the
+command line, a synthetic demo and one pre-registered demo on a real model are done. The test suite runs
+in CI on Linux and Windows, Python 3.10 to 3.13. Links below point to the files of this release, except in
+the tau2-bench study section (`main` branch).
 
 ## Install
 
@@ -37,7 +69,7 @@ cd realdelta
 pip install -e ".[dev]"      # the dev extra adds pytest
 ```
 
-## What it does
+## Quick start
 
 - **Pass-rate intervals for repeated trials, in two scopes.** `suite` asks how sure
   we are about *this fixed set of cases*: given each case's pass rate, its trials
@@ -67,6 +99,24 @@ result = compare(baseline, candidate)          # suite scope
 print(result.delta, result.detected, result.p_value)
 ```
 
+### Command line
+
+```bash
+python -m realdelta interval results.jsonl                    # pass rate with its interval
+python -m realdelta compare baseline.jsonl candidate.jsonl    # paired change, suite scope
+python -m realdelta plan --cases 40 --delta -0.05             # power per trials option
+python -m realdelta plan --cases 40 --break-cases 2 --trials 3,5,10 \
+    --input-tokens 3000 --output-tokens 500 --usd-per-m-input 1 --usd-per-m-output 5
+```
+
+After installing, `realdelta ...` is the same command as `python -m realdelta ...`.
+Add `--json` for one JSON object. Reports from `compare` and `plan` (and
+from `interval` in the population scope) end with notes on what the result cannot
+tell you; warnings (on stderr) flag settings outside the tested range below, such
+as fewer than 10 cases or fewer than 3 trials per case for a comparison. `compare`
+uses seed 0 for its permutation p-value (with more than 16 cases; up to 16 it
+enumerates every sign flip) unless you pass `--seed`.
+
 ## Result files
 
 One record per trial, as JSON Lines (`.jsonl`) or CSV (`.csv`), UTF-8:
@@ -92,181 +142,6 @@ timed-out runs as failures: dropping or re-running a trial because of its outcom
 breaks assumption A4 below. Without `trial`, a file concatenated twice cannot be
 detected, so every command prints the number of cases and trials it read; check it.
 `load_outcomes(path)` reads a file into the dictionary the Python API takes.
-
-## Command line
-
-```bash
-python -m realdelta interval results.jsonl                    # pass rate with its interval
-python -m realdelta compare baseline.jsonl candidate.jsonl    # paired change, suite scope
-python -m realdelta plan --cases 40 --delta -0.05             # power per trials option
-python -m realdelta plan --cases 40 --break-cases 2 --trials 3,5,10 \
-    --input-tokens 3000 --output-tokens 500 --usd-per-m-input 1 --usd-per-m-output 5
-```
-
-After installing, `realdelta ...` is the same command as `python -m realdelta ...`.
-Add `--json` for one JSON object. Reports from `compare` and `plan` (and
-from `interval` in the population scope) end with notes on what the result cannot
-tell you; warnings (on stderr) flag settings outside the tested range below, such
-as fewer than 10 cases or fewer than 3 trials per case for a comparison. `compare`
-uses seed 0 for its permutation p-value (with more than 16 cases; up to 16 it
-enumerates every sign flip) unless you pass `--seed`.
-
-## Synthetic demo
-
-[`examples/synthetic_demo.py`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.1/examples/synthetic_demo.py) simulates an agent with 40
-cases that mostly pass (case pass rates from Beta(20,1); true pass rate 0.95507), run 5
-times each, with one fixed seed (the first one tried) and no model calls. Its full
-output is in [`examples/synthetic/transcript.txt`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.1/examples/synthetic/transcript.txt);
-a test re-runs it and compares the output byte for byte. The comparison runs only with
-numpy 2.4.4, the version the transcript was recorded with (other versions skip it).
-The CI workflow pins 2.4.4, and the comparison has passed there on Linux and Windows
-with Python 3.11, 3.12 and 3.13.
-
-- **Noise alone moves the number.** Across 500 pairs of runs of the *unchanged*
-  agent, the pass rate moved by 2 points or more in 184 pairs (36.8%) and by 4 points
-  or more in 35 (7.0%); the 95th percentile of the move is 4.0 points. `compare`
-  flagged a change in 23 of the 500 (4.6%); its sign-flip p-value was below 0.05 in
-  14 (2.8%).
-- **A regression in a few cases is caught by the interval much more often than by
-  the p-value.**
-  In a candidate where 3 of the 40 cases fail every time (true change -0.073), the
-  interval excluded 0 in 423 of 500 pairs of runs (84.6%); the sign-flip p-value was
-  below 0.05 in 76 (15.2%). The sign-flip test asks whether cases moved in a
-  consistent direction across the suite, and only 3 cases moved; the interval
-  measures the trial-to-trial noise of this fixed suite, which is the suite scope's
-  question. A permutation test within cases would match that scope; it is not
-  implemented.
-- **How many trials?** `plan` for suites like this one (40 cases, Beta(20,1), 3 cases
-  broken; it draws a new suite in every simulation) gives a simulated power of
-  0.13 +- 0.02 with 1 trial per case (below the gated range), 0.54 +- 0.03 with 3,
-  0.85 +- 0.02 with 5 and 0.99 +- 0.01 with 10.
-
-These are simulation results for this setting, not calibration claims.
-
-## Demo on a real model
-
-The protocol and the run outputs below are frozen and use the 0.1.0 wording of assumption A3:
-the protocol's "Call order (A3)" interleaving keeps run-level drift alike in both arms (a shock
-shared by both runs: Diagnostic AD's correlation-1 row, coverage 0.961), and the CLI notes inside
-`summary.txt` carry the 0.1.0 text corrected in 0.1.1 (see Limitations).
-
-[`examples/real_model/`](https://github.com/althea-yuquan-chen/realdelta/tree/v0.1.1/examples/real_model/) runs 40 generated puzzles (arithmetic, letter
-counting, weekdays, sorting; 10 each) on GPT-5.6 Luna served through Azure OpenAI, with reasoning
-effort low. Azure's content filtering is part of the system measured. Everything that decides the
-result was fixed in [`PROTOCOL.md`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.1/examples/real_model/PROTOCOL.md) before any paid call; its
-Amendment 1 changed the model from Claude Haiku 5.5 to GPT-5.6 Luna before any call was made. Three
-arms, 5 trials per case each, 600 calls in one interleaved order: A1 and A2 use the same system prompt
-(an A/A pair), B adds "Answer immediately; do not show your working." The run
-([`run_20261116/summary.txt`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.1/examples/real_model/run_20261116/summary.txt)) used 51,213 input and
-52,408 output tokens with no re-issued calls, timeouts, refusals or truncated outputs. The run
-directory is named after the local date; it started at 2026-11-17T00:54Z.
-
-**What "pass" measures here.** A trial passes only if its value is right *and* its last line has the
-form `ANSWER: <value>`, as the pre-registered grader requires. The prompts carry two format
-instructions side by side: the system prompt asks for that line, the user message says "Give the
-answer in this form: ...". Most failures in this run are a correct value without the prefix, so the
-pass rates below mostly measure compliance with the answer format, not puzzle-solving accuracy.
-
-| Arm | Pass rate (suite scope) | 95% interval |
-|---|---|---|
-| A1 | 0.875 | [0.821, 0.917] |
-| A2 | 0.855 | [0.798, 0.901] |
-| B | 0.820 | [0.760, 0.871] |
-
-- **A1 vs A2:** -0.020, interval [-0.086, +0.046]. The A/A pair was not flagged. It is one
-  realization: in the synthetic demo, 4.6% of unchanged pairs were flagged.
-- **A1 vs B:** -0.055. No change detected at this scale (40 cases, 5 trials); the interval
-  [-0.123, +0.014] bounds the change. Given the point above, what this comparison measures is
-  mostly format compliance, not accuracy.
-- **Failures per arm** (pass / wrong value / no `ANSWER:` line; no other category occurred):
-  A1 175 / 1 / 24, A2 171 / 1 / 28, B 164 / 2 / 34. The grader checks the answer line first, so a
-  wrong value without the prefix counts as "no `ANSWER:` line".
-- **Population scope:** because the cases are random draws from the puzzle generator (10 per family;
-  treating that stratified sample as independent draws is usually conservative), A1's pass rate for
-  puzzles from this generator is 0.875 with interval [0.732, 0.958].
-
-Descriptive, not pre-registered, and not tested:
-
-- **Value correctness ignoring the prefix:** reading the last line's value with or without `ANSWER:`,
-  A1 has 196 of 200 trials right, A2 199 and B 197. 82 of the 86 "no `ANSWER:` line" trials carry the
-  right value.
-- **Failures by puzzle family** (any category):
-
-  | Family | A1 | A2 | B |
-  |---|---|---|---|
-  | arithmetic | 9 | 6 | 3 |
-  | letters | 0 | 5 | 21 |
-  | weekday | 15 | 17 | 6 |
-  | sort | 1 | 1 | 6 |
-
-  In this run B failed more on letter counting and sorting and less on weekdays and arithmetic, so
-  per-family differences partly cancel in the overall rate. No per-family difference was tested.
-- **Flaky cases:** 15 to 20 cases per arm passed on some trials and failed on others.
-
-A1 appears in both comparisons, so they are not independent, and each can raise a false alarm (4.6%
-of unchanged pairs in the synthetic demo; the calibration tests allow up to 7%). The task set is
-synthetic and says nothing about other tasks. Dollar cost is not quoted here because Azure's price
-for this model is uncertain; `summary.txt` gives an upper estimate.
-
-## Study on public leaderboard data: tau2-bench airline
-
-This study is not part of release 0.1.1. Its links point to the `main` branch.
-[`examples/tau2_leaderboard/`](https://github.com/althea-yuquan-chen/realdelta/tree/main/examples/tau2_leaderboard/)
-applies `compare` to the published per-trial results of four submissions on the tau2-bench airline
-leaderboard, labeled A to D. Sierra (the benchmark's maintainer) ran all four on the same 50 tasks with
-4 trials each, and each submission is a model plus everything that differed in its run (evaluation date,
-provider-side state, reasoning settings). These are comparisons of submissions on this task set, not of
-models. The question, the pairs and the analysis were fixed in
-[`PROTOCOL.md`](https://github.com/althea-yuquan-chen/realdelta/blob/main/examples/tau2_leaderboard/PROTOCOL.md)
-before the data were fetched. The leaderboard's pass rates are public, and the protocol's Disclosure
-section lists what was read before it was fixed. Everything added later is a dated amendment there.
-Amendment 6 maps the commit hashes recorded inside the output files to the published ones.
-
-Upstream issue [#540](https://github.com/sierra-research/tau2-bench/issues/540) (Amendment 10) computes, for
-eight submissions in the same bucket, four of them with the names of A to D, how far apart two single-run scores
-must be before the gap exceeds trial-to-trial noise. Its per-trial airline scores for those four equal those of
-the files used here. It gives no interval for the difference between two named submissions. A comment there
-applies a paired bootstrap over tasks to the June 2025 baseline files, where no airline pair's 95% interval
-excludes 0. This study adds pre-registered paired comparisons between the leaderboard submissions.
-
-- **Primary pair, A vs C:** change -0.010, 95% interval (suite scope) [-0.079, +0.059]. Not detected
-  at this scale. The interval reaches about 7 points on either side of the estimate. No correlation
-  between the arms was visible at this size (4 informative tasks). If shared seeds couple the arms
-  positively, the interval is conservative and low in power. A negative coupling would make it too
-  narrow (Diagnostic AD). A run-level shock within one submission's run (assumption A5) cannot be
-  measured here and can raise a single pair's false-alarm rate to 0.085 (Diagnostic AD, X0) to 0.105
-  (grid V2). A vs C was pre-registered as primary because the two share an evaluation date. That date
-  may describe an evaluation in another domain (Amendment 3). If so, the reason for the choice is
-  weaker. The pair stays as pre-registered.
-- **Which changes 50 tasks x 4 trials can detect** (post-hoc, Amendment 4,
-  [`posthoc_power.md`](https://github.com/althea-yuquan-chen/realdelta/blob/main/examples/tau2_leaderboard/posthoc_power.md)).
-  These are simulations of synthetic 50-task suites, not a statement about submissions A or C. Per-task
-  pass rates are drawn from a Beta fitted to A's and C's per-task pass counts, and the arms are
-  independent.
-  - At 4 trials per task, the first shift on the grid reaching power 0.8 is -0.12 (realized change
-    -0.116, power 0.897). At -0.10 the power is 0.763.
-  - For a 1-point change, the first option reaching 0.8 is 256 trials per task (power 0.867, against
-    0.563 at 128 trials). This row is outside the gated range of 3 to 10 trials. Four trials cannot
-    tell a rate of 1 from 0.97, so the row depends on the fitted Beta's shape near 0 and 1. It is an
-    extrapolation. With the planner's default Beta(8, 2) rates it is 512 trials (power 0.809, SE
-    0.012). Power is compared with 0.8 as a point estimate. A row within about 2 SE of it could fall on
-    either side with another seed.
-  - 71 of the 100 observed per-task counts of A and C are 4 of 4. In these simulations, at 4 trials per
-    task, the interval's false-alarm rate is 0.003 (SE 0.002), below 0.05 by more than 2 SE, so the
-    interval is conservative here. The calibration grid has no row for this setting. The change sizes
-    above are a property of this interval under these assumptions, not of the leaderboard.
-- **Descriptive pairs and D.** The five other pairs are descriptive and give no finding. They are in
-  [`run_20261123/summary.md`](https://github.com/althea-yuquan-chen/realdelta/blob/main/examples/tau2_leaderboard/run_20261123/summary.md)
-  with the same caveats. D's rows use the bucket files of submission D, which do not reproduce its
-  published scores
-  ([`posthoc_published_scores.md`](https://github.com/althea-yuquan-chen/realdelta/blob/main/examples/tau2_leaderboard/posthoc_published_scores.md),
-  Amendment 2). Upstream records explain this (Amendment 5). Issue
-  [#238](https://github.com/sierra-research/tau2-bench/issues/238) reported that D's published airline
-  scores could not be reproduced with reasoning effort "none". A contributor replied that the run had
-  used "medium". Pull request [#334](https://github.com/sierra-research/tau2-bench/pull/334) then
-  replaced D's published scores with a rerun's. The two airline result files under D's prefix in the
-  bucket, as listed on 2026-11-17, still hold the run whose scores #334 replaced. Issue
-  [#764](https://github.com/sierra-research/tau2-bench/issues/764) reports this upstream (Amendment 7).
 
 ## How the intervals were checked
 
@@ -360,7 +235,9 @@ mode affecting a few percent of cases like them.
   suite scope needs A1, A4 and A5, and comparisons also A3; the population pass rate
   needs A2 and A4. A2 holds only if your cases were sampled from the population you
   care about; for a hand-picked suite, the population scope describes a hypothetical
-  population of similar cases.
+  population of similar cases. Version 0.1.1 corrects the 0.1.0 description
+  of A3: 0.1.0 said shared seeds between the arms make intervals too narrow, citing a row
+  that measures a shock within one arm.
 - **Measured violations** (reported, not gated; 30 cases, 5 trials, Beta(4,2) rates
   unless noted; they hold for the tested settings only):
   - A1: trials that repeat the previous outcome drop suite pass-rate coverage to
@@ -392,6 +269,165 @@ mode affecting a few percent of cases like them.
   identically on every case", and in the synthetic demo's setting (3 of 40 cases
   broken) it rejected in 15.2% of runs against 84.6% for the interval.
 
+## Applications
+
+### Synthetic demo
+
+[`examples/synthetic_demo.py`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.1/examples/synthetic_demo.py) simulates an agent with 40
+cases that mostly pass (case pass rates from Beta(20,1); true pass rate 0.95507), run 5
+times each, with one fixed seed (the first one tried) and no model calls. Its full
+output is in [`examples/synthetic/transcript.txt`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.1/examples/synthetic/transcript.txt);
+a test re-runs it and compares the output byte for byte. The comparison runs only with
+numpy 2.4.4, the version the transcript was recorded with (other versions skip it).
+The CI workflow pins 2.4.4, and the comparison has passed there on Linux and Windows
+with Python 3.11, 3.12 and 3.13.
+
+- **Noise alone moves the number.** Across 500 pairs of runs of the *unchanged*
+  agent, the pass rate moved by 2 points or more in 184 pairs (36.8%) and by 4 points
+  or more in 35 (7.0%); the 95th percentile of the move is 4.0 points. `compare`
+  flagged a change in 23 of the 500 (4.6%); its sign-flip p-value was below 0.05 in
+  14 (2.8%).
+- **A regression in a few cases is caught by the interval much more often than by
+  the p-value.**
+  In a candidate where 3 of the 40 cases fail every time (true change -0.073), the
+  interval excluded 0 in 423 of 500 pairs of runs (84.6%); the sign-flip p-value was
+  below 0.05 in 76 (15.2%). The sign-flip test asks whether cases moved in a
+  consistent direction across the suite, and only 3 cases moved; the interval
+  measures the trial-to-trial noise of this fixed suite, which is the suite scope's
+  question. A permutation test within cases would match that scope; it is not
+  implemented.
+- **How many trials?** `plan` for suites like this one (40 cases, Beta(20,1), 3 cases
+  broken; it draws a new suite in every simulation) gives a simulated power of
+  0.13 +- 0.02 with 1 trial per case (below the gated range), 0.54 +- 0.03 with 3,
+  0.85 +- 0.02 with 5 and 0.99 +- 0.01 with 10.
+
+These are simulation results for this setting, not calibration claims.
+
+### Demo on a real model
+
+The protocol and the run outputs below are frozen and use the 0.1.0 wording of assumption A3:
+the protocol's "Call order (A3)" interleaving keeps run-level drift alike in both arms (a shock
+shared by both runs: Diagnostic AD's correlation-1 row, coverage 0.961), and the CLI notes inside
+`summary.txt` carry the 0.1.0 text corrected in 0.1.1 (see Limitations).
+
+[`examples/real_model/`](https://github.com/althea-yuquan-chen/realdelta/tree/v0.1.1/examples/real_model/) runs 40 generated puzzles (arithmetic, letter
+counting, weekdays, sorting; 10 each) on GPT-5.6 Luna served through Azure OpenAI, with reasoning
+effort low. Azure's content filtering is part of the system measured. Everything that decides the
+result was fixed in [`PROTOCOL.md`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.1/examples/real_model/PROTOCOL.md) before any paid call; its
+Amendment 1 changed the model from Claude Haiku 5.5 to GPT-5.6 Luna before any call was made. Three
+arms, 5 trials per case each, 600 calls in one interleaved order: A1 and A2 use the same system prompt
+(an A/A pair), B adds "Answer immediately; do not show your working." The run
+([`run_20261116/summary.txt`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.1/examples/real_model/run_20261116/summary.txt)) used 51,213 input and
+52,408 output tokens with no re-issued calls, timeouts, refusals or truncated outputs. The run
+directory is named after the local date; it started at 2026-11-17T00:54Z.
+
+**What "pass" measures here.** A trial passes only if its value is right *and* its last line has the
+form `ANSWER: <value>`, as the pre-registered grader requires. The prompts carry two format
+instructions side by side: the system prompt asks for that line, the user message says "Give the
+answer in this form: ...". Most failures in this run are a correct value without the prefix, so the
+pass rates below mostly measure compliance with the answer format, not puzzle-solving accuracy.
+
+| Arm | Pass rate (suite scope) | 95% interval |
+|---|---|---|
+| A1 | 0.875 | [0.821, 0.917] |
+| A2 | 0.855 | [0.798, 0.901] |
+| B | 0.820 | [0.760, 0.871] |
+
+- **A1 vs A2:** -0.020, interval [-0.086, +0.046]. The A/A pair was not flagged. It is one
+  realization: in the synthetic demo, 4.6% of unchanged pairs were flagged.
+- **A1 vs B:** -0.055. No change detected at this scale (40 cases, 5 trials); the interval
+  [-0.123, +0.014] bounds the change. Given the point above, what this comparison measures is
+  mostly format compliance, not accuracy.
+- **Failures per arm** (pass / wrong value / no `ANSWER:` line; no other category occurred):
+  A1 175 / 1 / 24, A2 171 / 1 / 28, B 164 / 2 / 34. The grader checks the answer line first, so a
+  wrong value without the prefix counts as "no `ANSWER:` line".
+- **Population scope:** because the cases are random draws from the puzzle generator (10 per family;
+  treating that stratified sample as independent draws is usually conservative), A1's pass rate for
+  puzzles from this generator is 0.875 with interval [0.732, 0.958].
+
+Descriptive, not pre-registered, and not tested:
+
+- **Value correctness ignoring the prefix:** reading the last line's value with or without `ANSWER:`,
+  A1 has 196 of 200 trials right, A2 199 and B 197. 82 of the 86 "no `ANSWER:` line" trials carry the
+  right value.
+- **Failures by puzzle family** (any category):
+
+  | Family | A1 | A2 | B |
+  |---|---|---|---|
+  | arithmetic | 9 | 6 | 3 |
+  | letters | 0 | 5 | 21 |
+  | weekday | 15 | 17 | 6 |
+  | sort | 1 | 1 | 6 |
+
+  In this run B failed more on letter counting and sorting and less on weekdays and arithmetic, so
+  per-family differences partly cancel in the overall rate. No per-family difference was tested.
+- **Flaky cases:** 15 to 20 cases per arm passed on some trials and failed on others.
+
+A1 appears in both comparisons, so they are not independent, and each can raise a false alarm (4.6%
+of unchanged pairs in the synthetic demo; the calibration tests allow up to 7%). The task set is
+synthetic and says nothing about other tasks. Dollar cost is not quoted here because Azure's price
+for this model is uncertain; `summary.txt` gives an upper estimate.
+
+### Study on public leaderboard data: tau2-bench airline
+
+This study is not part of release 0.1.1. Its links point to the `main` branch.
+[`examples/tau2_leaderboard/`](https://github.com/althea-yuquan-chen/realdelta/tree/main/examples/tau2_leaderboard/)
+applies `compare` to the published per-trial results of four submissions on the tau2-bench airline
+leaderboard, labeled A to D. Sierra (the benchmark's maintainer) ran all four on the same 50 tasks with
+4 trials each, and each submission is a model plus everything that differed in its run (evaluation date,
+provider-side state, reasoning settings). These are comparisons of submissions on this task set, not of
+models. The question, the pairs and the analysis were fixed in
+[`PROTOCOL.md`](https://github.com/althea-yuquan-chen/realdelta/blob/main/examples/tau2_leaderboard/PROTOCOL.md)
+before the data were fetched. The leaderboard's pass rates are public, and the protocol's Disclosure
+section lists what was read before it was fixed. Everything added later is a dated amendment there.
+Amendment 6 maps the commit hashes recorded inside the output files to the published ones.
+
+Upstream issue [#540](https://github.com/sierra-research/tau2-bench/issues/540) (Amendment 10) computes, for
+eight submissions in the same bucket, four of them with the names of A to D, how far apart two single-run scores
+must be before the gap exceeds trial-to-trial noise. Its per-trial airline scores for those four equal those of
+the files used here. It gives no interval for the difference between two named submissions. A comment there
+applies a paired bootstrap over tasks to the June 2025 baseline files, where no airline pair's 95% interval
+excludes 0. This study adds pre-registered paired comparisons between the leaderboard submissions.
+
+- **Primary pair, A vs C:** change -0.010, 95% interval (suite scope) [-0.079, +0.059]. Not detected
+  at this scale. The interval reaches about 7 points on either side of the estimate. No correlation
+  between the arms was visible at this size (4 informative tasks). If shared seeds couple the arms
+  positively, the interval is conservative and low in power. A negative coupling would make it too
+  narrow (Diagnostic AD). A run-level shock within one submission's run (assumption A5) cannot be
+  measured here and can raise a single pair's false-alarm rate to 0.085 (Diagnostic AD, X0) to 0.105
+  (grid V2). A vs C was pre-registered as primary because the two share an evaluation date. That date
+  may describe an evaluation in another domain (Amendment 3). If so, the reason for the choice is
+  weaker. The pair stays as pre-registered.
+- **Which changes 50 tasks x 4 trials can detect** (post-hoc, Amendment 4,
+  [`posthoc_power.md`](https://github.com/althea-yuquan-chen/realdelta/blob/main/examples/tau2_leaderboard/posthoc_power.md)).
+  These are simulations of synthetic 50-task suites, not a statement about submissions A or C. Per-task
+  pass rates are drawn from a Beta fitted to A's and C's per-task pass counts, and the arms are
+  independent.
+  - At 4 trials per task, the first shift on the grid reaching power 0.8 is -0.12 (realized change
+    -0.116, power 0.897). At -0.10 the power is 0.763.
+  - For a 1-point change, the first option reaching 0.8 is 256 trials per task (power 0.867, against
+    0.563 at 128 trials). This row is outside the gated range of 3 to 10 trials. Four trials cannot
+    tell a rate of 1 from 0.97, so the row depends on the fitted Beta's shape near 0 and 1. It is an
+    extrapolation. With the planner's default Beta(8, 2) rates it is 512 trials (power 0.809, SE
+    0.012). Power is compared with 0.8 as a point estimate. A row within about 2 SE of it could fall on
+    either side with another seed.
+  - 71 of the 100 observed per-task counts of A and C are 4 of 4. In these simulations, at 4 trials per
+    task, the interval's false-alarm rate is 0.003 (SE 0.002), below 0.05 by more than 2 SE, so the
+    interval is conservative here. The calibration grid has no row for this setting. The change sizes
+    above are a property of this interval under these assumptions, not of the leaderboard.
+- **Descriptive pairs and D.** The five other pairs are descriptive and give no finding. They are in
+  [`run_20261123/summary.md`](https://github.com/althea-yuquan-chen/realdelta/blob/main/examples/tau2_leaderboard/run_20261123/summary.md)
+  with the same caveats. D's rows use the bucket files of submission D, which do not reproduce its
+  published scores
+  ([`posthoc_published_scores.md`](https://github.com/althea-yuquan-chen/realdelta/blob/main/examples/tau2_leaderboard/posthoc_published_scores.md),
+  Amendment 2). Upstream records explain this (Amendment 5). Issue
+  [#238](https://github.com/sierra-research/tau2-bench/issues/238) reported that D's published airline
+  scores could not be reproduced with reasoning effort "none". A contributor replied that the run had
+  used "medium". Pull request [#334](https://github.com/sierra-research/tau2-bench/pull/334) then
+  replaced D's published scores with a rerun's. The two airline result files under D's prefix in the
+  bucket, as listed on 2026-11-17, still hold the run whose scores #334 replaced. Issue
+  [#764](https://github.com/sierra-research/tau2-bench/issues/764) reports this upstream (Amendment 7).
+
 ## Related work
 
 Evan Miller's "Adding Error Bars to Evals" ([arXiv:2411.00640](https://arxiv.org/abs/2411.00640), 2024)
@@ -405,19 +441,17 @@ McNemar test for binary scores, and Monte Carlo coverage tests of its intervals.
 accepts partial-credit scores. It gives bootstrap intervals that resample tasks and then runs, paired t
 and Wilcoxon tests on per-task means, and pass^k. [agentrial](https://pypi.org/project/agentrial/0.2.0/) runs
 each test case N times, reports Wilson intervals for pass rates and uses Fisher's exact test to detect
-regressions. These descriptions come from each project's PyPI page (errorbars 0.2.4, agentrel 0.1.0,
-agentrial 0.2.0, read on 2026-11-23).
+regressions. [passk-compare](https://github.com/muhammad-musa-ml/passk-compare/tree/b50469b) (a GitHub
+repository, not on PyPI) gives pass@k and pass^k with intervals from a bootstrap that resamples tasks. For two
+runs on the same tasks it estimates the paired difference in pass^k and returns a non-inferiority verdict at a
+margin the user sets. Bayes@N (Hariri et al., [arXiv:2510.04265](https://arxiv.org/abs/2510.04265), ICLR 2026;
+code in the scorio repository) replaces pass@k with posterior estimates of each model's success probability and
+credible intervals, and reads a gap as meaningful when the credible intervals do not overlap. These
+descriptions come from each project's PyPI page (errorbars 0.2.4, agentrel 0.1.0, agentrial 0.2.0),
+passk-compare's README at commit b50469b and the Bayes@N arXiv record (abstract and journal reference, version
+4), read on 2026-11-23.
 
-`realdelta` accepts pass/fail outcomes only. Unlike Miller's population framing, its comparisons are
-about the fixed suite of cases, so only trial-to-trial noise enters the interval (see What it does).
-Its intervals were checked on a pre-registered calibration grid, and the rows that failed are published
-with the rest (see How the intervals were checked). The pass-rate rows cover 5 to 50 cases with up to 10
-trials per case. One failed row led to the current suite pass-rate method. With 5 cases, 1 trial each
-and rates near 100%, the Wilson interval then used covered 0.917 against a nominal 0.95. The delta rows
-cover 10 to 50 cases with 3 to 10 trials per case, plus one unequal-trials setting. For the delta, rates
-closer to 100% than the grid's Beta(20,1) rows are covered by a reported-only diagnostic (see
-Limitations). The effects of violated assumptions, such as coupling between the two arms or a shock
-shared by one arm's cases, are measured for the tested settings and listed in Limitations.
+How `realdelta` differs is set out in [What is different](#what-is-different).
 
 ## Reproduce
 
