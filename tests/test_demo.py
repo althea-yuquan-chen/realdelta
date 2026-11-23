@@ -57,8 +57,28 @@ def test_readme_demo_numbers_match_the_transcript():
         ("Cases whose pass rate changed: 14 ", "14 cases are listed"),
         ("  now pass every trial: 4\n", "4 of them under \"now pass every trial\""),
         ("  now fail every trial: 3\n", "3 cases were broken"),
+        ("interval excludes 0 (detected): 423/500", "the interval excluded 0 in 84.6% of 500 runs"),
+        ("sign-flip p-value below 0.05:   76/500", "the p-value was below 0.05 in 15.2%"),
+        ("  now pass every trial: 4\n", "The 4 cases under \"now pass every trial\" are noise"),
     ]
     flat = " ".join(readme.split())
     for in_transcript, in_readme in pairs:
         assert in_transcript in transcript, in_transcript
         assert in_readme in flat, in_readme
+
+
+def test_readme_quick_start_output_is_the_transcript_regression_block():
+    """The README's quick-start report is the committed transcript's regression block, with only the long
+    A1/A3/A5 Note shortened to a fixed prefix and suffix."""
+    readme = (REPO / "README.md").read_text(encoding="utf-8")
+    transcript = (COMMITTED / "transcript.txt").read_text(encoding="utf-8").splitlines()
+    start = transcript.index("$ python -m realdelta compare baseline.jsonl regression.jsonl    # cwd: examples/synthetic")
+    end = next(i for i in range(start, len(transcript)) if transcript[i].startswith("Note: Per-case"))
+    expected = transcript[start + 1:end + 1]
+    prefix, suffix = "Note: Assumptions A1, A3 and A5 cannot be checked from result files", "(README, Limitations)."
+    shortened = [i for i, line in enumerate(expected) if line.startswith(prefix)]
+    assert len(shortened) == 1 and expected[shortened[0]].endswith(suffix)
+    expected[shortened[0]] = f"{prefix} ... {suffix}"
+    qs = readme.split("## Quick start", 1)[1].split("How to read it:", 1)[0]
+    block = qs.split("$ realdelta compare baseline.jsonl regression.jsonl\n", 1)[1].split("\n```", 1)[0].splitlines()
+    assert block == expected

@@ -7,6 +7,63 @@ the pass rate moved from 82% to 86%. `realdelta` tells you whether that move is
 larger than the run-to-run noise of your agent, and how many repeated trials you
 need before it can tell.
 
+## Quick start
+
+The example files live in the repository, and the per-case list in the output below is on the `main` branch
+(release 0.1.1, `pip install realdelta`, prints the same report without it). From a clone:
+
+```bash
+git clone https://github.com/althea-yuquan-chen/realdelta
+cd realdelta
+pip install -e .
+cd examples/synthetic
+realdelta compare baseline.jsonl regression.jsonl
+```
+
+The regression file breaks 3 of the 40 cases (they fail every trial). The report, with the first Note shortened
+here (the CLI prints it in full):
+
+```
+$ realdelta compare baseline.jsonl regression.jsonl
+Baseline baseline.jsonl: 40 cases, trials per case min 5 / median 5 / max 5, 200 trials in total
+Candidate regression.jsonl: 40 cases, trials per case min 5 / median 5 / max 5, 200 trials in total
+Change in pass rate (candidate - baseline, suite scope): -0.1000, 95% interval [-0.1555, -0.0451]
+Detected: yes (interval excludes 0)
+p-value: 0.0438 (sign-flip permutation, 10000 random sign flips, seed 0)
+Region: inside gated range
+Cases whose pass rate changed: 14 (descriptive; see the note below)
+  now fail every trial: 3
+    'case-009' 5/5 -> 0/5
+    'case-018' 5/5 -> 0/5
+    'case-007' 4/5 -> 0/5
+  now pass every trial: 4
+    'case-004' 3/5 -> 5/5
+    'case-002' 4/5 -> 5/5
+    'case-010' 4/5 -> 5/5
+    'case-032' 4/5 -> 5/5
+  other changes: 7
+    'case-034' 4/5 -> 1/5
+    'case-000' 5/5 -> 3/5
+    'case-015' 5/5 -> 3/5
+    'case-014' 5/5 -> 4/5
+    'case-020' 4/5 -> 3/5
+    'case-028' 5/5 -> 4/5
+    'case-035' 5/5 -> 4/5
+Note: Assumptions A1, A3 and A5 cannot be checked from result files ... (README, Limitations).
+Note: The p-value tests the sharp null 'the two versions behave identically on every case' and has not been calibration-checked. 'detected' uses the interval, not the p-value; the two can disagree.
+Note: Per-case changes are descriptive: with a few trials per case a case's rate moves by chance, and no per-case test or multiple-comparison correction is applied.
+```
+
+How to read it:
+
+- `Detected` uses the interval only. The p-value has not been calibration-checked. In this demo's setting (40
+  cases, 5 trials, 3 cases broken), the interval excluded 0 in 84.6% of 500 runs and the p-value was below 0.05
+  in 15.2%.
+- `Region` refers to the numbers of cases and trials only. No gated row has cases breaking outright, so this
+  example is outside the gated evidence.
+- The 4 cases under "now pass every trial" are noise: no case improved in this file.
+- The answer is about these 40 cases, not about other tasks.
+
 ## What is different
 
 Evan Miller's "Adding Error Bars to Evals" (2024) sets out how to put error bars on eval scores, and several
@@ -71,7 +128,7 @@ cd realdelta
 pip install -e ".[dev]"      # the dev extra adds pytest
 ```
 
-## Quick start
+## What it does
 
 - **Pass-rate intervals for repeated trials, in two scopes.** `suite` asks how sure
   we are about *this fixed set of cases*: given each case's pass rate, its trials
