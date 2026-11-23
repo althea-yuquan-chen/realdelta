@@ -41,9 +41,10 @@ outright).
 The command line warns about settings outside the gated range, such as fewer than 10 cases. The Python API
 does not.
 
-It takes pass/fail outcomes only, was checked at the 95% level only, and has no pass^k, no multiple-comparison
-correction and an uncalibrated p-value, and for pass rates closer to 100% than its gated rows the comparison rests
-on a reported-only diagnostic and has low power (see [Limitations](#limitations)).
+It takes pass/fail outcomes only, was checked at the 95% level only, and has no interval for pass^k (only a
+per-case point estimate, `pass_hat_k`), no multiple-comparison correction and an uncalibrated p-value, and for pass
+rates closer to 100% than its gated rows the comparison rests on a reported-only diagnostic and has low power (see
+[Limitations](#limitations)).
 
 It has been applied to public leaderboard data in a pre-registered study of four tau2-bench airline leaderboard
 submissions (see [the study](#study-on-public-leaderboard-data-tau2-bench-airline)).
