@@ -482,3 +482,14 @@ unchanged, except for one rounding:
 Commits f17de3b and 79ec3d7 add and revise a Related work section in the README. They do not change the section
 on this study. 829c89b, f17de3b, 79ec3d7 and this amendment were not pushed when this amendment was written.
 Pushing them waits for the owner.
+
+### Amendment 9 (2026-11-23): the site corrections asked for in Amendment 8
+
+The owner's personal site corrected the two differences recorded in Amendment 8 in commit 69aa528, pushed on
+2026-11-23 at 15:51 -0500 with the owner's approval, as the site session reports. The push time comes from this
+machine's reflog of the site's `origin/main` and is the analyst's statement. In the tau2 section of 69aa528:
+- the dependence statement ends "A negative coupling would make it too narrow (Diagnostic AD)".
+- Amendment 3's reading follows the primary-result table directly, before the post-hoc power paragraph, with
+  its wording unchanged.
+The site commit before it, 3f2c0d6 (pushed at 15:44 -0500), adds a Related work section and does not change the
+tau2 section. The tau2 section of 69aa528 does not mention D. This amendment was not pushed when it was written.
