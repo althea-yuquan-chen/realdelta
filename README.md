@@ -52,7 +52,8 @@ submissions (see [the study](#study-on-public-leaderboard-data-tau2-bench-airlin
 **Status:** version 0.1.1, alpha. The statistics core, its calibration checks, result-file loading, the
 command line, a synthetic demo and one pre-registered demo on a real model are done. The test suite runs
 in CI on Linux and Windows, Python 3.10 to 3.13. Links below point to the files of this release, except in
-the tau2-bench study section (`main` branch).
+the tau2-bench study section and where a link says `main`. Reading tau2-bench files and the per-case change list
+are on `main` only.
 
 ## Install
 
@@ -105,7 +106,7 @@ print(result.delta, result.detected, result.p_value)
 ```bash
 python -m realdelta interval results.jsonl                    # pass rate with its interval
 python -m realdelta compare baseline.jsonl candidate.jsonl    # paired change, suite scope
-python -m realdelta compare base/results.json cand/results.json   # tau2-bench result files, read directly
+python -m realdelta compare base/results.json cand/results.json   # tau2-bench files (main branch, not in 0.1.1)
 python -m realdelta plan --cases 40 --delta -0.05             # power per trials option
 python -m realdelta plan --cases 40 --break-cases 2 --trials 3,5,10 \
     --input-tokens 3000 --output-tokens 500 --usd-per-m-input 1 --usd-per-m-output 5
@@ -157,8 +158,9 @@ breaks assumption A4 below. Without `trial`, a file concatenated twice cannot be
 detected, so every command prints the number of cases and trials it read; check it.
 `load_outcomes(path)` reads a file into the dictionary the Python API takes.
 
-**tau2-bench result files** (`.json`, or a `dir`-format folder holding `results.json`) are read directly by
-`interval` and `compare`, and by `load_tau2_results(path)` in Python. Both of tau2's storage formats are
+**tau2-bench result files**, a `.json` file or a `dir`-format folder holding `results.json`, are read directly
+by `interval` and `compare`, and by `load_tau2_results(path)` in Python. This is on the `main` branch, not in
+release 0.1.1; install it with `pip install git+https://github.com/althea-yuquan-chen/realdelta`. Both of tau2's storage formats are
 accepted; in the `dir` format only the index in `results.json` is read. A trial passes when tau2's own success
 rule holds for its reward (within 1e-6 of 1). A simulation without a reward that did not end in an
 infrastructure error counts as a failure, as in tau2's metrics. Simulations ended by an infrastructure error are
@@ -306,7 +308,8 @@ mode affecting a few percent of cases like them.
 cases that mostly pass (case pass rates from Beta(20,1); true pass rate 0.95507), run 5
 times each, with one fixed seed (the first one tried) and no model calls. Its full
 output is in [`examples/synthetic/transcript.txt`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.1/examples/synthetic/transcript.txt);
-a test re-runs it and compares the output byte for byte. The comparison runs only with
+a test re-runs it and compares the output byte for byte. On `main` the transcript also holds the per-case
+change lists, and the test compares against that version. The comparison runs only with
 numpy 2.4.4, the version the transcript was recorded with (other versions skip it).
 The CI workflow pins 2.4.4, and the comparison has passed there on Linux and Windows
 with Python 3.11, 3.12 and 3.13.

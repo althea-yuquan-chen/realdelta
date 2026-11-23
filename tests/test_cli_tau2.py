@@ -31,7 +31,6 @@ def test_interval_reads_tau2_json_and_reports_dropped_infra(capsys):
 def test_dropping_infra_errors_keeps_the_unequal_trials_warnings(tmp_path, capsys):
     # t3 keeps 3 of 4 trials after the drop: the gate must see unequal trials, not be relaxed.
     from realdelta.cli import WARN_ARMS
-    _, out = run_json(capsys, ["compare", str(FIX / "main.json"), str(FIX / "main_dir")])
     # This 5-case fixture is below the gated range, so it cannot pin the unequal-trials region itself; that
     # needs a fixture with at least 10 cases (not done in this step).
     data = json.loads((FIX / "main.json").read_text())
@@ -83,3 +82,25 @@ def test_jsonl_output_has_no_tau2_block(tmp_path, capsys):
     f.write_text('{"case_id": "a", "passed": true}\n{"case_id": "a", "passed": false}\n', encoding="utf-8")
     _, out = run_json(capsys, ["interval", str(f)])
     assert "tau2" not in out["summary"]
+
+
+def _with_info(tmp_path, name, **changes):
+    data = json.loads((FIX / "main.json").read_text())
+    for key, value in changes.items():
+        if key == "user_llm":
+            data["info"]["user_info"]["llm"] = value
+        else:
+            data["info"][key] = value
+    out = tmp_path / name
+    out.write_text(json.dumps(data))
+    return out
+
+
+def test_compare_warns_on_different_trial_counts_and_user_simulators(tmp_path, capsys):
+    other = _with_info(tmp_path, "other.json", num_trials=8, user_llm="some-other-simulator")
+    code, out = run_json(capsys, ["compare", str(FIX / "main.json"), str(other)])
+    assert code == 0
+    assert any("different numbers of trials" in w for w in out["warnings"])
+    assert any("different user simulators" in w for w in out["warnings"])
+    _, same = run_json(capsys, ["compare", str(FIX / "main.json"), str(FIX / "main_dir")])
+    assert not any("different numbers of trials" in w or "different user simulators" in w for w in same["warnings"])

@@ -67,7 +67,7 @@ def _case_lines(changes) -> list[str]:
 WARN_CONF = "Only the 95% level was checked; other levels are untested."
 NOTE_TAU2_INFRA = (
     "tau2-bench files: simulations ended by an infrastructure error were dropped, as tau2's metrics are written to "
-    "do (under pandas 3, tau2 at commit 768f3d8 counted them as failures instead; README, Result files). This "
+    "do (under pandas 3.1.1, tau2 at commit 768f3d8 counted them as failures instead; README, Result files). This "
     "keeps assumption A4 only if those errors do not depend on how the trial would have gone; use "
     "--infra-errors fail to count them as failures instead."
 )

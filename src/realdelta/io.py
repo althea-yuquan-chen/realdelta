@@ -283,7 +283,7 @@ def load_tau2_results(path, *, infra_errors: str = "drop") -> Tau2Outcomes:
     missing, tau2's own metrics raise; this reader reports 0%.)
 
     ``infra_errors``: ``"drop"`` removes simulations whose termination reason is ``infrastructure_error``, as
-    tau2's metrics are written to do (under pandas 3, tau2 at commit 768f3d8 counted them as failures; see the
+    tau2's metrics are written to do (under pandas 3.1.1, tau2 at commit 768f3d8 counted them as failures; see the
     README, Result files); a task left with no simulation raises, because dropping it would change the suite.
     ``"fail"`` counts them as failures. ``"error"`` refuses a file that has any. Dropping by termination reason
     keeps assumption A4 only if infrastructure errors do not depend on how the trial would have gone.
