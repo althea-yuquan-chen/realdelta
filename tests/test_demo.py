@@ -52,6 +52,11 @@ def test_readme_demo_numbers_match_the_transcript():
         ("     3  0.543+-0.029", "0.54 +- 0.03 with 3"),
         ("     5  0.847+-0.021", "0.85 +- 0.02 with 5"),
         ("    10  0.990+-0.006", "0.99 +- 0.01 with 10"),
+        ("Cases whose pass rate changed: 9 ", "9 of 40 cases changed"),
+        ("  now pass every trial: 6\n", "6 of them to \"now pass every trial\""),
+        ("Cases whose pass rate changed: 14 ", "14 cases are listed"),
+        ("  now pass every trial: 4\n", "4 of them under \"now pass every trial\""),
+        ("  now fail every trial: 3\n", "3 cases were broken"),
     ]
     flat = " ".join(readme.split())
     for in_transcript, in_readme in pairs:

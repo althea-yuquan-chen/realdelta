@@ -119,6 +119,18 @@ as fewer than 10 cases or fewer than 3 trials per case for a comparison. `compar
 uses seed 0 for its permutation p-value (with more than 16 cases; up to 16 it
 enumerates every sign flip) unless you pass `--seed`.
 
+`compare` also lists the cases whose pass rate changed, grouped into cases that now fail every trial, cases that
+now pass every trial and other changes, largest changes first within each group (the first 10 of each group in
+text, all in `--json` under the key `case_changes`, and as `Comparison.case_changes` in Python; not part of
+release 0.1.1). The list is descriptive: with a few trials per case a case's rate moves by chance, and no
+per-case test is applied. In the synthetic demo's regression run, where 3 cases were broken and none improved, 14
+cases are listed, 4 of them under "now pass every trial"; in its unchanged rerun, 9 of 40 cases changed, 6 of
+them to "now pass every trial" and none to "now fail every trial". That last group stays empty there only
+because nearly every case passes almost always: a case with true pass rate 0.3 fails all 3 of 3 trials with
+probability 0.7^3, about 0.34
+([`transcript.txt`](https://github.com/althea-yuquan-chen/realdelta/blob/main/examples/synthetic/transcript.txt),
+`main` branch).
+
 ## Result files
 
 One record per trial, as JSON Lines (`.jsonl`) or CSV (`.csv`), UTF-8:

@@ -13,8 +13,21 @@ Change in pass rate (candidate - baseline, suite scope): +0.0150, 95% interval [
 Detected: no (interval contains 0)
 p-value: 0.6173 (sign-flip permutation, 10000 random sign flips, seed 0)
 Region: inside gated range
+Cases whose pass rate changed: 9 (descriptive; see the note below)
+  now pass every trial: 6
+    'case-004' 3/5 -> 5/5
+    'case-002' 4/5 -> 5/5
+    'case-007' 4/5 -> 5/5
+    'case-010' 4/5 -> 5/5
+    'case-032' 4/5 -> 5/5
+    'case-037' 4/5 -> 5/5
+  other changes: 3
+    'case-028' 5/5 -> 3/5
+    'case-020' 4/5 -> 3/5
+    'case-036' 5/5 -> 4/5
 Note: Assumptions A1, A3 and A5 cannot be checked from result files. In the tested settings: a case's trials that repeat each other (A1), or a run-level shock shared by one arm's cases such as an outage during one run (A5), made intervals too narrow; positive coupling between the arms (A3), modelled as a latent correlation, did not narrow them but cut power; negative coupling narrowed them; sharing run-level shocks between the arms offset the A5 effect, fully only when both runs saw the same shock (README, Limitations).
 Note: The p-value tests the sharp null 'the two versions behave identically on every case' and has not been calibration-checked. 'detected' uses the interval, not the p-value; the two can disagree.
+Note: Per-case changes are descriptive: with a few trials per case a case's rate moves by chance, and no per-case test or multiple-comparison correction is applied.
 
 $ python -m realdelta compare baseline.jsonl regression.jsonl    # cwd: examples/synthetic
 Baseline baseline.jsonl: 40 cases, trials per case min 5 / median 5 / max 5, 200 trials in total
@@ -23,8 +36,27 @@ Change in pass rate (candidate - baseline, suite scope): -0.1000, 95% interval [
 Detected: yes (interval excludes 0)
 p-value: 0.0438 (sign-flip permutation, 10000 random sign flips, seed 0)
 Region: inside gated range
+Cases whose pass rate changed: 14 (descriptive; see the note below)
+  now fail every trial: 3
+    'case-009' 5/5 -> 0/5
+    'case-018' 5/5 -> 0/5
+    'case-007' 4/5 -> 0/5
+  now pass every trial: 4
+    'case-004' 3/5 -> 5/5
+    'case-002' 4/5 -> 5/5
+    'case-010' 4/5 -> 5/5
+    'case-032' 4/5 -> 5/5
+  other changes: 7
+    'case-034' 4/5 -> 1/5
+    'case-000' 5/5 -> 3/5
+    'case-015' 5/5 -> 3/5
+    'case-014' 5/5 -> 4/5
+    'case-020' 4/5 -> 3/5
+    'case-028' 5/5 -> 4/5
+    'case-035' 5/5 -> 4/5
 Note: Assumptions A1, A3 and A5 cannot be checked from result files. In the tested settings: a case's trials that repeat each other (A1), or a run-level shock shared by one arm's cases such as an outage during one run (A5), made intervals too narrow; positive coupling between the arms (A3), modelled as a latent correlation, did not narrow them but cut power; negative coupling narrowed them; sharing run-level shocks between the arms offset the A5 effect, fully only when both runs saw the same shock (README, Limitations).
 Note: The p-value tests the sharp null 'the two versions behave identically on every case' and has not been calibration-checked. 'detected' uses the interval, not the p-value; the two can disagree.
+Note: Per-case changes are descriptive: with a few trials per case a case's rate moves by chance, and no per-case test or multiple-comparison correction is applied.
 
 $ python -m realdelta plan --cases 40 --break-cases 3 --trials 1,3,5,10 --alpha 20 --beta 1 --seed 20261119    # cwd: any
 Plan for 40 cases, 3 cases broken

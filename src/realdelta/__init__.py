@@ -4,8 +4,10 @@ from .io import ResultFileError, Tau2Outcomes, load_outcomes, load_tau2_results
 from .planner import CostEstimate, PlanRow, estimate_cost, plan_trials
 from .simulate import SimulatedSuite
 from .stats import (
+    CaseChange,
     Comparison,
     Interval,
+    case_changes,
     case_level_interval,
     compare,
     delta_interval,
@@ -16,6 +18,7 @@ from .stats import (
 )
 
 __all__ = [
+    "CaseChange",
     "Comparison",
     "CostEstimate",
     "Interval",
@@ -23,6 +26,7 @@ __all__ = [
     "ResultFileError",
     "SimulatedSuite",
     "Tau2Outcomes",
+    "case_changes",
     "case_level_interval",
     "compare",
     "delta_interval",

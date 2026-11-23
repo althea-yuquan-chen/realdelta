@@ -81,7 +81,7 @@ def test_compare_matches_independent_wilson_mover(tmp_path, capsys):
     code, out = run_json(capsys, ["compare", str(base), str(cand)])
     assert code == 0
     assert set(out) == {"command", "baseline", "candidate", "scope", "conf", "delta", "detected", "p_value",
-                        "n_perm", "seed", "region", "notes", "warnings"}
+                        "n_perm", "seed", "region", "notes", "warnings", "case_changes"}
     a, b = wilson_interval(m * k_a, m * n), wilson_interval(m * k_b, m * n)
     d = b.estimate - a.estimate
     assert d > 0
@@ -92,7 +92,7 @@ def test_compare_matches_independent_wilson_mover(tmp_path, capsys):
     assert out["seed"] == 0
     assert out["region"] == "inside gated range"
     assert out["warnings"] == []
-    assert len(out["notes"]) == 2
+    assert len(out["notes"]) == 3
 
 
 @pytest.mark.parametrize("m, n, low, high", [(9, 3, True, False), (10, 3, False, False), (10, 2, True, False),

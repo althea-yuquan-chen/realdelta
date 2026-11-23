@@ -44,6 +44,7 @@ is checked by simulation, not proven.
 from __future__ import annotations
 
 import math
+from fractions import Fraction
 from dataclasses import dataclass
 from statistics import NormalDist
 from typing import Literal, Mapping, Sequence
@@ -292,6 +293,54 @@ def _reject_population_delta(scope: str) -> None:
 
 
 @dataclass(frozen=True)
+class CaseChange:
+    """One case whose pass rate differs between the two versions (descriptive; no per-case test)."""
+
+    case_id: str
+    baseline_passes: int
+    baseline_trials: int
+    candidate_passes: int
+    candidate_trials: int
+
+    @property
+    def change(self) -> float:
+        return float(self.exact_change)
+
+    @property
+    def exact_change(self) -> Fraction:
+        return (Fraction(self.candidate_passes, self.candidate_trials)
+                - Fraction(self.baseline_passes, self.baseline_trials))
+
+    @property
+    def group(self) -> str:
+        if self.candidate_passes == 0 and self.baseline_passes > 0:
+            return "now_fails_every_trial"
+        if self.candidate_passes == self.candidate_trials and self.baseline_passes < self.baseline_trials:
+            return "now_passes_every_trial"
+        return "other"
+
+
+_GROUP_ORDER = {"now_fails_every_trial": 0, "now_passes_every_trial": 1, "other": 2}
+
+
+def case_changes(baseline: Outcomes, candidate: Outcomes) -> tuple[CaseChange, ...]:
+    """Cases whose pass rate differs: by group (now fail every trial, now pass every trial, other), then by size
+    of the change, largest first (exact fractions), then by case id.
+
+    Descriptive only: with a few trials per case a case's rate moves by chance, and no per-case test or
+    multiple-comparison correction is applied.
+    """
+    _paired_counts(baseline, candidate)  # same validation as compare
+    out = []
+    for case in baseline:
+        a, b = baseline[case], candidate[case]
+        ch = CaseChange(str(case), int(sum(map(bool, a))), len(a), int(sum(map(bool, b))), len(b))
+        if ch.baseline_passes * ch.candidate_trials != ch.candidate_passes * ch.baseline_trials:
+            out.append(ch)
+    return tuple(sorted(out, key=lambda c: (_GROUP_ORDER[c.group], -abs(c.exact_change), c.case_id)))
+
+
+@dataclass(frozen=True)
 class Comparison:
     """Paired comparison of two versions run on the same cases (candidate minus baseline).
 
@@ -305,6 +354,7 @@ class Comparison:
     p_value: float
     n_cases: int
     scope: Scope
+    case_changes: tuple[CaseChange, ...] = ()
 
     @property
     def detected(self) -> bool:
@@ -338,4 +388,5 @@ def compare(
     pa, ta, pb, tb = _paired_counts(baseline, candidate)
     delta = _delta_interval(pa, ta, pb, tb, scope, conf)
     p_value = _sign_flip_p_value(pb / tb - pa / ta, n_perm, np.random.default_rng(seed))
-    return Comparison(delta=delta, p_value=p_value, n_cases=len(pa), scope=scope)
+    return Comparison(delta=delta, p_value=p_value, n_cases=len(pa), scope=scope,
+                      case_changes=case_changes(baseline, candidate))

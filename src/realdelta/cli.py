@@ -43,6 +43,27 @@ NOTE_BREAK = (
     f"none has a few cases breaking outright, so break plans have no gated calibration evidence ({README})."
 )
 REGION_UNEQUAL = "unequal trials (one gated setting)"
+NOTE_CASES = (
+    "Per-case changes are descriptive: with a few trials per case a case's rate moves by chance, and no per-case "
+    "test or multiple-comparison correction is applied."
+)
+CASE_GROUPS = (("now_fails_every_trial", "now fail every trial"), ("now_passes_every_trial", "now pass every trial"),
+               ("other", "other changes"))
+SHOW_CASES = 10
+
+
+def _case_lines(changes) -> list[str]:
+    lines = [f"Cases whose pass rate changed: {len(changes)} (descriptive; see the note below)"]
+    for key, title in CASE_GROUPS:
+        group = [c for c in changes if c.group == key]
+        if not group:
+            continue
+        shown = f" (showing {SHOW_CASES} of {len(group)})" if len(group) > SHOW_CASES else ""
+        lines.append(f"  {title}: {len(group)}{shown}")
+        for c in group[:SHOW_CASES]:
+            lines.append(f"    {ascii(_short(c.case_id))} {c.baseline_passes}/{c.baseline_trials} -> "
+                         f"{c.candidate_passes}/{c.candidate_trials}")
+    return lines
 WARN_CONF = "Only the 95% level was checked; other levels are untested."
 NOTE_TAU2_INFRA = (
     "tau2-bench files: simulations ended by an infrastructure error were dropped, as tau2's metrics are written to "
@@ -203,7 +224,7 @@ def _cmd_compare(args) -> int:
     if any(len(base[c]) != len(cand[c]) for c in base):
         warnings.append(WARN_ARMS)
     d = result.delta
-    notes = [NOTE_ASSUMPTIONS, NOTE_P_VALUE]
+    notes = [NOTE_ASSUMPTIONS, NOTE_P_VALUE, NOTE_CASES]
     if (mb and mb["infra_dropped"]) or (mc and mc["infra_dropped"]):
         notes.append(NOTE_TAU2_INFRA)
     payload = {"command": "compare", "baseline": {"file": Path(args.baseline).name, **sb, **({"tau2": mb} if mb else {})},
@@ -211,6 +232,10 @@ def _cmd_compare(args) -> int:
                "scope": args.scope, "conf": args.conf,
                "delta": {"estimate": d.estimate, "low": d.low, "high": d.high}, "detected": result.detected,
                "p_value": result.p_value, "n_perm": args.n_perm, "seed": args.seed, "region": region,
+               "case_changes": {"note": NOTE_CASES, "cases": [
+                   {"case_id": c.case_id, "baseline": {"passes": c.baseline_passes, "trials": c.baseline_trials},
+                    "candidate": {"passes": c.candidate_passes, "trials": c.candidate_trials},
+                    "change": c.change, "group": c.group} for c in result.case_changes]},
                "notes": notes, "warnings": warnings}
     lines = [_fmt_summary(f"Baseline {Path(args.baseline).name}", sb),
              _fmt_summary(f"Candidate {Path(args.candidate).name}", sc),
@@ -218,7 +243,7 @@ def _cmd_compare(args) -> int:
              f"{args.conf:.0%} interval [{d.low:+.4f}, {d.high:+.4f}]",
              f"Detected: {'yes' if result.detected else 'no'} (interval {'excludes' if result.detected else 'contains'} 0)",
              f"p-value: {result.p_value:.4g} (sign-flip permutation, " + _p_method(base, cand, args) + ")",
-             f"Region: {region}"]
+             f"Region: {region}"] + _case_lines(result.case_changes)
     return _emit(args, payload, lines)
 
 
