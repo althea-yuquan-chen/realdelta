@@ -110,6 +110,17 @@ def pass_hat_k(passes: int, trials: int, k: int) -> float:
     return math.comb(passes, k) / math.comb(trials, k)
 
 
+def _passed(case_id, r) -> bool:
+    """A pass/fail value: bool, numpy bool, or the integer 0 or 1. Anything else (strings such as "fail",
+    partial-credit scores, None) raises, because bool() would count it as a pass."""
+    if isinstance(r, (bool, np.bool_)):
+        return bool(r)
+    if isinstance(r, (int, np.integer)) and r in (0, 1):
+        return bool(r)
+    raise TypeError(f"case {case_id!r}: outcomes must be pass/fail values (True/False or 1/0), "
+                    f"got a value of type {type(r).__name__}")
+
+
 def _counts(outcomes: Outcomes) -> tuple[list[str], np.ndarray, np.ndarray]:
     if not outcomes:
         raise ValueError("outcomes is empty")
@@ -120,7 +131,7 @@ def _counts(outcomes: Outcomes) -> tuple[list[str], np.ndarray, np.ndarray]:
         results = list(outcomes[case_id])
         if not results:
             raise ValueError(f"case {case_id!r} has no trials")
-        passes[i] = sum(bool(r) for r in results)
+        passes[i] = sum(_passed(case_id, r) for r in results)
         trials[i] = len(results)
     return ids, passes, trials
 
@@ -334,7 +345,7 @@ def case_changes(baseline: Outcomes, candidate: Outcomes) -> tuple[CaseChange, .
     out = []
     for case in baseline:
         a, b = baseline[case], candidate[case]
-        ch = CaseChange(str(case), int(sum(map(bool, a))), len(a), int(sum(map(bool, b))), len(b))
+        ch = CaseChange(str(case), sum(_passed(case, r) for r in a), len(a), sum(_passed(case, r) for r in b), len(b))
         if ch.baseline_passes * ch.candidate_trials != ch.candidate_passes * ch.baseline_trials:
             out.append(ch)
     return tuple(sorted(out, key=lambda c: (_GROUP_ORDER[c.group], -abs(c.exact_change), c.case_id)))
