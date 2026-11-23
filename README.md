@@ -7,6 +7,12 @@ the pass rate moved from 82% to 86%. `realdelta` tells you whether that move is
 larger than the run-to-run noise of your agent, and how many repeated trials you
 need before it can tell.
 
+Evan Miller's "Adding Error Bars to Evals" (2024) and several Python libraries also ask
+whether a change in an eval score is real. `realdelta` compares versions on the fixed
+suite of cases and publishes a pre-registered calibration check of its intervals,
+including the rows that failed. The [Related work](#related-work) section describes how
+`realdelta` relates to them.
+
 **Status:** version 0.1.1, alpha. Version 0.1.1 corrects the 0.1.0 description of assumption A3
 (see Limitations): 0.1.0 said shared seeds between the arms make intervals too narrow, citing a
 row that measures a shock within one arm. The statistics
@@ -378,6 +384,33 @@ mode affecting a few percent of cases like them.
   p-value from `compare`. It tests the sharp null "the two versions behave
   identically on every case", and in the synthetic demo's setting (3 of 40 cases
   broken) it rejected in 15.2% of runs against 84.6% for the interval.
+
+## Related work
+
+Evan Miller's "Adding Error Bars to Evals" ([arXiv:2411.00640](https://arxiv.org/abs/2411.00640), 2024)
+treats eval questions as drawn from a larger population of questions. It recommends standard errors
+from the central limit theorem, clustered standard errors, reducing within-question variance (for
+example, by resampling answers), paired differences between models, and power analysis. Several Python
+libraries address the same question. [errorbars](https://pypi.org/project/errorbars/) follows Miller's
+recommendations, with clustered and paired standard errors, repeated samples per question, an exact
+McNemar test for binary scores, and Monte Carlo coverage tests of its intervals.
+[agentrel](https://pypi.org/project/agentrel/) is built for repeated runs of stochastic agents and
+accepts partial-credit scores. It gives bootstrap intervals that resample tasks and then runs, paired t
+and Wilcoxon tests on per-task means, and pass^k. [agentrial](https://pypi.org/project/agentrial/) runs
+each test case N times, reports Wilson intervals for pass rates and uses Fisher's exact test to detect
+regressions. These descriptions come from each project's PyPI page (errorbars 0.2.4, agentrel 0.1.0,
+agentrial 0.2.0, read on 2026-11-23).
+
+`realdelta` accepts pass/fail outcomes only. Unlike Miller's population framing, its comparisons are
+about the fixed suite of cases, so only trial-to-trial noise enters the interval (see What it does).
+Its intervals were checked on a pre-registered calibration grid, and the rows that failed are published
+with the rest (see How the intervals were checked). The pass-rate rows cover 5 to 50 cases with up to 10
+trials per case. One failed row led to the current suite pass-rate method. With 5 cases, 1 trial each
+and rates near 100%, the Wilson interval then used covered 0.917 against a nominal 0.95. The delta rows
+cover 10 to 50 cases with 3 to 10 trials per case, plus one unequal-trials setting. For the delta, rates
+closer to 100% than the grid's Beta(20,1) rows are covered by a reported-only diagnostic (see
+Limitations). The effects of violated assumptions, such as coupling between the two arms or a shock
+shared by one arm's cases, are measured for the tested settings and listed in Limitations.
 
 ## Reproduce
 
