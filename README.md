@@ -391,12 +391,12 @@ Evan Miller's "Adding Error Bars to Evals" ([arXiv:2411.00640](https://arxiv.org
 treats eval questions as drawn from a larger population of questions. It recommends standard errors
 from the central limit theorem, clustered standard errors, reducing within-question variance (for
 example, by resampling answers), paired differences between models, and power analysis. Several Python
-libraries address the same question. [errorbars](https://pypi.org/project/errorbars/) follows Miller's
+libraries put intervals on eval scores. [errorbars](https://pypi.org/project/errorbars/0.2.4/) follows Miller's
 recommendations, with clustered and paired standard errors, repeated samples per question, an exact
 McNemar test for binary scores, and Monte Carlo coverage tests of its intervals.
-[agentrel](https://pypi.org/project/agentrel/) is built for repeated runs of stochastic agents and
+[agentrel](https://pypi.org/project/agentrel/0.1.0/) is built for repeated runs of stochastic agents and
 accepts partial-credit scores. It gives bootstrap intervals that resample tasks and then runs, paired t
-and Wilcoxon tests on per-task means, and pass^k. [agentrial](https://pypi.org/project/agentrial/) runs
+and Wilcoxon tests on per-task means, and pass^k. [agentrial](https://pypi.org/project/agentrial/0.2.0/) runs
 each test case N times, reports Wilson intervals for pass rates and uses Fisher's exact test to detect
 regressions. These descriptions come from each project's PyPI page (errorbars 0.2.4, agentrel 0.1.0,
 agentrial 0.2.0, read on 2026-11-23).
