@@ -421,3 +421,64 @@ Amendment 4's limits and the false-alarm reading of `posthoc_power.md`; and D on
 citing #238, #334 and #764. It names no model in its text and no descriptive pair as detected. Pushing it is
 an outward step and waits for the owner, as does any write-up outside this repository, together with the
 owner's re-confirmation of the clean-room answer.
+
+### Amendment 8 (2026-11-23): the outward steps of 2026-11-17; clean room; README wording
+
+Outward steps of 2026-11-17. Push times come from this machine's reflog of `origin/main` ("update by push", local
+clock, -0500); they are the analyst's statement and cannot be checked from this repository.
+- 00:55: push of 7c4ef90..e5ad8b1 (Amendments 1 to 6). It carried `run_20261123/` (111e822) together with
+  `posthoc_published_scores.md` (c795111) and Amendment 2 (7b2de75), as Amendment 2 requires.
+- 05:59:54 UTC (00:59 -0500): upstream issue #764 (Amendment 7).
+- 10:44: push of c9aad41 (Amendment 7 and the README section on this study).
+- 10:51: push of commit cfefe00 of the owner's personal site, which adds a section on this study. Commit 6893b2c
+  split its long sentences and reached the site's remote with the push of 6b5c25b at 11:23. The section's text
+  is the same in the site's latest pushed commit, e82526d (16:10).
+The owner approved the pushes of e5ad8b1, c9aad41 and cfefe00 and the issue in chat (analyst's notes).
+
+The site section, as of e82526d, against "Wording rules for any write-up" and Amendments 2 to 4:
+- It names submissions, says Sierra ran them, and puts the confounds in the same sentence. The primary result
+  reads "not detected at this scale" with its interval. It gives the run-level shock caveat with false-alarm
+  rates of 0.085 to 0.105, the post-hoc power with Amendment 4's limits, and no ranking language. It does not
+  mention D. For the descriptive pairs it links the README and this protocol.
+- It gives the dependence statement's words in three sentences and leaves out "(Diagnostic AD)".
+- It gives Amendment 3's reading at the end of the section, after the post-hoc power paragraph. Amendment 3
+  asks for it next to the primary result.
+On 2026-11-23 the owner asked for both differences to be corrected on the site. A later amendment records the
+corrected site commit.
+
+Clean room. "Before any outward publication" and Amendments 1 and 7 ask the owner to re-confirm the clean-room
+answer before each outward step. No re-confirmation was recorded before the steps above. This is a deviation
+from that rule. On 2026-11-23 the analyst asked the owner in chat to confirm: "当时没有专门确认，现在补确认：
+tau2-bench（Sierra）和这些厂商仍然与你无关。" ("No separate confirmation was made at the time; confirming now:
+tau2-bench (Sierra) and these vendors are still unrelated to you.") The owner answered "无关" ("not related"),
+then "一直都无关，从来都没关系。。。这是我个人的项目" ("never related, there has never been any connection... this
+is my personal project"). The owner's "always" covers the time of the steps above. This answer precedes the push
+of this amendment.
+- Change to the rule, at the owner's request ("不用每次确认", "no need to confirm each time"): the owner's
+  statement of 2026-11-23 is taken as standing. From this amendment on, the owner tells the analyst if it
+  changes, and a separate re-confirmation before each outward step is no longer asked. Each outward step still
+  needs the owner's explicit approval.
+
+#764. On 2026-11-23, `gh issue view 764` showed the issue open with no comments, last updated
+2026-11-17T05:59:54Z (output kept in the analyst's notes). No reply on the issue. The bucket and D's
+`submission.json` were not re-checked.
+
+Posts. This amendment does not record social-media posts about this study. A later amendment records them with
+their dates.
+
+README wording. Commit 829c89b changes the README section on this study. Its numbers, scopes and caveats are
+unchanged, except for one rounding:
+- Long sentences are split and semicolons are replaced by periods. The dependence statement keeps the words fixed
+  in "Dependence between and within submissions (assumptions A3 and A5)", including "(Diagnostic AD)". Only its
+  two semicolons became periods.
+- The realized change at a shift of -0.12, -0.1158 in `posthoc_power.md`, is rounded to -0.116, the value the
+  site uses.
+- "what was read before that" becomes "the protocol's Disclosure section lists what was read before it was
+  fixed", closer to the Disclosure section's wording.
+- "which weakens the reason for the choice" becomes "If so, the reason for the choice is weaker", closer to
+  Amendment 3's conditional.
+- Prose uses US spelling ("realized", "labeled"). Identifiers and committed output are unchanged, including the
+  column name "realised change" in `posthoc_power.md`.
+Commits f17de3b and 79ec3d7 add and revise a Related work section in the README. They do not change the section
+on this study. 829c89b, f17de3b, 79ec3d7 and this amendment were not pushed when this amendment was written.
+Pushing them waits for the owner.
