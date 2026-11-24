@@ -1,0 +1,28 @@
+== gate F* >= 3 (cells with >= 20 gated suites, gated mean true power in [0.2, 0.9])
+  P-pooled  cells  37; mean error min -0.033 max +0.038; worst MAE 0.097; worst p90 0.221; bias fails 0, MAE fails 0, p90>0.20 2
+     Beta(20,1)|m=30|n_obs=3|break=3|n_plan=3                n=40 me -0.028 mae 0.097 p90 0.221
+     Beta(20,1)|m=30|n_obs=5|break=1|n_plan=10               n=49 me +0.032 mae 0.088 p90 0.204
+     Beta(4,2)|m=10|n_obs=3|break=2|n_plan=10                n=50 me +0.038 mae 0.093 p90 0.191
+     Beta(20,1)|m=30|n_obs=3|shift=-0.05|n_plan=10           n=40 me -0.004 mae 0.082 p90 0.178
+     Beta(20,1)|m=30|n_obs=5|shift=-0.05|n_plan=10           n=49 me +0.018 mae 0.092 p90 0.178
+  P-uniform cells  37; mean error min -0.467 max +0.034; worst MAE 0.467; worst p90 0.574; bias fails 18, MAE fails 15, p90>0.20 16
+  Plug-in   cells  37; mean error min -0.118 max +0.065; worst MAE 0.118; worst p90 0.226; bias fails 3, MAE fails 0, p90>0.20 2
+== gate F* >= 6 (cells with >= 20 gated suites, gated mean true power in [0.2, 0.9])
+  P-pooled  cells  29; mean error min -0.036 max +0.034; worst MAE 0.089; worst p90 0.193; bias fails 0, MAE fails 0, p90>0.20 0
+     Beta(0.5,0.5)|m=10|n_obs=3|break=2|n_plan=10            n=24 me -0.013 mae 0.081 p90 0.193
+     Beta(4,2)|m=10|n_obs=3|break=2|n_plan=10                n=44 me +0.026 mae 0.089 p90 0.179
+     Beta(20,1)|m=30|n_obs=5|break=3|n_plan=5                n=36 me -0.029 mae 0.062 p90 0.156
+     Beta(4,2)|m=10|n_obs=5|break=2|n_plan=10                n=50 me +0.014 mae 0.062 p90 0.150
+     Beta(20,1)|m=30|n_obs=5|break=1|n_plan=10               n=36 me -0.021 mae 0.055 p90 0.141
+  P-uniform cells  29; mean error min -0.460 max +0.034; worst MAE 0.460; worst p90 0.522; bias fails 11, MAE fails 9, p90>0.20 11
+  Plug-in   cells  29; mean error min -0.118 max +0.051; worst MAE 0.118; worst p90 0.178; bias fails 3, MAE fails 0, p90>0.20 0
+== gate F* >= 10 (cells with >= 20 gated suites, gated mean true power in [0.2, 0.9])
+  P-pooled  cells  17; mean error min -0.029 max +0.034; worst MAE 0.075; worst p90 0.148; bias fails 0, MAE fails 0, p90>0.20 0
+     Beta(4,2)|m=10|n_obs=5|break=2|n_plan=10                n=49 me +0.010 mae 0.059 p90 0.148
+     Beta(4,2)|m=30|n_obs=3|break=3|n_plan=10                n=50 me +0.025 mae 0.056 p90 0.131
+     Mix|m=30|n_obs=5|break=3|n_plan=5                       n=22 me -0.026 mae 0.075 p90 0.131
+     Mix|m=30|n_obs=5|shift=-0.05|n_plan=10                  n=22 me -0.029 mae 0.046 p90 0.114
+     Beta(4,2)|m=30|n_obs=5|break=3|n_plan=10                n=50 me +0.027 mae 0.062 p90 0.113
+  P-uniform cells  17; mean error min -0.350 max +0.033; worst MAE 0.350; worst p90 0.456; bias fails 2, MAE fails 2, p90>0.20 2
+  Plug-in   cells  17; mean error min -0.117 max +0.050; worst MAE 0.117; worst p90 0.178; bias fails 2, MAE fails 0, p90>0.20 0
+files where F* < F (some all-fail case): 334 of 800

@@ -1,0 +1,1892 @@
+round 2 (post-hoc); protocol sha256: 9f672914c5b57f06246ca9458418d93614551879045f4fb68fc22d176aeb7c99
+
+Oracle control: PASS (cells with |mean error| > 0.03, all suites: 0)
+
+== F_min 3: eligible True; 346 decision cells; coverage by m {'20': {'near_ceiling_cells': 65, 'with_n_obs_3': 13}, '50': {'near_ceiling_cells': 79, 'with_n_obs_3': 30}, '120': {'near_ceiling_cells': 53, 'with_n_obs_3': 19}}
+  P-pooled: FAILS; pooled p90 |error| 0.141; cells failing bias 39, MAE 9, p90 24; false-alarm cells 0
+    bias: Beta(20,1)|m=20|n_obs=3|break=3|n_plan=3: -0.103
+    bias: Beta(20,1)|m=50|n_obs=3|break=1|n_plan=20: +0.064
+    bias: Beta(20,1)|m=50|n_obs=5|break=1|n_plan=20: +0.060
+    bias: Beta(4,2)|m=50|n_obs=3|shift=-0.05|n_plan=20: +0.057
+    bias: Beta(4,2)|m=50|n_obs=4|break=3|n_plan=20: +0.050
+    bias: Beta(4,2)|m=50|n_obs=4|shift=-0.05|n_plan=20: +0.054
+    bias: Beta(50,1)|m=20|n_obs=4|break=1|n_plan=10: -0.178
+    bias: Beta(50,1)|m=20|n_obs=4|break=1|n_plan=5: -0.103
+    bias: Beta(50,1)|m=20|n_obs=4|shift=-0.05|n_plan=10: -0.134
+    bias: Beta(50,1)|m=20|n_obs=5|break=1|n_plan=10: -0.139
+    bias: Beta(8,1)|m=20|n_obs=3|break=1|n_plan=20: +0.073
+    bias: Beta(8,1)|m=20|n_obs=3|shift=-0.05|n_plan=20: +0.063
+    bias: Beta(8,1)|m=20|n_obs=5|break=1|n_plan=20: +0.055
+    bias: Mix90Z|m=120|n_obs=3|break=3|n_plan=10: -0.122
+    bias: Mix90Z|m=120|n_obs=3|break=3|n_plan=5: +0.088
+    bias: Mix90Z|m=120|n_obs=4|break=3|n_plan=10: -0.109
+    bias: Mix90Z|m=120|n_obs=4|break=3|n_plan=5: +0.078
+    bias: Mix90Z|m=120|n_obs=5|break=3|n_plan=10: -0.102
+    bias: Mix90Z|m=120|n_obs=5|break=3|n_plan=5: +0.068
+    bias: Mix90Z|m=20|n_obs=4|break=1|n_plan=20: -0.130
+    bias: Mix90Z|m=20|n_obs=5|break=1|n_plan=20: -0.112
+    bias: Mix90Z|m=50|n_obs=3|break=3|n_plan=3: +0.065
+    bias: Mix90Z|m=50|n_obs=3|shift=-0.05|n_plan=5: +0.054
+    bias: Mix90Z|m=50|n_obs=4|shift=-0.05|n_plan=4: +0.081
+    bias: Mix90Z|m=50|n_obs=4|shift=-0.05|n_plan=5: +0.055
+    bias: Tri|m=120|n_obs=3|shift=-0.05|n_plan=10: +0.182
+    bias: Tri|m=120|n_obs=4|shift=-0.05|n_plan=10: +0.202
+    bias: Tri|m=120|n_obs=5|shift=-0.05|n_plan=10: +0.214
+    bias: Tri|m=20|n_obs=3|shift=-0.05|n_plan=20: +0.141
+    bias: Tri|m=20|n_obs=4|shift=-0.05|n_plan=20: +0.142
+    bias: Tri|m=20|n_obs=5|shift=-0.05|n_plan=20: +0.136
+    bias: Tri|m=50|n_obs=3|break=3|n_plan=20: -0.117
+    bias: Tri|m=50|n_obs=3|shift=-0.05|n_plan=10: +0.196
+    bias: Tri|m=50|n_obs=3|shift=-0.05|n_plan=20: +0.125
+    bias: Tri|m=50|n_obs=4|break=3|n_plan=20: -0.103
+    bias: Tri|m=50|n_obs=4|shift=-0.05|n_plan=10: +0.204
+    bias: Tri|m=50|n_obs=4|shift=-0.05|n_plan=20: +0.152
+    bias: Tri|m=50|n_obs=5|shift=-0.05|n_plan=10: +0.207
+    bias: Tri|m=50|n_obs=5|shift=-0.05|n_plan=20: +0.155
+    mae: Beta(50,1)|m=20|n_obs=4|break=1|n_plan=10: 0.178
+    mae: Tri|m=120|n_obs=3|shift=-0.05|n_plan=10: 0.182
+    mae: Tri|m=120|n_obs=4|shift=-0.05|n_plan=10: 0.202
+    mae: Tri|m=120|n_obs=5|shift=-0.05|n_plan=10: 0.214
+    mae: Tri|m=50|n_obs=3|shift=-0.05|n_plan=10: 0.196
+    mae: Tri|m=50|n_obs=4|shift=-0.05|n_plan=10: 0.204
+    mae: Tri|m=50|n_obs=4|shift=-0.05|n_plan=20: 0.153
+    mae: Tri|m=50|n_obs=5|shift=-0.05|n_plan=10: 0.207
+    mae: Tri|m=50|n_obs=5|shift=-0.05|n_plan=20: 0.156
+    p90: Beta(20,1)|m=20|n_obs=3|break=1|n_plan=20: 0.229
+    p90: Beta(20,1)|m=20|n_obs=3|break=3|n_plan=3: 0.244
+    p90: Beta(20,1)|m=50|n_obs=3|break=1|n_plan=20: 0.244
+    p90: Beta(20,1)|m=50|n_obs=3|break=3|n_plan=3: 0.203
+    p90: Beta(20,1)|m=50|n_obs=3|break=3|n_plan=5: 0.201
+    p90: Beta(20,1)|m=50|n_obs=4|break=1|n_plan=20: 0.215
+    p90: Beta(50,1)|m=120|n_obs=3|break=1|n_plan=20: 0.217
+    p90: Beta(50,1)|m=120|n_obs=4|break=1|n_plan=20: 0.221
+    p90: Beta(50,1)|m=50|n_obs=4|break=1|n_plan=20: 0.209
+    p90: Beta(8,1)|m=20|n_obs=3|break=1|n_plan=20: 0.240
+    p90: Beta(8,1)|m=20|n_obs=4|break=1|n_plan=20: 0.220
+    p90: Mix90Z|m=120|n_obs=3|break=3|n_plan=10: 0.201
+    p90: Tri|m=120|n_obs=3|shift=-0.05|n_plan=10: 0.256
+    p90: Tri|m=120|n_obs=4|shift=-0.05|n_plan=10: 0.278
+    p90: Tri|m=120|n_obs=5|shift=-0.05|n_plan=10: 0.294
+    p90: Tri|m=20|n_obs=3|shift=-0.05|n_plan=20: 0.247
+    p90: Tri|m=20|n_obs=4|shift=-0.05|n_plan=20: 0.225
+    p90: Tri|m=20|n_obs=5|shift=-0.05|n_plan=20: 0.236
+    p90: Tri|m=50|n_obs=3|shift=-0.05|n_plan=10: 0.280
+    p90: Tri|m=50|n_obs=3|shift=-0.05|n_plan=20: 0.237
+    p90: Tri|m=50|n_obs=4|shift=-0.05|n_plan=10: 0.278
+    p90: Tri|m=50|n_obs=4|shift=-0.05|n_plan=20: 0.263
+    p90: Tri|m=50|n_obs=5|shift=-0.05|n_plan=10: 0.289
+    p90: Tri|m=50|n_obs=5|shift=-0.05|n_plan=20: 0.268
+  P-uniform: FAILS; pooled p90 |error| 0.476; cells failing bias 262, MAE 213, p90 185; false-alarm cells 34
+    bias: Beta(0.5,0.5)|m=120|n_obs=3|shift=-0.05|n_plan=5: +0.050
+    bias: Beta(0.5,0.5)|m=120|n_obs=4|shift=-0.05|n_plan=5: +0.051
+    bias: Beta(0.5,0.5)|m=120|n_obs=5|shift=-0.05|n_plan=5: +0.050
+    bias: Beta(20,1)|m=120|n_obs=3|break=1|n_plan=20: -0.164
+    bias: Beta(20,1)|m=120|n_obs=3|break=3|n_plan=10: -0.528
+    bias: Beta(20,1)|m=120|n_obs=3|break=3|n_plan=3: -0.177
+    bias: Beta(20,1)|m=120|n_obs=3|break=3|n_plan=5: -0.307
+    bias: Beta(20,1)|m=120|n_obs=3|shift=-0.05|n_plan=3: -0.399
+    bias: Beta(20,1)|m=120|n_obs=4|break=1|n_plan=20: -0.156
+    bias: Beta(20,1)|m=120|n_obs=4|break=3|n_plan=10: -0.493
+    bias: Beta(20,1)|m=120|n_obs=4|break=3|n_plan=4: -0.229
+    bias: Beta(20,1)|m=120|n_obs=4|break=3|n_plan=5: -0.290
+    bias: Beta(20,1)|m=120|n_obs=4|shift=-0.05|n_plan=4: -0.380
+    bias: Beta(20,1)|m=120|n_obs=5|break=1|n_plan=20: -0.144
+    bias: Beta(20,1)|m=120|n_obs=5|break=3|n_plan=10: -0.464
+    bias: Beta(20,1)|m=120|n_obs=5|break=3|n_plan=5: -0.271
+    bias: Beta(20,1)|m=20|n_obs=3|break=1|n_plan=10: -0.306
+    bias: Beta(20,1)|m=20|n_obs=3|break=1|n_plan=20: -0.530
+    bias: Beta(20,1)|m=20|n_obs=3|break=1|n_plan=5: -0.139
+    bias: Beta(20,1)|m=20|n_obs=3|break=3|n_plan=3: -0.467
+    bias: Beta(20,1)|m=20|n_obs=3|shift=-0.05|n_plan=10: -0.254
+    bias: Beta(20,1)|m=20|n_obs=3|shift=-0.05|n_plan=20: -0.369
+    bias: Beta(20,1)|m=20|n_obs=3|shift=-0.05|n_plan=5: -0.142
+    bias: Beta(20,1)|m=20|n_obs=4|break=1|n_plan=10: -0.300
+    bias: Beta(20,1)|m=20|n_obs=4|break=1|n_plan=20: -0.502
+    bias: Beta(20,1)|m=20|n_obs=4|break=1|n_plan=5: -0.134
+    bias: Beta(20,1)|m=20|n_obs=4|break=3|n_plan=4: -0.463
+    bias: Beta(20,1)|m=20|n_obs=4|shift=-0.05|n_plan=10: -0.244
+    bias: Beta(20,1)|m=20|n_obs=4|shift=-0.05|n_plan=20: -0.355
+    bias: Beta(20,1)|m=20|n_obs=4|shift=-0.05|n_plan=5: -0.132
+    bias: Beta(20,1)|m=20|n_obs=5|break=1|n_plan=10: -0.291
+    bias: Beta(20,1)|m=20|n_obs=5|break=1|n_plan=20: -0.470
+    bias: Beta(20,1)|m=20|n_obs=5|break=1|n_plan=5: -0.127
+    bias: Beta(20,1)|m=20|n_obs=5|shift=-0.05|n_plan=10: -0.240
+    bias: Beta(20,1)|m=20|n_obs=5|shift=-0.05|n_plan=20: -0.333
+    bias: Beta(20,1)|m=20|n_obs=5|shift=-0.05|n_plan=5: -0.128
+    bias: Beta(20,1)|m=50|n_obs=3|break=1|n_plan=10: -0.161
+    bias: Beta(20,1)|m=50|n_obs=3|break=1|n_plan=20: -0.331
+    bias: Beta(20,1)|m=50|n_obs=3|break=3|n_plan=3: -0.323
+    bias: Beta(20,1)|m=50|n_obs=3|break=3|n_plan=5: -0.504
+    bias: Beta(20,1)|m=50|n_obs=3|shift=-0.05|n_plan=10: -0.387
+    bias: Beta(20,1)|m=50|n_obs=3|shift=-0.05|n_plan=3: -0.215
+    bias: Beta(20,1)|m=50|n_obs=3|shift=-0.05|n_plan=5: -0.328
+    bias: Beta(20,1)|m=50|n_obs=4|break=1|n_plan=10: -0.154
+    bias: Beta(20,1)|m=50|n_obs=4|break=1|n_plan=20: -0.319
+    bias: Beta(20,1)|m=50|n_obs=4|break=3|n_plan=4: -0.415
+    bias: Beta(20,1)|m=50|n_obs=4|break=3|n_plan=5: -0.476
+    bias: Beta(20,1)|m=50|n_obs=4|shift=-0.05|n_plan=10: -0.355
+    bias: Beta(20,1)|m=50|n_obs=4|shift=-0.05|n_plan=4: -0.256
+    bias: Beta(20,1)|m=50|n_obs=4|shift=-0.05|n_plan=5: -0.306
+    bias: Beta(20,1)|m=50|n_obs=5|break=1|n_plan=10: -0.150
+    bias: Beta(20,1)|m=50|n_obs=5|break=1|n_plan=20: -0.303
+    bias: Beta(20,1)|m=50|n_obs=5|break=3|n_plan=5: -0.439
+    bias: Beta(20,1)|m=50|n_obs=5|shift=-0.05|n_plan=10: -0.328
+    bias: Beta(20,1)|m=50|n_obs=5|shift=-0.05|n_plan=5: -0.294
+    bias: Beta(50,1)|m=120|n_obs=3|break=1|n_plan=10: -0.188
+    bias: Beta(50,1)|m=120|n_obs=3|break=1|n_plan=20: -0.388
+    bias: Beta(50,1)|m=120|n_obs=3|break=3|n_plan=3: -0.376
+    bias: Beta(50,1)|m=120|n_obs=3|break=3|n_plan=5: -0.603
+    bias: Beta(50,1)|m=120|n_obs=4|break=1|n_plan=10: -0.186
+    bias: Beta(50,1)|m=120|n_obs=4|break=1|n_plan=20: -0.373
+    bias: Beta(50,1)|m=120|n_obs=4|break=3|n_plan=4: -0.491
+    bias: Beta(50,1)|m=120|n_obs=4|break=3|n_plan=5: -0.592
+    bias: Beta(50,1)|m=120|n_obs=5|break=1|n_plan=10: -0.177
+    bias: Beta(50,1)|m=120|n_obs=5|break=1|n_plan=20: -0.371
+    bias: Beta(50,1)|m=120|n_obs=5|break=3|n_plan=5: -0.568
+    bias: Beta(50,1)|m=20|n_obs=4|break=1|n_plan=10: -0.544
+    bias: Beta(50,1)|m=20|n_obs=4|break=1|n_plan=4: -0.141
+    bias: Beta(50,1)|m=20|n_obs=4|break=1|n_plan=5: -0.231
+    bias: Beta(50,1)|m=20|n_obs=4|shift=-0.05|n_plan=10: -0.437
+    bias: Beta(50,1)|m=20|n_obs=4|shift=-0.05|n_plan=4: -0.162
+    bias: Beta(50,1)|m=20|n_obs=4|shift=-0.05|n_plan=5: -0.226
+    bias: Beta(50,1)|m=20|n_obs=5|break=1|n_plan=10: -0.536
+    bias: Beta(50,1)|m=20|n_obs=5|break=1|n_plan=5: -0.227
+    bias: Beta(50,1)|m=20|n_obs=5|shift=-0.05|n_plan=10: -0.435
+    bias: Beta(50,1)|m=20|n_obs=5|shift=-0.05|n_plan=5: -0.225
+    bias: Beta(50,1)|m=50|n_obs=3|break=1|n_plan=10: -0.361
+    bias: Beta(50,1)|m=50|n_obs=3|break=1|n_plan=20: -0.647
+    bias: Beta(50,1)|m=50|n_obs=3|break=1|n_plan=5: -0.150
+    bias: Beta(50,1)|m=50|n_obs=3|break=3|n_plan=3: -0.559
+    bias: Beta(50,1)|m=50|n_obs=3|shift=-0.05|n_plan=3: -0.374
+    bias: Beta(50,1)|m=50|n_obs=3|shift=-0.05|n_plan=5: -0.528
+    bias: Beta(50,1)|m=50|n_obs=4|break=1|n_plan=10: -0.351
+    bias: Beta(50,1)|m=50|n_obs=4|break=1|n_plan=20: -0.623
+    bias: Beta(50,1)|m=50|n_obs=4|break=1|n_plan=5: -0.140
+    bias: Beta(50,1)|m=50|n_obs=4|break=3|n_plan=4: -0.643
+    bias: Beta(50,1)|m=50|n_obs=4|shift=-0.05|n_plan=4: -0.444
+    bias: Beta(50,1)|m=50|n_obs=4|shift=-0.05|n_plan=5: -0.500
+    bias: Beta(50,1)|m=50|n_obs=5|break=1|n_plan=10: -0.343
+    bias: Beta(50,1)|m=50|n_obs=5|break=1|n_plan=20: -0.603
+    bias: Beta(50,1)|m=50|n_obs=5|break=1|n_plan=5: -0.136
+    bias: Beta(50,1)|m=50|n_obs=5|shift=-0.05|n_plan=5: -0.478
+    bias: Beta(8,1)|m=120|n_obs=3|break=3|n_plan=10: -0.223
+    bias: Beta(8,1)|m=120|n_obs=3|break=3|n_plan=20: -0.349
+    bias: Beta(8,1)|m=120|n_obs=3|break=3|n_plan=5: -0.110
+    bias: Beta(8,1)|m=120|n_obs=3|shift=-0.05|n_plan=3: -0.191
+    bias: Beta(8,1)|m=120|n_obs=3|shift=-0.05|n_plan=5: -0.215
+    bias: Beta(8,1)|m=120|n_obs=4|break=3|n_plan=10: -0.199
+    bias: Beta(8,1)|m=120|n_obs=4|break=3|n_plan=20: -0.322
+    bias: Beta(8,1)|m=120|n_obs=4|break=3|n_plan=5: -0.109
+    bias: Beta(8,1)|m=120|n_obs=4|shift=-0.05|n_plan=4: -0.195
+    bias: Beta(8,1)|m=120|n_obs=4|shift=-0.05|n_plan=5: -0.201
+    bias: Beta(8,1)|m=120|n_obs=5|break=3|n_plan=10: -0.184
+    bias: Beta(8,1)|m=120|n_obs=5|break=3|n_plan=20: -0.287
+    bias: Beta(8,1)|m=120|n_obs=5|shift=-0.05|n_plan=5: -0.180
+    bias: Beta(8,1)|m=20|n_obs=3|break=1|n_plan=10: -0.133
+    bias: Beta(8,1)|m=20|n_obs=3|break=1|n_plan=20: -0.254
+    bias: Beta(8,1)|m=20|n_obs=3|break=3|n_plan=3: -0.251
+    bias: Beta(8,1)|m=20|n_obs=3|break=3|n_plan=5: -0.346
+    bias: Beta(8,1)|m=20|n_obs=3|shift=-0.05|n_plan=10: -0.112
+    bias: Beta(8,1)|m=20|n_obs=3|shift=-0.05|n_plan=20: -0.168
+    bias: Beta(8,1)|m=20|n_obs=4|break=1|n_plan=10: -0.121
+    bias: Beta(8,1)|m=20|n_obs=4|break=1|n_plan=20: -0.231
+    bias: Beta(8,1)|m=20|n_obs=4|break=3|n_plan=4: -0.286
+    bias: Beta(8,1)|m=20|n_obs=4|break=3|n_plan=5: -0.313
+    bias: Beta(8,1)|m=20|n_obs=4|shift=-0.05|n_plan=10: -0.101
+    bias: Beta(8,1)|m=20|n_obs=4|shift=-0.05|n_plan=20: -0.158
+    bias: Beta(8,1)|m=20|n_obs=5|break=1|n_plan=10: -0.115
+    bias: Beta(8,1)|m=20|n_obs=5|break=1|n_plan=20: -0.219
+    bias: Beta(8,1)|m=20|n_obs=5|break=3|n_plan=5: -0.272
+    bias: Beta(8,1)|m=20|n_obs=5|shift=-0.05|n_plan=20: -0.154
+    bias: Beta(8,1)|m=50|n_obs=3|break=1|n_plan=20: -0.120
+    bias: Beta(8,1)|m=50|n_obs=3|break=3|n_plan=10: -0.367
+    bias: Beta(8,1)|m=50|n_obs=3|break=3|n_plan=3: -0.136
+    bias: Beta(8,1)|m=50|n_obs=3|break=3|n_plan=5: -0.231
+    bias: Beta(8,1)|m=50|n_obs=3|shift=-0.05|n_plan=10: -0.199
+    bias: Beta(8,1)|m=50|n_obs=3|shift=-0.05|n_plan=5: -0.144
+    bias: Beta(8,1)|m=50|n_obs=4|break=1|n_plan=20: -0.114
+    bias: Beta(8,1)|m=50|n_obs=4|break=3|n_plan=10: -0.326
+    bias: Beta(8,1)|m=50|n_obs=4|break=3|n_plan=4: -0.170
+    bias: Beta(8,1)|m=50|n_obs=4|break=3|n_plan=5: -0.207
+    bias: Beta(8,1)|m=50|n_obs=4|shift=-0.05|n_plan=10: -0.184
+    bias: Beta(8,1)|m=50|n_obs=4|shift=-0.05|n_plan=4: -0.115
+    bias: Beta(8,1)|m=50|n_obs=4|shift=-0.05|n_plan=5: -0.131
+    bias: Beta(8,1)|m=50|n_obs=5|break=1|n_plan=20: -0.107
+    bias: Beta(8,1)|m=50|n_obs=5|break=3|n_plan=10: -0.287
+    bias: Beta(8,1)|m=50|n_obs=5|break=3|n_plan=5: -0.193
+    bias: Beta(8,1)|m=50|n_obs=5|shift=-0.05|n_plan=10: -0.170
+    bias: Beta(8,1)|m=50|n_obs=5|shift=-0.05|n_plan=5: -0.121
+    bias: Mix90Z|m=120|n_obs=3|break=3|n_plan=10: -0.547
+    bias: Mix90Z|m=120|n_obs=3|break=3|n_plan=5: -0.102
+    bias: Mix90Z|m=120|n_obs=3|shift=-0.05|n_plan=3: -0.323
+    bias: Mix90Z|m=120|n_obs=4|break=3|n_plan=10: -0.562
+    bias: Mix90Z|m=120|n_obs=4|break=3|n_plan=5: -0.127
+    bias: Mix90Z|m=120|n_obs=4|shift=-0.05|n_plan=4: -0.389
+    bias: Mix90Z|m=120|n_obs=5|break=3|n_plan=10: -0.526
+    bias: Mix90Z|m=120|n_obs=5|break=3|n_plan=5: -0.122
+    bias: Mix90Z|m=20|n_obs=4|break=1|n_plan=10: -0.205
+    bias: Mix90Z|m=20|n_obs=4|break=1|n_plan=20: -0.508
+    bias: Mix90Z|m=20|n_obs=4|break=3|n_plan=4: -0.427
+    bias: Mix90Z|m=20|n_obs=4|shift=-0.05|n_plan=10: -0.130
+    bias: Mix90Z|m=20|n_obs=4|shift=-0.05|n_plan=20: -0.349
+    bias: Mix90Z|m=20|n_obs=5|break=1|n_plan=10: -0.257
+    bias: Mix90Z|m=20|n_obs=5|break=1|n_plan=20: -0.504
+    bias: Mix90Z|m=20|n_obs=5|shift=-0.05|n_plan=10: -0.164
+    bias: Mix90Z|m=20|n_obs=5|shift=-0.05|n_plan=20: -0.345
+    bias: Mix90Z|m=50|n_obs=3|break=1|n_plan=20: -0.320
+    bias: Mix90Z|m=50|n_obs=3|break=3|n_plan=3: -0.114
+    bias: Mix90Z|m=50|n_obs=3|break=3|n_plan=5: -0.418
+    bias: Mix90Z|m=50|n_obs=3|shift=-0.05|n_plan=10: -0.376
+    bias: Mix90Z|m=50|n_obs=3|shift=-0.05|n_plan=5: -0.156
+    bias: Mix90Z|m=50|n_obs=4|break=1|n_plan=20: -0.342
+    bias: Mix90Z|m=50|n_obs=4|break=3|n_plan=4: -0.306
+    bias: Mix90Z|m=50|n_obs=4|break=3|n_plan=5: -0.429
+    bias: Mix90Z|m=50|n_obs=4|shift=-0.05|n_plan=10: -0.352
+    bias: Mix90Z|m=50|n_obs=4|shift=-0.05|n_plan=4: -0.113
+    bias: Mix90Z|m=50|n_obs=4|shift=-0.05|n_plan=5: -0.197
+    bias: Mix90Z|m=50|n_obs=5|break=1|n_plan=20: -0.386
+    bias: Mix90Z|m=50|n_obs=5|break=3|n_plan=5: -0.469
+    bias: Mix90Z|m=50|n_obs=5|shift=-0.05|n_plan=5: -0.229
+    bias: Mix95|m=120|n_obs=3|break=1|n_plan=20: -0.381
+    bias: Mix95|m=120|n_obs=3|break=3|n_plan=3: -0.342
+    bias: Mix95|m=120|n_obs=3|break=3|n_plan=5: -0.606
+    bias: Mix95|m=120|n_obs=4|break=1|n_plan=10: -0.170
+    bias: Mix95|m=120|n_obs=4|break=1|n_plan=20: -0.471
+    bias: Mix95|m=120|n_obs=4|break=3|n_plan=4: -0.553
+    bias: Mix95|m=120|n_obs=4|break=3|n_plan=5: -0.654
+    bias: Mix95|m=120|n_obs=5|break=1|n_plan=10: -0.158
+    bias: Mix95|m=120|n_obs=5|break=1|n_plan=20: -0.431
+    bias: Mix95|m=120|n_obs=5|break=3|n_plan=5: -0.625
+    bias: Mix95|m=20|n_obs=4|break=1|n_plan=10: -0.413
+    bias: Mix95|m=20|n_obs=4|shift=-0.05|n_plan=10: -0.328
+    bias: Mix95|m=20|n_obs=4|shift=-0.05|n_plan=20: -0.457
+    bias: Mix95|m=20|n_obs=4|shift=-0.05|n_plan=5: -0.136
+    bias: Mix95|m=20|n_obs=5|break=1|n_plan=10: -0.387
+    bias: Mix95|m=20|n_obs=5|shift=-0.05|n_plan=10: -0.303
+    bias: Mix95|m=20|n_obs=5|shift=-0.05|n_plan=20: -0.409
+    bias: Mix95|m=20|n_obs=5|shift=-0.05|n_plan=5: -0.114
+    bias: Mix95|m=50|n_obs=3|break=1|n_plan=10: -0.271
+    bias: Mix95|m=50|n_obs=3|break=1|n_plan=20: -0.614
+    bias: Mix95|m=50|n_obs=3|break=3|n_plan=3: -0.496
+    bias: Mix95|m=50|n_obs=3|shift=-0.05|n_plan=3: -0.300
+    bias: Mix95|m=50|n_obs=3|shift=-0.05|n_plan=5: -0.487
+    bias: Mix95|m=50|n_obs=4|break=1|n_plan=10: -0.280
+    bias: Mix95|m=50|n_obs=4|break=1|n_plan=20: -0.604
+    bias: Mix95|m=50|n_obs=4|break=3|n_plan=4: -0.620
+    bias: Mix95|m=50|n_obs=4|shift=-0.05|n_plan=4: -0.406
+    bias: Mix95|m=50|n_obs=4|shift=-0.05|n_plan=5: -0.468
+    bias: Mix95|m=50|n_obs=5|break=1|n_plan=10: -0.302
+    bias: Mix95|m=50|n_obs=5|break=1|n_plan=20: -0.613
+    bias: Mix95|m=50|n_obs=5|shift=-0.05|n_plan=5: -0.470
+    bias: Mix|m=120|n_obs=3|break=3|n_plan=10: -0.381
+    bias: Mix|m=120|n_obs=3|break=3|n_plan=5: -0.142
+    bias: Mix|m=120|n_obs=3|shift=-0.05|n_plan=3: -0.296
+    bias: Mix|m=120|n_obs=3|shift=-0.05|n_plan=5: -0.336
+    bias: Mix|m=120|n_obs=4|break=3|n_plan=10: -0.378
+    bias: Mix|m=120|n_obs=4|break=3|n_plan=5: -0.155
+    bias: Mix|m=120|n_obs=4|shift=-0.05|n_plan=4: -0.323
+    bias: Mix|m=120|n_obs=4|shift=-0.05|n_plan=5: -0.315
+    bias: Mix|m=120|n_obs=5|break=3|n_plan=10: -0.340
+    bias: Mix|m=120|n_obs=5|break=3|n_plan=5: -0.133
+    bias: Mix|m=120|n_obs=5|shift=-0.05|n_plan=5: -0.288
+    bias: Mix|m=20|n_obs=3|break=1|n_plan=10: -0.183
+    bias: Mix|m=20|n_obs=3|break=1|n_plan=20: -0.405
+    bias: Mix|m=20|n_obs=3|break=3|n_plan=3: -0.324
+    bias: Mix|m=20|n_obs=3|break=3|n_plan=5: -0.415
+    bias: Mix|m=20|n_obs=3|shift=-0.05|n_plan=10: -0.165
+    bias: Mix|m=20|n_obs=3|shift=-0.05|n_plan=20: -0.301
+    bias: Mix|m=20|n_obs=4|break=1|n_plan=10: -0.189
+    bias: Mix|m=20|n_obs=4|break=1|n_plan=20: -0.390
+    bias: Mix|m=20|n_obs=4|break=3|n_plan=4: -0.397
+    bias: Mix|m=20|n_obs=4|break=3|n_plan=5: -0.381
+    bias: Mix|m=20|n_obs=4|shift=-0.05|n_plan=10: -0.161
+    bias: Mix|m=20|n_obs=4|shift=-0.05|n_plan=20: -0.291
+    bias: Mix|m=20|n_obs=5|break=1|n_plan=10: -0.213
+    bias: Mix|m=20|n_obs=5|break=1|n_plan=20: -0.388
+    bias: Mix|m=20|n_obs=5|break=3|n_plan=5: -0.347
+    bias: Mix|m=20|n_obs=5|shift=-0.05|n_plan=10: -0.172
+    bias: Mix|m=20|n_obs=5|shift=-0.05|n_plan=20: -0.293
+    bias: Mix|m=50|n_obs=3|break=1|n_plan=20: -0.226
+    bias: Mix|m=50|n_obs=3|break=3|n_plan=10: -0.481
+    bias: Mix|m=50|n_obs=3|break=3|n_plan=3: -0.166
+    bias: Mix|m=50|n_obs=3|break=3|n_plan=5: -0.353
+    bias: Mix|m=50|n_obs=3|shift=-0.05|n_plan=10: -0.339
+    bias: Mix|m=50|n_obs=3|shift=-0.05|n_plan=5: -0.202
+    bias: Mix|m=50|n_obs=4|break=1|n_plan=20: -0.250
+    bias: Mix|m=50|n_obs=4|break=3|n_plan=4: -0.290
+    bias: Mix|m=50|n_obs=4|break=3|n_plan=5: -0.375
+    bias: Mix|m=50|n_obs=4|shift=-0.05|n_plan=10: -0.322
+    bias: Mix|m=50|n_obs=4|shift=-0.05|n_plan=4: -0.184
+    bias: Mix|m=50|n_obs=4|shift=-0.05|n_plan=5: -0.232
+    bias: Mix|m=50|n_obs=5|break=1|n_plan=20: -0.243
+    bias: Mix|m=50|n_obs=5|break=3|n_plan=5: -0.358
+    bias: Mix|m=50|n_obs=5|shift=-0.05|n_plan=10: -0.305
+    bias: Mix|m=50|n_obs=5|shift=-0.05|n_plan=5: -0.220
+    bias: Tri|m=120|n_obs=3|shift=-0.05|n_plan=10: +0.178
+    bias: Tri|m=120|n_obs=4|shift=-0.05|n_plan=10: +0.199
+    bias: Tri|m=120|n_obs=5|shift=-0.05|n_plan=10: +0.197
+    bias: Tri|m=20|n_obs=3|break=1|n_plan=20: -0.101
+    bias: Tri|m=20|n_obs=3|break=3|n_plan=10: -0.101
+    bias: Tri|m=20|n_obs=3|shift=-0.05|n_plan=20: +0.133
+    bias: Tri|m=20|n_obs=4|shift=-0.05|n_plan=20: +0.137
+    bias: Tri|m=20|n_obs=5|shift=-0.05|n_plan=20: +0.121
+    bias: Tri|m=50|n_obs=3|break=3|n_plan=20: -0.146
+    bias: Tri|m=50|n_obs=3|shift=-0.05|n_plan=10: +0.188
+    bias: Tri|m=50|n_obs=3|shift=-0.05|n_plan=20: +0.115
+    bias: Tri|m=50|n_obs=4|break=3|n_plan=20: -0.137
+    bias: Tri|m=50|n_obs=4|shift=-0.05|n_plan=10: +0.196
+    bias: Tri|m=50|n_obs=4|shift=-0.05|n_plan=20: +0.137
+    bias: Tri|m=50|n_obs=5|break=3|n_plan=20: -0.123
+    bias: Tri|m=50|n_obs=5|shift=-0.05|n_plan=10: +0.197
+    bias: Tri|m=50|n_obs=5|shift=-0.05|n_plan=20: +0.147
+    mae: Beta(20,1)|m=120|n_obs=3|break=1|n_plan=20: 0.164
+    mae: Beta(20,1)|m=120|n_obs=3|break=3|n_plan=10: 0.528
+    mae: Beta(20,1)|m=120|n_obs=3|break=3|n_plan=3: 0.177
+    mae: Beta(20,1)|m=120|n_obs=3|break=3|n_plan=5: 0.307
+    mae: Beta(20,1)|m=120|n_obs=3|shift=-0.05|n_plan=3: 0.399
+    mae: Beta(20,1)|m=120|n_obs=4|break=1|n_plan=20: 0.156
+    mae: Beta(20,1)|m=120|n_obs=4|break=3|n_plan=10: 0.493
+    mae: Beta(20,1)|m=120|n_obs=4|break=3|n_plan=4: 0.229
+    mae: Beta(20,1)|m=120|n_obs=4|break=3|n_plan=5: 0.290
+    mae: Beta(20,1)|m=120|n_obs=4|shift=-0.05|n_plan=4: 0.380
+    mae: Beta(20,1)|m=120|n_obs=5|break=3|n_plan=10: 0.464
+    mae: Beta(20,1)|m=120|n_obs=5|break=3|n_plan=5: 0.271
+    mae: Beta(20,1)|m=20|n_obs=3|break=1|n_plan=10: 0.306
+    mae: Beta(20,1)|m=20|n_obs=3|break=1|n_plan=20: 0.530
+    mae: Beta(20,1)|m=20|n_obs=3|break=3|n_plan=3: 0.467
+    mae: Beta(20,1)|m=20|n_obs=3|shift=-0.05|n_plan=10: 0.254
+    mae: Beta(20,1)|m=20|n_obs=3|shift=-0.05|n_plan=20: 0.369
+    mae: Beta(20,1)|m=20|n_obs=4|break=1|n_plan=10: 0.300
+    mae: Beta(20,1)|m=20|n_obs=4|break=1|n_plan=20: 0.502
+    mae: Beta(20,1)|m=20|n_obs=4|break=3|n_plan=4: 0.463
+    mae: Beta(20,1)|m=20|n_obs=4|shift=-0.05|n_plan=10: 0.244
+    mae: Beta(20,1)|m=20|n_obs=4|shift=-0.05|n_plan=20: 0.355
+    mae: Beta(20,1)|m=20|n_obs=5|break=1|n_plan=10: 0.291
+    mae: Beta(20,1)|m=20|n_obs=5|break=1|n_plan=20: 0.470
+    mae: Beta(20,1)|m=20|n_obs=5|shift=-0.05|n_plan=10: 0.240
+    mae: Beta(20,1)|m=20|n_obs=5|shift=-0.05|n_plan=20: 0.333
+    mae: Beta(20,1)|m=50|n_obs=3|break=1|n_plan=10: 0.161
+    mae: Beta(20,1)|m=50|n_obs=3|break=1|n_plan=20: 0.331
+    mae: Beta(20,1)|m=50|n_obs=3|break=3|n_plan=3: 0.323
+    mae: Beta(20,1)|m=50|n_obs=3|break=3|n_plan=5: 0.504
+    mae: Beta(20,1)|m=50|n_obs=3|shift=-0.05|n_plan=10: 0.387
+    mae: Beta(20,1)|m=50|n_obs=3|shift=-0.05|n_plan=3: 0.215
+    mae: Beta(20,1)|m=50|n_obs=3|shift=-0.05|n_plan=5: 0.328
+    mae: Beta(20,1)|m=50|n_obs=4|break=1|n_plan=10: 0.154
+    mae: Beta(20,1)|m=50|n_obs=4|break=1|n_plan=20: 0.319
+    mae: Beta(20,1)|m=50|n_obs=4|break=3|n_plan=4: 0.415
+    mae: Beta(20,1)|m=50|n_obs=4|break=3|n_plan=5: 0.476
+    mae: Beta(20,1)|m=50|n_obs=4|shift=-0.05|n_plan=10: 0.355
+    mae: Beta(20,1)|m=50|n_obs=4|shift=-0.05|n_plan=4: 0.256
+    mae: Beta(20,1)|m=50|n_obs=4|shift=-0.05|n_plan=5: 0.306
+    mae: Beta(20,1)|m=50|n_obs=5|break=1|n_plan=10: 0.150
+    mae: Beta(20,1)|m=50|n_obs=5|break=1|n_plan=20: 0.303
+    mae: Beta(20,1)|m=50|n_obs=5|break=3|n_plan=5: 0.439
+    mae: Beta(20,1)|m=50|n_obs=5|shift=-0.05|n_plan=10: 0.328
+    mae: Beta(20,1)|m=50|n_obs=5|shift=-0.05|n_plan=5: 0.294
+    mae: Beta(50,1)|m=120|n_obs=3|break=1|n_plan=10: 0.188
+    mae: Beta(50,1)|m=120|n_obs=3|break=1|n_plan=20: 0.388
+    mae: Beta(50,1)|m=120|n_obs=3|break=3|n_plan=3: 0.376
+    mae: Beta(50,1)|m=120|n_obs=3|break=3|n_plan=5: 0.603
+    mae: Beta(50,1)|m=120|n_obs=4|break=1|n_plan=10: 0.186
+    mae: Beta(50,1)|m=120|n_obs=4|break=1|n_plan=20: 0.373
+    mae: Beta(50,1)|m=120|n_obs=4|break=3|n_plan=4: 0.491
+    mae: Beta(50,1)|m=120|n_obs=4|break=3|n_plan=5: 0.592
+    mae: Beta(50,1)|m=120|n_obs=5|break=1|n_plan=10: 0.177
+    mae: Beta(50,1)|m=120|n_obs=5|break=1|n_plan=20: 0.371
+    mae: Beta(50,1)|m=120|n_obs=5|break=3|n_plan=5: 0.568
+    mae: Beta(50,1)|m=20|n_obs=4|break=1|n_plan=10: 0.544
+    mae: Beta(50,1)|m=20|n_obs=4|break=1|n_plan=5: 0.231
+    mae: Beta(50,1)|m=20|n_obs=4|shift=-0.05|n_plan=10: 0.437
+    mae: Beta(50,1)|m=20|n_obs=4|shift=-0.05|n_plan=4: 0.162
+    mae: Beta(50,1)|m=20|n_obs=4|shift=-0.05|n_plan=5: 0.226
+    mae: Beta(50,1)|m=20|n_obs=5|break=1|n_plan=10: 0.536
+    mae: Beta(50,1)|m=20|n_obs=5|break=1|n_plan=5: 0.227
+    mae: Beta(50,1)|m=20|n_obs=5|shift=-0.05|n_plan=10: 0.435
+    mae: Beta(50,1)|m=20|n_obs=5|shift=-0.05|n_plan=5: 0.225
+    mae: Beta(50,1)|m=50|n_obs=3|break=1|n_plan=10: 0.361
+    mae: Beta(50,1)|m=50|n_obs=3|break=1|n_plan=20: 0.647
+    mae: Beta(50,1)|m=50|n_obs=3|break=1|n_plan=5: 0.150
+    mae: Beta(50,1)|m=50|n_obs=3|break=3|n_plan=3: 0.559
+    mae: Beta(50,1)|m=50|n_obs=3|shift=-0.05|n_plan=3: 0.374
+    mae: Beta(50,1)|m=50|n_obs=3|shift=-0.05|n_plan=5: 0.528
+    mae: Beta(50,1)|m=50|n_obs=4|break=1|n_plan=10: 0.351
+    mae: Beta(50,1)|m=50|n_obs=4|break=1|n_plan=20: 0.623
+    mae: Beta(50,1)|m=50|n_obs=4|break=3|n_plan=4: 0.643
+    mae: Beta(50,1)|m=50|n_obs=4|shift=-0.05|n_plan=4: 0.444
+    mae: Beta(50,1)|m=50|n_obs=4|shift=-0.05|n_plan=5: 0.500
+    mae: Beta(50,1)|m=50|n_obs=5|break=1|n_plan=10: 0.343
+    mae: Beta(50,1)|m=50|n_obs=5|break=1|n_plan=20: 0.603
+    mae: Beta(50,1)|m=50|n_obs=5|shift=-0.05|n_plan=5: 0.478
+    mae: Beta(8,1)|m=120|n_obs=3|break=3|n_plan=10: 0.223
+    mae: Beta(8,1)|m=120|n_obs=3|break=3|n_plan=20: 0.349
+    mae: Beta(8,1)|m=120|n_obs=3|shift=-0.05|n_plan=3: 0.191
+    mae: Beta(8,1)|m=120|n_obs=3|shift=-0.05|n_plan=5: 0.215
+    mae: Beta(8,1)|m=120|n_obs=4|break=3|n_plan=10: 0.199
+    mae: Beta(8,1)|m=120|n_obs=4|break=3|n_plan=20: 0.322
+    mae: Beta(8,1)|m=120|n_obs=4|shift=-0.05|n_plan=4: 0.195
+    mae: Beta(8,1)|m=120|n_obs=4|shift=-0.05|n_plan=5: 0.201
+    mae: Beta(8,1)|m=120|n_obs=5|break=3|n_plan=10: 0.184
+    mae: Beta(8,1)|m=120|n_obs=5|break=3|n_plan=20: 0.287
+    mae: Beta(8,1)|m=120|n_obs=5|shift=-0.05|n_plan=5: 0.180
+    mae: Beta(8,1)|m=20|n_obs=3|break=1|n_plan=20: 0.254
+    mae: Beta(8,1)|m=20|n_obs=3|break=3|n_plan=3: 0.251
+    mae: Beta(8,1)|m=20|n_obs=3|break=3|n_plan=5: 0.346
+    mae: Beta(8,1)|m=20|n_obs=3|shift=-0.05|n_plan=20: 0.168
+    mae: Beta(8,1)|m=20|n_obs=4|break=1|n_plan=20: 0.231
+    mae: Beta(8,1)|m=20|n_obs=4|break=3|n_plan=4: 0.286
+    mae: Beta(8,1)|m=20|n_obs=4|break=3|n_plan=5: 0.313
+    mae: Beta(8,1)|m=20|n_obs=4|shift=-0.05|n_plan=20: 0.159
+    mae: Beta(8,1)|m=20|n_obs=5|break=1|n_plan=20: 0.219
+    mae: Beta(8,1)|m=20|n_obs=5|break=3|n_plan=5: 0.272
+    mae: Beta(8,1)|m=20|n_obs=5|shift=-0.05|n_plan=20: 0.154
+    mae: Beta(8,1)|m=50|n_obs=3|break=3|n_plan=10: 0.367
+    mae: Beta(8,1)|m=50|n_obs=3|break=3|n_plan=5: 0.231
+    mae: Beta(8,1)|m=50|n_obs=3|shift=-0.05|n_plan=10: 0.199
+    mae: Beta(8,1)|m=50|n_obs=4|break=3|n_plan=10: 0.326
+    mae: Beta(8,1)|m=50|n_obs=4|break=3|n_plan=4: 0.170
+    mae: Beta(8,1)|m=50|n_obs=4|break=3|n_plan=5: 0.207
+    mae: Beta(8,1)|m=50|n_obs=4|shift=-0.05|n_plan=10: 0.184
+    mae: Beta(8,1)|m=50|n_obs=5|break=3|n_plan=10: 0.287
+    mae: Beta(8,1)|m=50|n_obs=5|break=3|n_plan=5: 0.193
+    mae: Beta(8,1)|m=50|n_obs=5|shift=-0.05|n_plan=10: 0.170
+    mae: Mix90Z|m=120|n_obs=3|break=3|n_plan=10: 0.547
+    mae: Mix90Z|m=120|n_obs=3|shift=-0.05|n_plan=3: 0.323
+    mae: Mix90Z|m=120|n_obs=4|break=3|n_plan=10: 0.562
+    mae: Mix90Z|m=120|n_obs=4|shift=-0.05|n_plan=4: 0.389
+    mae: Mix90Z|m=120|n_obs=5|break=3|n_plan=10: 0.526
+    mae: Mix90Z|m=20|n_obs=4|break=1|n_plan=10: 0.205
+    mae: Mix90Z|m=20|n_obs=4|break=1|n_plan=20: 0.508
+    mae: Mix90Z|m=20|n_obs=4|break=3|n_plan=4: 0.427
+    mae: Mix90Z|m=20|n_obs=4|shift=-0.05|n_plan=20: 0.349
+    mae: Mix90Z|m=20|n_obs=5|break=1|n_plan=10: 0.262
+    mae: Mix90Z|m=20|n_obs=5|break=1|n_plan=20: 0.504
+    mae: Mix90Z|m=20|n_obs=5|shift=-0.05|n_plan=10: 0.180
+    mae: Mix90Z|m=20|n_obs=5|shift=-0.05|n_plan=20: 0.345
+    mae: Mix90Z|m=50|n_obs=3|break=1|n_plan=20: 0.320
+    mae: Mix90Z|m=50|n_obs=3|break=3|n_plan=5: 0.418
+    mae: Mix90Z|m=50|n_obs=3|shift=-0.05|n_plan=10: 0.376
+    mae: Mix90Z|m=50|n_obs=3|shift=-0.05|n_plan=5: 0.167
+    mae: Mix90Z|m=50|n_obs=4|break=1|n_plan=20: 0.342
+    mae: Mix90Z|m=50|n_obs=4|break=3|n_plan=4: 0.311
+    mae: Mix90Z|m=50|n_obs=4|break=3|n_plan=5: 0.429
+    mae: Mix90Z|m=50|n_obs=4|shift=-0.05|n_plan=10: 0.352
+    mae: Mix90Z|m=50|n_obs=4|shift=-0.05|n_plan=5: 0.214
+    mae: Mix90Z|m=50|n_obs=5|break=1|n_plan=20: 0.386
+    mae: Mix90Z|m=50|n_obs=5|break=3|n_plan=5: 0.469
+    mae: Mix90Z|m=50|n_obs=5|shift=-0.05|n_plan=5: 0.234
+    mae: Mix95|m=120|n_obs=3|break=1|n_plan=20: 0.381
+    mae: Mix95|m=120|n_obs=3|break=3|n_plan=3: 0.342
+    mae: Mix95|m=120|n_obs=3|break=3|n_plan=5: 0.606
+    mae: Mix95|m=120|n_obs=4|break=1|n_plan=10: 0.170
+    mae: Mix95|m=120|n_obs=4|break=1|n_plan=20: 0.471
+    mae: Mix95|m=120|n_obs=4|break=3|n_plan=4: 0.553
+    mae: Mix95|m=120|n_obs=4|break=3|n_plan=5: 0.654
+    mae: Mix95|m=120|n_obs=5|break=1|n_plan=10: 0.158
+    mae: Mix95|m=120|n_obs=5|break=1|n_plan=20: 0.431
+    mae: Mix95|m=120|n_obs=5|break=3|n_plan=5: 0.625
+    mae: Mix95|m=20|n_obs=4|break=1|n_plan=10: 0.413
+    mae: Mix95|m=20|n_obs=4|shift=-0.05|n_plan=10: 0.328
+    mae: Mix95|m=20|n_obs=4|shift=-0.05|n_plan=20: 0.457
+    mae: Mix95|m=20|n_obs=5|break=1|n_plan=10: 0.387
+    mae: Mix95|m=20|n_obs=5|shift=-0.05|n_plan=10: 0.303
+    mae: Mix95|m=20|n_obs=5|shift=-0.05|n_plan=20: 0.409
+    mae: Mix95|m=50|n_obs=3|break=1|n_plan=10: 0.271
+    mae: Mix95|m=50|n_obs=3|break=1|n_plan=20: 0.614
+    mae: Mix95|m=50|n_obs=3|break=3|n_plan=3: 0.496
+    mae: Mix95|m=50|n_obs=3|shift=-0.05|n_plan=3: 0.300
+    mae: Mix95|m=50|n_obs=3|shift=-0.05|n_plan=5: 0.487
+    mae: Mix95|m=50|n_obs=4|break=1|n_plan=10: 0.280
+    mae: Mix95|m=50|n_obs=4|break=1|n_plan=20: 0.604
+    mae: Mix95|m=50|n_obs=4|break=3|n_plan=4: 0.620
+    mae: Mix95|m=50|n_obs=4|shift=-0.05|n_plan=4: 0.406
+    mae: Mix95|m=50|n_obs=4|shift=-0.05|n_plan=5: 0.468
+    mae: Mix95|m=50|n_obs=5|break=1|n_plan=10: 0.302
+    mae: Mix95|m=50|n_obs=5|break=1|n_plan=20: 0.613
+    mae: Mix95|m=50|n_obs=5|shift=-0.05|n_plan=5: 0.470
+    mae: Mix|m=120|n_obs=3|break=3|n_plan=10: 0.381
+    mae: Mix|m=120|n_obs=3|shift=-0.05|n_plan=3: 0.296
+    mae: Mix|m=120|n_obs=3|shift=-0.05|n_plan=5: 0.336
+    mae: Mix|m=120|n_obs=4|break=3|n_plan=10: 0.378
+    mae: Mix|m=120|n_obs=4|break=3|n_plan=5: 0.155
+    mae: Mix|m=120|n_obs=4|shift=-0.05|n_plan=4: 0.323
+    mae: Mix|m=120|n_obs=4|shift=-0.05|n_plan=5: 0.315
+    mae: Mix|m=120|n_obs=5|break=3|n_plan=10: 0.340
+    mae: Mix|m=120|n_obs=5|shift=-0.05|n_plan=5: 0.288
+    mae: Mix|m=20|n_obs=3|break=1|n_plan=10: 0.183
+    mae: Mix|m=20|n_obs=3|break=1|n_plan=20: 0.405
+    mae: Mix|m=20|n_obs=3|break=3|n_plan=3: 0.324
+    mae: Mix|m=20|n_obs=3|break=3|n_plan=5: 0.415
+    mae: Mix|m=20|n_obs=3|shift=-0.05|n_plan=10: 0.165
+    mae: Mix|m=20|n_obs=3|shift=-0.05|n_plan=20: 0.301
+    mae: Mix|m=20|n_obs=4|break=1|n_plan=10: 0.190
+    mae: Mix|m=20|n_obs=4|break=1|n_plan=20: 0.390
+    mae: Mix|m=20|n_obs=4|break=3|n_plan=4: 0.397
+    mae: Mix|m=20|n_obs=4|break=3|n_plan=5: 0.381
+    mae: Mix|m=20|n_obs=4|shift=-0.05|n_plan=10: 0.161
+    mae: Mix|m=20|n_obs=4|shift=-0.05|n_plan=20: 0.291
+    mae: Mix|m=20|n_obs=5|break=1|n_plan=10: 0.213
+    mae: Mix|m=20|n_obs=5|break=1|n_plan=20: 0.388
+    mae: Mix|m=20|n_obs=5|break=3|n_plan=5: 0.347
+    mae: Mix|m=20|n_obs=5|shift=-0.05|n_plan=10: 0.173
+    mae: Mix|m=20|n_obs=5|shift=-0.05|n_plan=20: 0.293
+    mae: Mix|m=50|n_obs=3|break=1|n_plan=20: 0.226
+    mae: Mix|m=50|n_obs=3|break=3|n_plan=10: 0.481
+    mae: Mix|m=50|n_obs=3|break=3|n_plan=3: 0.166
+    mae: Mix|m=50|n_obs=3|break=3|n_plan=5: 0.353
+    mae: Mix|m=50|n_obs=3|shift=-0.05|n_plan=10: 0.339
+    mae: Mix|m=50|n_obs=3|shift=-0.05|n_plan=5: 0.202
+    mae: Mix|m=50|n_obs=4|break=1|n_plan=20: 0.250
+    mae: Mix|m=50|n_obs=4|break=3|n_plan=4: 0.290
+    mae: Mix|m=50|n_obs=4|break=3|n_plan=5: 0.375
+    mae: Mix|m=50|n_obs=4|shift=-0.05|n_plan=10: 0.322
+    mae: Mix|m=50|n_obs=4|shift=-0.05|n_plan=4: 0.184
+    mae: Mix|m=50|n_obs=4|shift=-0.05|n_plan=5: 0.232
+    mae: Mix|m=50|n_obs=5|break=1|n_plan=20: 0.243
+    mae: Mix|m=50|n_obs=5|break=3|n_plan=5: 0.358
+    mae: Mix|m=50|n_obs=5|shift=-0.05|n_plan=10: 0.305
+    mae: Mix|m=50|n_obs=5|shift=-0.05|n_plan=5: 0.220
+    mae: Tri|m=120|n_obs=3|shift=-0.05|n_plan=10: 0.178
+    mae: Tri|m=120|n_obs=4|shift=-0.05|n_plan=10: 0.199
+    mae: Tri|m=120|n_obs=5|shift=-0.05|n_plan=10: 0.197
+    mae: Tri|m=50|n_obs=3|shift=-0.05|n_plan=10: 0.188
+    mae: Tri|m=50|n_obs=4|shift=-0.05|n_plan=10: 0.196
+    mae: Tri|m=50|n_obs=5|shift=-0.05|n_plan=10: 0.197
+    p90: Beta(20,1)|m=120|n_obs=3|break=3|n_plan=10: 0.582
+    p90: Beta(20,1)|m=120|n_obs=3|break=3|n_plan=3: 0.208
+    p90: Beta(20,1)|m=120|n_obs=3|break=3|n_plan=5: 0.348
+    p90: Beta(20,1)|m=120|n_obs=3|shift=-0.05|n_plan=3: 0.458
+    p90: Beta(20,1)|m=120|n_obs=4|break=3|n_plan=10: 0.549
+    p90: Beta(20,1)|m=120|n_obs=4|break=3|n_plan=4: 0.263
+    p90: Beta(20,1)|m=120|n_obs=4|break=3|n_plan=5: 0.331
+    p90: Beta(20,1)|m=120|n_obs=4|shift=-0.05|n_plan=4: 0.431
+    p90: Beta(20,1)|m=120|n_obs=5|break=3|n_plan=10: 0.525
+    p90: Beta(20,1)|m=120|n_obs=5|break=3|n_plan=5: 0.317
+    p90: Beta(20,1)|m=20|n_obs=3|break=1|n_plan=10: 0.376
+    p90: Beta(20,1)|m=20|n_obs=3|break=1|n_plan=20: 0.617
+    p90: Beta(20,1)|m=20|n_obs=3|break=3|n_plan=3: 0.542
+    p90: Beta(20,1)|m=20|n_obs=3|shift=-0.05|n_plan=10: 0.320
+    p90: Beta(20,1)|m=20|n_obs=3|shift=-0.05|n_plan=20: 0.448
+    p90: Beta(20,1)|m=20|n_obs=4|break=1|n_plan=10: 0.379
+    p90: Beta(20,1)|m=20|n_obs=4|break=1|n_plan=20: 0.567
+    p90: Beta(20,1)|m=20|n_obs=4|break=3|n_plan=4: 0.523
+    p90: Beta(20,1)|m=20|n_obs=4|shift=-0.05|n_plan=10: 0.291
+    p90: Beta(20,1)|m=20|n_obs=4|shift=-0.05|n_plan=20: 0.430
+    p90: Beta(20,1)|m=20|n_obs=5|break=1|n_plan=10: 0.389
+    p90: Beta(20,1)|m=20|n_obs=5|break=1|n_plan=20: 0.560
+    p90: Beta(20,1)|m=20|n_obs=5|shift=-0.05|n_plan=10: 0.306
+    p90: Beta(20,1)|m=20|n_obs=5|shift=-0.05|n_plan=20: 0.416
+    p90: Beta(20,1)|m=50|n_obs=3|break=1|n_plan=10: 0.211
+    p90: Beta(20,1)|m=50|n_obs=3|break=1|n_plan=20: 0.392
+    p90: Beta(20,1)|m=50|n_obs=3|break=3|n_plan=3: 0.381
+    p90: Beta(20,1)|m=50|n_obs=3|break=3|n_plan=5: 0.589
+    p90: Beta(20,1)|m=50|n_obs=3|shift=-0.05|n_plan=10: 0.439
+    p90: Beta(20,1)|m=50|n_obs=3|shift=-0.05|n_plan=3: 0.255
+    p90: Beta(20,1)|m=50|n_obs=3|shift=-0.05|n_plan=5: 0.401
+    p90: Beta(20,1)|m=50|n_obs=4|break=1|n_plan=20: 0.391
+    p90: Beta(20,1)|m=50|n_obs=4|break=3|n_plan=4: 0.477
+    p90: Beta(20,1)|m=50|n_obs=4|break=3|n_plan=5: 0.537
+    p90: Beta(20,1)|m=50|n_obs=4|shift=-0.05|n_plan=10: 0.407
+    p90: Beta(20,1)|m=50|n_obs=4|shift=-0.05|n_plan=4: 0.298
+    p90: Beta(20,1)|m=50|n_obs=4|shift=-0.05|n_plan=5: 0.354
+    p90: Beta(20,1)|m=50|n_obs=5|break=1|n_plan=20: 0.379
+    p90: Beta(20,1)|m=50|n_obs=5|break=3|n_plan=5: 0.503
+    p90: Beta(20,1)|m=50|n_obs=5|shift=-0.05|n_plan=10: 0.377
+    p90: Beta(20,1)|m=50|n_obs=5|shift=-0.05|n_plan=5: 0.365
+    p90: Beta(50,1)|m=120|n_obs=3|break=1|n_plan=10: 0.214
+    p90: Beta(50,1)|m=120|n_obs=3|break=1|n_plan=20: 0.436
+    p90: Beta(50,1)|m=120|n_obs=3|break=3|n_plan=3: 0.417
+    p90: Beta(50,1)|m=120|n_obs=3|break=3|n_plan=5: 0.650
+    p90: Beta(50,1)|m=120|n_obs=4|break=1|n_plan=10: 0.218
+    p90: Beta(50,1)|m=120|n_obs=4|break=1|n_plan=20: 0.419
+    p90: Beta(50,1)|m=120|n_obs=4|break=3|n_plan=4: 0.542
+    p90: Beta(50,1)|m=120|n_obs=4|break=3|n_plan=5: 0.640
+    p90: Beta(50,1)|m=120|n_obs=5|break=1|n_plan=10: 0.205
+    p90: Beta(50,1)|m=120|n_obs=5|break=1|n_plan=20: 0.417
+    p90: Beta(50,1)|m=120|n_obs=5|break=3|n_plan=5: 0.622
+    p90: Beta(50,1)|m=50|n_obs=4|break=1|n_plan=10: 0.428
+    p90: Beta(50,1)|m=50|n_obs=4|break=1|n_plan=20: 0.686
+    p90: Beta(50,1)|m=50|n_obs=4|break=3|n_plan=4: 0.682
+    p90: Beta(50,1)|m=50|n_obs=4|shift=-0.05|n_plan=4: 0.494
+    p90: Beta(50,1)|m=50|n_obs=4|shift=-0.05|n_plan=5: 0.544
+    p90: Beta(50,1)|m=50|n_obs=5|break=1|n_plan=10: 0.401
+    p90: Beta(50,1)|m=50|n_obs=5|break=1|n_plan=20: 0.672
+    p90: Beta(50,1)|m=50|n_obs=5|shift=-0.05|n_plan=5: 0.531
+    p90: Beta(8,1)|m=120|n_obs=3|break=3|n_plan=10: 0.273
+    p90: Beta(8,1)|m=120|n_obs=3|break=3|n_plan=20: 0.410
+    p90: Beta(8,1)|m=120|n_obs=3|shift=-0.05|n_plan=3: 0.247
+    p90: Beta(8,1)|m=120|n_obs=3|shift=-0.05|n_plan=5: 0.271
+    p90: Beta(8,1)|m=120|n_obs=4|break=3|n_plan=10: 0.241
+    p90: Beta(8,1)|m=120|n_obs=4|break=3|n_plan=20: 0.364
+    p90: Beta(8,1)|m=120|n_obs=4|shift=-0.05|n_plan=4: 0.250
+    p90: Beta(8,1)|m=120|n_obs=4|shift=-0.05|n_plan=5: 0.245
+    p90: Beta(8,1)|m=120|n_obs=5|break=3|n_plan=10: 0.243
+    p90: Beta(8,1)|m=120|n_obs=5|break=3|n_plan=20: 0.352
+    p90: Beta(8,1)|m=120|n_obs=5|shift=-0.05|n_plan=5: 0.242
+    p90: Beta(8,1)|m=20|n_obs=3|break=1|n_plan=20: 0.339
+    p90: Beta(8,1)|m=20|n_obs=3|break=3|n_plan=3: 0.327
+    p90: Beta(8,1)|m=20|n_obs=3|break=3|n_plan=5: 0.452
+    p90: Beta(8,1)|m=20|n_obs=3|shift=-0.05|n_plan=20: 0.240
+    p90: Beta(8,1)|m=20|n_obs=4|break=1|n_plan=20: 0.333
+    p90: Beta(8,1)|m=20|n_obs=4|break=3|n_plan=4: 0.365
+    p90: Beta(8,1)|m=20|n_obs=4|break=3|n_plan=5: 0.393
+    p90: Beta(8,1)|m=20|n_obs=4|shift=-0.05|n_plan=20: 0.236
+    p90: Beta(8,1)|m=20|n_obs=5|break=1|n_plan=20: 0.320
+    p90: Beta(8,1)|m=20|n_obs=5|break=3|n_plan=5: 0.387
+    p90: Beta(8,1)|m=20|n_obs=5|shift=-0.05|n_plan=20: 0.222
+    p90: Beta(8,1)|m=50|n_obs=3|break=3|n_plan=10: 0.446
+    p90: Beta(8,1)|m=50|n_obs=3|break=3|n_plan=5: 0.281
+    p90: Beta(8,1)|m=50|n_obs=3|shift=-0.05|n_plan=10: 0.263
+    p90: Beta(8,1)|m=50|n_obs=4|break=3|n_plan=10: 0.386
+    p90: Beta(8,1)|m=50|n_obs=4|break=3|n_plan=4: 0.223
+    p90: Beta(8,1)|m=50|n_obs=4|break=3|n_plan=5: 0.253
+    p90: Beta(8,1)|m=50|n_obs=4|shift=-0.05|n_plan=10: 0.239
+    p90: Beta(8,1)|m=50|n_obs=5|break=3|n_plan=10: 0.356
+    p90: Beta(8,1)|m=50|n_obs=5|break=3|n_plan=5: 0.255
+    p90: Beta(8,1)|m=50|n_obs=5|shift=-0.05|n_plan=10: 0.224
+    p90: Mix90Z|m=120|n_obs=3|break=3|n_plan=10: 0.686
+    p90: Mix90Z|m=120|n_obs=3|break=3|n_plan=5: 0.276
+    p90: Mix90Z|m=120|n_obs=3|shift=-0.05|n_plan=3: 0.473
+    p90: Mix90Z|m=120|n_obs=4|break=3|n_plan=10: 0.688
+    p90: Mix90Z|m=120|n_obs=4|break=3|n_plan=5: 0.321
+    p90: Mix90Z|m=120|n_obs=4|shift=-0.05|n_plan=4: 0.471
+    p90: Mix90Z|m=120|n_obs=5|break=3|n_plan=10: 0.668
+    p90: Mix90Z|m=120|n_obs=5|break=3|n_plan=5: 0.375
+    p90: Mix90Z|m=50|n_obs=4|break=1|n_plan=20: 0.573
+    p90: Mix90Z|m=50|n_obs=4|break=3|n_plan=4: 0.586
+    p90: Mix90Z|m=50|n_obs=4|break=3|n_plan=5: 0.638
+    p90: Mix90Z|m=50|n_obs=4|shift=-0.05|n_plan=10: 0.450
+    p90: Mix90Z|m=50|n_obs=4|shift=-0.05|n_plan=4: 0.321
+    p90: Mix90Z|m=50|n_obs=4|shift=-0.05|n_plan=5: 0.402
+    p90: Mix90Z|m=50|n_obs=5|break=1|n_plan=20: 0.662
+    p90: Mix90Z|m=50|n_obs=5|break=3|n_plan=5: 0.651
+    p90: Mix90Z|m=50|n_obs=5|shift=-0.05|n_plan=5: 0.432
+    p90: Mix95|m=120|n_obs=3|break=1|n_plan=20: 0.566
+    p90: Mix95|m=120|n_obs=3|break=3|n_plan=3: 0.509
+    p90: Mix95|m=120|n_obs=3|break=3|n_plan=5: 0.774
+    p90: Mix95|m=120|n_obs=4|break=1|n_plan=10: 0.358
+    p90: Mix95|m=120|n_obs=4|break=1|n_plan=20: 0.760
+    p90: Mix95|m=120|n_obs=4|break=3|n_plan=4: 0.789
+    p90: Mix95|m=120|n_obs=4|break=3|n_plan=5: 0.838
+    p90: Mix95|m=120|n_obs=5|break=1|n_plan=10: 0.292
+    p90: Mix95|m=120|n_obs=5|break=1|n_plan=20: 0.684
+    p90: Mix95|m=120|n_obs=5|break=3|n_plan=5: 0.804
+    p90: Mix95|m=50|n_obs=4|break=1|n_plan=10: 0.538
+    p90: Mix95|m=50|n_obs=4|break=1|n_plan=20: 0.784
+    p90: Mix95|m=50|n_obs=4|break=3|n_plan=4: 0.780
+    p90: Mix95|m=50|n_obs=4|shift=-0.05|n_plan=4: 0.545
+    p90: Mix95|m=50|n_obs=4|shift=-0.05|n_plan=5: 0.599
+    p90: Mix95|m=50|n_obs=5|break=1|n_plan=10: 0.536
+    p90: Mix95|m=50|n_obs=5|break=1|n_plan=20: 0.777
+    p90: Mix95|m=50|n_obs=5|shift=-0.05|n_plan=5: 0.590
+    p90: Mix|m=120|n_obs=3|break=3|n_plan=10: 0.494
+    p90: Mix|m=120|n_obs=3|break=3|n_plan=5: 0.207
+    p90: Mix|m=120|n_obs=3|shift=-0.05|n_plan=3: 0.392
+    p90: Mix|m=120|n_obs=3|shift=-0.05|n_plan=5: 0.400
+    p90: Mix|m=120|n_obs=4|break=3|n_plan=10: 0.497
+    p90: Mix|m=120|n_obs=4|break=3|n_plan=5: 0.228
+    p90: Mix|m=120|n_obs=4|shift=-0.05|n_plan=4: 0.386
+    p90: Mix|m=120|n_obs=4|shift=-0.05|n_plan=5: 0.378
+    p90: Mix|m=120|n_obs=5|break=3|n_plan=10: 0.447
+    p90: Mix|m=120|n_obs=5|break=3|n_plan=5: 0.211
+    p90: Mix|m=120|n_obs=5|shift=-0.05|n_plan=5: 0.347
+    p90: Mix|m=20|n_obs=3|break=1|n_plan=10: 0.335
+    p90: Mix|m=20|n_obs=3|break=1|n_plan=20: 0.583
+    p90: Mix|m=20|n_obs=3|break=3|n_plan=3: 0.499
+    p90: Mix|m=20|n_obs=3|break=3|n_plan=5: 0.493
+    p90: Mix|m=20|n_obs=3|shift=-0.05|n_plan=10: 0.297
+    p90: Mix|m=20|n_obs=3|shift=-0.05|n_plan=20: 0.440
+    p90: Mix|m=20|n_obs=4|break=1|n_plan=10: 0.334
+    p90: Mix|m=20|n_obs=4|break=1|n_plan=20: 0.542
+    p90: Mix|m=20|n_obs=4|break=3|n_plan=4: 0.510
+    p90: Mix|m=20|n_obs=4|break=3|n_plan=5: 0.451
+    p90: Mix|m=20|n_obs=4|shift=-0.05|n_plan=10: 0.289
+    p90: Mix|m=20|n_obs=4|shift=-0.05|n_plan=20: 0.408
+    p90: Mix|m=20|n_obs=5|break=1|n_plan=10: 0.381
+    p90: Mix|m=20|n_obs=5|break=1|n_plan=20: 0.551
+    p90: Mix|m=20|n_obs=5|break=3|n_plan=5: 0.412
+    p90: Mix|m=20|n_obs=5|shift=-0.05|n_plan=10: 0.311
+    p90: Mix|m=20|n_obs=5|shift=-0.05|n_plan=20: 0.442
+    p90: Mix|m=50|n_obs=3|break=1|n_plan=20: 0.354
+    p90: Mix|m=50|n_obs=3|break=3|n_plan=10: 0.556
+    p90: Mix|m=50|n_obs=3|break=3|n_plan=3: 0.271
+    p90: Mix|m=50|n_obs=3|break=3|n_plan=5: 0.504
+    p90: Mix|m=50|n_obs=3|shift=-0.05|n_plan=10: 0.441
+    p90: Mix|m=50|n_obs=3|shift=-0.05|n_plan=5: 0.315
+    p90: Mix|m=50|n_obs=4|break=1|n_plan=20: 0.435
+    p90: Mix|m=50|n_obs=4|break=3|n_plan=4: 0.504
+    p90: Mix|m=50|n_obs=4|break=3|n_plan=5: 0.575
+    p90: Mix|m=50|n_obs=4|shift=-0.05|n_plan=10: 0.417
+    p90: Mix|m=50|n_obs=4|shift=-0.05|n_plan=4: 0.307
+    p90: Mix|m=50|n_obs=4|shift=-0.05|n_plan=5: 0.358
+    p90: Mix|m=50|n_obs=5|break=1|n_plan=20: 0.456
+    p90: Mix|m=50|n_obs=5|break=3|n_plan=5: 0.554
+    p90: Mix|m=50|n_obs=5|shift=-0.05|n_plan=10: 0.393
+    p90: Mix|m=50|n_obs=5|shift=-0.05|n_plan=5: 0.344
+    p90: Tri|m=120|n_obs=3|shift=-0.05|n_plan=10: 0.265
+    p90: Tri|m=120|n_obs=4|shift=-0.05|n_plan=10: 0.281
+    p90: Tri|m=120|n_obs=5|shift=-0.05|n_plan=10: 0.290
+    p90: Tri|m=20|n_obs=3|shift=-0.05|n_plan=20: 0.244
+    p90: Tri|m=20|n_obs=4|shift=-0.05|n_plan=20: 0.217
+    p90: Tri|m=20|n_obs=5|shift=-0.05|n_plan=20: 0.223
+    p90: Tri|m=50|n_obs=3|break=3|n_plan=20: 0.220
+    p90: Tri|m=50|n_obs=3|shift=-0.05|n_plan=10: 0.259
+    p90: Tri|m=50|n_obs=3|shift=-0.05|n_plan=20: 0.225
+    p90: Tri|m=50|n_obs=4|break=3|n_plan=20: 0.202
+    p90: Tri|m=50|n_obs=4|shift=-0.05|n_plan=10: 0.277
+    p90: Tri|m=50|n_obs=4|shift=-0.05|n_plan=20: 0.264
+    p90: Tri|m=50|n_obs=5|shift=-0.05|n_plan=10: 0.282
+    p90: Tri|m=50|n_obs=5|shift=-0.05|n_plan=20: 0.270
+    fa: Mix95|m=20|n_obs=4|n_plan=4: +0.032
+    fa: Mix95|m=20|n_obs=5|n_plan=20: +0.032
+    fa: Mix95|m=50|n_obs=3|n_plan=3: +0.031
+    fa: Mix95|m=50|n_obs=3|n_plan=10: +0.030
+    fa: Mix95|m=50|n_obs=3|n_plan=20: +0.031
+    fa: Mix95|m=50|n_obs=4|n_plan=5: +0.030
+    fa: Mix95|m=50|n_obs=5|n_plan=5: +0.032
+    fa: Mix95|m=50|n_obs=5|n_plan=10: +0.032
+    fa: Mix95|m=50|n_obs=5|n_plan=20: +0.030
+    fa: Mix95|m=120|n_obs=3|n_plan=10: +0.031
+    fa: Mix95|m=120|n_obs=3|n_plan=20: +0.031
+    fa: Mix95|m=120|n_obs=4|n_plan=4: +0.030
+    fa: Mix95|m=120|n_obs=4|n_plan=5: +0.031
+    fa: Mix95|m=120|n_obs=4|n_plan=20: +0.033
+    fa: Mix95|m=120|n_obs=5|n_plan=5: +0.030
+    fa: Mix95|m=120|n_obs=5|n_plan=10: +0.031
+    fa: Mix95|m=120|n_obs=5|n_plan=20: +0.033
+    fa: Mix90Z|m=20|n_obs=4|n_plan=10: +0.031
+    fa: Mix90Z|m=20|n_obs=5|n_plan=20: +0.035
+    fa: Mix90Z|m=50|n_obs=3|n_plan=10: +0.036
+    fa: Mix90Z|m=50|n_obs=3|n_plan=20: +0.039
+    fa: Mix90Z|m=50|n_obs=4|n_plan=5: +0.031
+    fa: Mix90Z|m=50|n_obs=4|n_plan=10: +0.032
+    fa: Mix90Z|m=50|n_obs=4|n_plan=20: +0.037
+    fa: Mix90Z|m=50|n_obs=5|n_plan=10: +0.031
+    fa: Mix90Z|m=50|n_obs=5|n_plan=20: +0.034
+    fa: Mix90Z|m=120|n_obs=3|n_plan=5: +0.031
+    fa: Mix90Z|m=120|n_obs=3|n_plan=10: +0.038
+    fa: Mix90Z|m=120|n_obs=3|n_plan=20: +0.037
+    fa: Mix90Z|m=120|n_obs=4|n_plan=5: +0.030
+    fa: Mix90Z|m=120|n_obs=4|n_plan=10: +0.034
+    fa: Mix90Z|m=120|n_obs=4|n_plan=20: +0.037
+    fa: Mix90Z|m=120|n_obs=5|n_plan=10: +0.031
+    fa: Mix90Z|m=120|n_obs=5|n_plan=20: +0.037
+  Plug-in: FAILS; pooled p90 |error| 0.143; cells failing bias 46, MAE 8, p90 25; false-alarm cells 0
+    bias: Beta(0.5,0.5)|m=120|n_obs=3|shift=-0.05|n_plan=10: -0.216
+    bias: Beta(0.5,0.5)|m=120|n_obs=3|shift=-0.05|n_plan=5: -0.195
+    bias: Beta(0.5,0.5)|m=120|n_obs=4|shift=-0.05|n_plan=10: -0.173
+    bias: Beta(0.5,0.5)|m=120|n_obs=4|shift=-0.05|n_plan=4: -0.140
+    bias: Beta(0.5,0.5)|m=120|n_obs=4|shift=-0.05|n_plan=5: -0.163
+    bias: Beta(0.5,0.5)|m=120|n_obs=5|shift=-0.05|n_plan=10: -0.149
+    bias: Beta(0.5,0.5)|m=120|n_obs=5|shift=-0.05|n_plan=5: -0.147
+    bias: Beta(0.5,0.5)|m=20|n_obs=3|shift=-0.05|n_plan=20: -0.128
+    bias: Beta(0.5,0.5)|m=50|n_obs=3|break=3|n_plan=20: +0.055
+    bias: Beta(0.5,0.5)|m=50|n_obs=3|shift=-0.05|n_plan=10: -0.163
+    bias: Beta(0.5,0.5)|m=50|n_obs=3|shift=-0.05|n_plan=20: -0.178
+    bias: Beta(0.5,0.5)|m=50|n_obs=4|shift=-0.05|n_plan=10: -0.130
+    bias: Beta(0.5,0.5)|m=50|n_obs=4|shift=-0.05|n_plan=20: -0.141
+    bias: Beta(0.5,0.5)|m=50|n_obs=5|shift=-0.05|n_plan=10: -0.116
+    bias: Beta(0.5,0.5)|m=50|n_obs=5|shift=-0.05|n_plan=20: -0.132
+    bias: Beta(20,1)|m=120|n_obs=3|break=3|n_plan=10: +0.053
+    bias: Beta(20,1)|m=50|n_obs=3|break=1|n_plan=20: +0.080
+    bias: Beta(20,1)|m=50|n_obs=3|break=3|n_plan=5: +0.061
+    bias: Beta(4,2)|m=120|n_obs=3|break=3|n_plan=20: +0.053
+    bias: Beta(4,2)|m=20|n_obs=3|break=3|n_plan=10: +0.064
+    bias: Beta(4,2)|m=50|n_obs=3|break=3|n_plan=20: +0.093
+    bias: Beta(4,2)|m=50|n_obs=4|break=3|n_plan=20: +0.077
+    bias: Beta(4,2)|m=50|n_obs=4|shift=-0.05|n_plan=20: +0.053
+    bias: Beta(50,1)|m=20|n_obs=4|break=1|n_plan=10: -0.196
+    bias: Beta(50,1)|m=20|n_obs=4|break=1|n_plan=5: -0.121
+    bias: Beta(50,1)|m=20|n_obs=4|shift=-0.05|n_plan=10: -0.129
+    bias: Beta(50,1)|m=20|n_obs=5|break=1|n_plan=10: -0.148
+    bias: Beta(50,1)|m=20|n_obs=5|shift=-0.05|n_plan=10: -0.128
+    bias: Beta(8,1)|m=120|n_obs=3|break=3|n_plan=20: +0.080
+    bias: Beta(8,1)|m=120|n_obs=4|break=3|n_plan=20: +0.062
+    bias: Beta(8,1)|m=120|n_obs=5|break=3|n_plan=20: +0.061
+    bias: Beta(8,1)|m=20|n_obs=3|break=1|n_plan=20: +0.104
+    bias: Beta(8,1)|m=20|n_obs=3|break=3|n_plan=5: +0.052
+    bias: Beta(8,1)|m=20|n_obs=3|shift=-0.05|n_plan=20: +0.088
+    bias: Beta(8,1)|m=20|n_obs=4|shift=-0.05|n_plan=20: +0.053
+    bias: Beta(8,1)|m=20|n_obs=5|break=1|n_plan=20: +0.067
+    bias: Beta(8,1)|m=50|n_obs=3|break=3|n_plan=10: +0.063
+    bias: Beta(8,1)|m=50|n_obs=3|shift=-0.05|n_plan=10: +0.068
+    bias: Beta(8,1)|m=50|n_obs=4|break=3|n_plan=10: +0.050
+    bias: Beta(8,1)|m=50|n_obs=4|shift=-0.05|n_plan=10: +0.051
+    bias: Beta(8,1)|m=50|n_obs=5|break=3|n_plan=10: +0.051
+    bias: Mix|m=20|n_obs=3|break=1|n_plan=20: +0.057
+    bias: Mix|m=20|n_obs=4|break=1|n_plan=20: +0.058
+    bias: Mix|m=50|n_obs=3|break=1|n_plan=20: +0.058
+    bias: Mix|m=50|n_obs=3|break=3|n_plan=5: +0.052
+    bias: Tri|m=50|n_obs=3|break=3|n_plan=20: +0.052
+    mae: Beta(0.5,0.5)|m=120|n_obs=3|shift=-0.05|n_plan=10: 0.216
+    mae: Beta(0.5,0.5)|m=120|n_obs=3|shift=-0.05|n_plan=5: 0.195
+    mae: Beta(0.5,0.5)|m=120|n_obs=4|shift=-0.05|n_plan=10: 0.173
+    mae: Beta(0.5,0.5)|m=120|n_obs=4|shift=-0.05|n_plan=5: 0.163
+    mae: Beta(0.5,0.5)|m=50|n_obs=3|shift=-0.05|n_plan=10: 0.163
+    mae: Beta(0.5,0.5)|m=50|n_obs=3|shift=-0.05|n_plan=20: 0.178
+    mae: Beta(50,1)|m=20|n_obs=4|break=1|n_plan=10: 0.196
+    mae: Beta(50,1)|m=20|n_obs=5|break=1|n_plan=10: 0.153
+    p90: Beta(0.5,0.5)|m=120|n_obs=3|shift=-0.05|n_plan=10: 0.299
+    p90: Beta(0.5,0.5)|m=120|n_obs=3|shift=-0.05|n_plan=5: 0.257
+    p90: Beta(0.5,0.5)|m=120|n_obs=4|shift=-0.05|n_plan=10: 0.244
+    p90: Beta(0.5,0.5)|m=120|n_obs=4|shift=-0.05|n_plan=5: 0.222
+    p90: Beta(0.5,0.5)|m=120|n_obs=5|shift=-0.05|n_plan=10: 0.213
+    p90: Beta(0.5,0.5)|m=20|n_obs=3|shift=-0.05|n_plan=20: 0.221
+    p90: Beta(0.5,0.5)|m=50|n_obs=3|shift=-0.05|n_plan=10: 0.222
+    p90: Beta(0.5,0.5)|m=50|n_obs=3|shift=-0.05|n_plan=20: 0.269
+    p90: Beta(0.5,0.5)|m=50|n_obs=4|shift=-0.05|n_plan=20: 0.222
+    p90: Beta(0.5,0.5)|m=50|n_obs=5|shift=-0.05|n_plan=20: 0.219
+    p90: Beta(20,1)|m=20|n_obs=3|break=1|n_plan=20: 0.224
+    p90: Beta(20,1)|m=20|n_obs=3|break=3|n_plan=3: 0.207
+    p90: Beta(20,1)|m=50|n_obs=3|break=1|n_plan=20: 0.278
+    p90: Beta(20,1)|m=50|n_obs=3|break=3|n_plan=3: 0.224
+    p90: Beta(20,1)|m=50|n_obs=3|break=3|n_plan=5: 0.207
+    p90: Beta(20,1)|m=50|n_obs=4|break=1|n_plan=20: 0.213
+    p90: Beta(4,2)|m=20|n_obs=3|break=3|n_plan=10: 0.201
+    p90: Beta(50,1)|m=120|n_obs=3|break=1|n_plan=20: 0.252
+    p90: Beta(50,1)|m=120|n_obs=3|break=3|n_plan=5: 0.208
+    p90: Beta(50,1)|m=120|n_obs=4|break=1|n_plan=20: 0.222
+    p90: Beta(50,1)|m=120|n_obs=4|break=3|n_plan=4: 0.203
+    p90: Beta(8,1)|m=20|n_obs=3|break=1|n_plan=20: 0.278
+    p90: Beta(8,1)|m=20|n_obs=3|shift=-0.05|n_plan=20: 0.215
+    p90: Beta(8,1)|m=20|n_obs=5|break=1|n_plan=20: 0.213
+    p90: Mix95|m=120|n_obs=3|break=1|n_plan=20: 0.215
+
+== F_min 6: eligible True; 275 decision cells; coverage by m {'20': {'near_ceiling_cells': 23, 'with_n_obs_3': 6}, '50': {'near_ceiling_cells': 52, 'with_n_obs_3': 14}, '120': {'near_ceiling_cells': 51, 'with_n_obs_3': 19}}
+  P-pooled: FAILS; pooled p90 |error| 0.131; cells failing bias 30, MAE 9, p90 12; false-alarm cells 0
+    bias: Beta(20,1)|m=50|n_obs=5|break=1|n_plan=20: +0.052
+    bias: Beta(4,2)|m=50|n_obs=3|shift=-0.05|n_plan=20: +0.057
+    bias: Beta(4,2)|m=50|n_obs=4|break=3|n_plan=20: +0.050
+    bias: Beta(4,2)|m=50|n_obs=4|shift=-0.05|n_plan=20: +0.054
+    bias: Beta(50,1)|m=50|n_obs=4|break=1|n_plan=10: -0.127
+    bias: Beta(50,1)|m=50|n_obs=4|break=1|n_plan=20: -0.166
+    bias: Beta(50,1)|m=50|n_obs=4|break=3|n_plan=4: -0.123
+    bias: Beta(50,1)|m=50|n_obs=4|shift=-0.05|n_plan=4: -0.109
+    bias: Beta(50,1)|m=50|n_obs=4|shift=-0.05|n_plan=5: -0.113
+    bias: Beta(8,1)|m=20|n_obs=5|break=1|n_plan=20: +0.051
+    bias: Mix90Z|m=120|n_obs=3|break=3|n_plan=10: -0.116
+    bias: Mix90Z|m=120|n_obs=3|break=3|n_plan=5: +0.083
+    bias: Mix90Z|m=120|n_obs=4|break=3|n_plan=10: -0.108
+    bias: Mix90Z|m=120|n_obs=4|break=3|n_plan=5: +0.076
+    bias: Mix90Z|m=120|n_obs=5|break=3|n_plan=10: -0.103
+    bias: Mix90Z|m=120|n_obs=5|break=3|n_plan=5: +0.065
+    bias: Tri|m=120|n_obs=3|shift=-0.05|n_plan=10: +0.182
+    bias: Tri|m=120|n_obs=4|shift=-0.05|n_plan=10: +0.202
+    bias: Tri|m=120|n_obs=5|shift=-0.05|n_plan=10: +0.214
+    bias: Tri|m=20|n_obs=3|shift=-0.05|n_plan=20: +0.124
+    bias: Tri|m=20|n_obs=4|shift=-0.05|n_plan=20: +0.139
+    bias: Tri|m=20|n_obs=5|shift=-0.05|n_plan=20: +0.134
+    bias: Tri|m=50|n_obs=3|break=3|n_plan=20: -0.117
+    bias: Tri|m=50|n_obs=3|shift=-0.05|n_plan=10: +0.196
+    bias: Tri|m=50|n_obs=3|shift=-0.05|n_plan=20: +0.125
+    bias: Tri|m=50|n_obs=4|break=3|n_plan=20: -0.103
+    bias: Tri|m=50|n_obs=4|shift=-0.05|n_plan=10: +0.204
+    bias: Tri|m=50|n_obs=4|shift=-0.05|n_plan=20: +0.152
+    bias: Tri|m=50|n_obs=5|shift=-0.05|n_plan=10: +0.207
+    bias: Tri|m=50|n_obs=5|shift=-0.05|n_plan=20: +0.155
+    mae: Beta(50,1)|m=50|n_obs=4|break=1|n_plan=20: 0.166
+    mae: Tri|m=120|n_obs=3|shift=-0.05|n_plan=10: 0.182
+    mae: Tri|m=120|n_obs=4|shift=-0.05|n_plan=10: 0.202
+    mae: Tri|m=120|n_obs=5|shift=-0.05|n_plan=10: 0.214
+    mae: Tri|m=50|n_obs=3|shift=-0.05|n_plan=10: 0.196
+    mae: Tri|m=50|n_obs=4|shift=-0.05|n_plan=10: 0.204
+    mae: Tri|m=50|n_obs=4|shift=-0.05|n_plan=20: 0.153
+    mae: Tri|m=50|n_obs=5|shift=-0.05|n_plan=10: 0.207
+    mae: Tri|m=50|n_obs=5|shift=-0.05|n_plan=20: 0.156
+    p90: Tri|m=120|n_obs=3|shift=-0.05|n_plan=10: 0.256
+    p90: Tri|m=120|n_obs=4|shift=-0.05|n_plan=10: 0.278
+    p90: Tri|m=120|n_obs=5|shift=-0.05|n_plan=10: 0.294
+    p90: Tri|m=20|n_obs=3|shift=-0.05|n_plan=20: 0.215
+    p90: Tri|m=20|n_obs=4|shift=-0.05|n_plan=20: 0.211
+    p90: Tri|m=20|n_obs=5|shift=-0.05|n_plan=20: 0.230
+    p90: Tri|m=50|n_obs=3|shift=-0.05|n_plan=10: 0.280
+    p90: Tri|m=50|n_obs=3|shift=-0.05|n_plan=20: 0.237
+    p90: Tri|m=50|n_obs=4|shift=-0.05|n_plan=10: 0.278
+    p90: Tri|m=50|n_obs=4|shift=-0.05|n_plan=20: 0.263
+    p90: Tri|m=50|n_obs=5|shift=-0.05|n_plan=10: 0.289
+    p90: Tri|m=50|n_obs=5|shift=-0.05|n_plan=20: 0.268
+  P-uniform: FAILS; pooled p90 |error| 0.413; cells failing bias 191, MAE 151, p90 129; false-alarm cells 17
+    bias: Beta(0.5,0.5)|m=120|n_obs=3|shift=-0.05|n_plan=5: +0.050
+    bias: Beta(0.5,0.5)|m=120|n_obs=4|shift=-0.05|n_plan=5: +0.051
+    bias: Beta(0.5,0.5)|m=120|n_obs=5|shift=-0.05|n_plan=5: +0.050
+    bias: Beta(20,1)|m=120|n_obs=3|break=1|n_plan=20: -0.164
+    bias: Beta(20,1)|m=120|n_obs=3|break=3|n_plan=10: -0.528
+    bias: Beta(20,1)|m=120|n_obs=3|break=3|n_plan=3: -0.177
+    bias: Beta(20,1)|m=120|n_obs=3|break=3|n_plan=5: -0.307
+    bias: Beta(20,1)|m=120|n_obs=3|shift=-0.05|n_plan=3: -0.399
+    bias: Beta(20,1)|m=120|n_obs=4|break=1|n_plan=20: -0.156
+    bias: Beta(20,1)|m=120|n_obs=4|break=3|n_plan=10: -0.493
+    bias: Beta(20,1)|m=120|n_obs=4|break=3|n_plan=4: -0.229
+    bias: Beta(20,1)|m=120|n_obs=4|break=3|n_plan=5: -0.290
+    bias: Beta(20,1)|m=120|n_obs=4|shift=-0.05|n_plan=4: -0.380
+    bias: Beta(20,1)|m=120|n_obs=5|break=1|n_plan=20: -0.144
+    bias: Beta(20,1)|m=120|n_obs=5|break=3|n_plan=10: -0.464
+    bias: Beta(20,1)|m=120|n_obs=5|break=3|n_plan=5: -0.271
+    bias: Beta(20,1)|m=20|n_obs=5|break=1|n_plan=10: -0.267
+    bias: Beta(20,1)|m=20|n_obs=5|break=1|n_plan=20: -0.459
+    bias: Beta(20,1)|m=20|n_obs=5|break=1|n_plan=5: -0.122
+    bias: Beta(20,1)|m=20|n_obs=5|shift=-0.05|n_plan=10: -0.230
+    bias: Beta(20,1)|m=20|n_obs=5|shift=-0.05|n_plan=20: -0.319
+    bias: Beta(20,1)|m=20|n_obs=5|shift=-0.05|n_plan=5: -0.117
+    bias: Beta(20,1)|m=50|n_obs=3|break=1|n_plan=10: -0.159
+    bias: Beta(20,1)|m=50|n_obs=3|break=1|n_plan=20: -0.331
+    bias: Beta(20,1)|m=50|n_obs=3|break=3|n_plan=3: -0.321
+    bias: Beta(20,1)|m=50|n_obs=3|break=3|n_plan=5: -0.504
+    bias: Beta(20,1)|m=50|n_obs=3|shift=-0.05|n_plan=10: -0.388
+    bias: Beta(20,1)|m=50|n_obs=3|shift=-0.05|n_plan=3: -0.212
+    bias: Beta(20,1)|m=50|n_obs=3|shift=-0.05|n_plan=5: -0.328
+    bias: Beta(20,1)|m=50|n_obs=4|break=1|n_plan=10: -0.154
+    bias: Beta(20,1)|m=50|n_obs=4|break=1|n_plan=20: -0.317
+    bias: Beta(20,1)|m=50|n_obs=4|break=3|n_plan=4: -0.413
+    bias: Beta(20,1)|m=50|n_obs=4|break=3|n_plan=5: -0.475
+    bias: Beta(20,1)|m=50|n_obs=4|shift=-0.05|n_plan=10: -0.355
+    bias: Beta(20,1)|m=50|n_obs=4|shift=-0.05|n_plan=4: -0.255
+    bias: Beta(20,1)|m=50|n_obs=4|shift=-0.05|n_plan=5: -0.306
+    bias: Beta(20,1)|m=50|n_obs=5|break=1|n_plan=10: -0.150
+    bias: Beta(20,1)|m=50|n_obs=5|break=1|n_plan=20: -0.302
+    bias: Beta(20,1)|m=50|n_obs=5|break=3|n_plan=5: -0.439
+    bias: Beta(20,1)|m=50|n_obs=5|shift=-0.05|n_plan=10: -0.329
+    bias: Beta(20,1)|m=50|n_obs=5|shift=-0.05|n_plan=5: -0.293
+    bias: Beta(50,1)|m=120|n_obs=3|break=1|n_plan=10: -0.187
+    bias: Beta(50,1)|m=120|n_obs=3|break=1|n_plan=20: -0.385
+    bias: Beta(50,1)|m=120|n_obs=3|break=3|n_plan=3: -0.373
+    bias: Beta(50,1)|m=120|n_obs=3|break=3|n_plan=5: -0.601
+    bias: Beta(50,1)|m=120|n_obs=4|break=1|n_plan=10: -0.184
+    bias: Beta(50,1)|m=120|n_obs=4|break=1|n_plan=20: -0.368
+    bias: Beta(50,1)|m=120|n_obs=4|break=3|n_plan=4: -0.489
+    bias: Beta(50,1)|m=120|n_obs=4|break=3|n_plan=5: -0.590
+    bias: Beta(50,1)|m=120|n_obs=5|break=1|n_plan=10: -0.177
+    bias: Beta(50,1)|m=120|n_obs=5|break=1|n_plan=20: -0.371
+    bias: Beta(50,1)|m=120|n_obs=5|break=3|n_plan=5: -0.568
+    bias: Beta(50,1)|m=50|n_obs=4|break=1|n_plan=10: -0.333
+    bias: Beta(50,1)|m=50|n_obs=4|break=1|n_plan=20: -0.605
+    bias: Beta(50,1)|m=50|n_obs=4|break=3|n_plan=4: -0.636
+    bias: Beta(50,1)|m=50|n_obs=4|shift=-0.05|n_plan=4: -0.442
+    bias: Beta(50,1)|m=50|n_obs=4|shift=-0.05|n_plan=5: -0.486
+    bias: Beta(50,1)|m=50|n_obs=5|break=1|n_plan=10: -0.335
+    bias: Beta(50,1)|m=50|n_obs=5|break=1|n_plan=20: -0.590
+    bias: Beta(50,1)|m=50|n_obs=5|shift=-0.05|n_plan=5: -0.474
+    bias: Beta(8,1)|m=120|n_obs=3|break=3|n_plan=10: -0.223
+    bias: Beta(8,1)|m=120|n_obs=3|break=3|n_plan=20: -0.349
+    bias: Beta(8,1)|m=120|n_obs=3|break=3|n_plan=5: -0.110
+    bias: Beta(8,1)|m=120|n_obs=3|shift=-0.05|n_plan=3: -0.191
+    bias: Beta(8,1)|m=120|n_obs=3|shift=-0.05|n_plan=5: -0.215
+    bias: Beta(8,1)|m=120|n_obs=4|break=3|n_plan=10: -0.199
+    bias: Beta(8,1)|m=120|n_obs=4|break=3|n_plan=20: -0.322
+    bias: Beta(8,1)|m=120|n_obs=4|break=3|n_plan=5: -0.109
+    bias: Beta(8,1)|m=120|n_obs=4|shift=-0.05|n_plan=4: -0.195
+    bias: Beta(8,1)|m=120|n_obs=4|shift=-0.05|n_plan=5: -0.201
+    bias: Beta(8,1)|m=120|n_obs=5|break=3|n_plan=10: -0.184
+    bias: Beta(8,1)|m=120|n_obs=5|break=3|n_plan=20: -0.287
+    bias: Beta(8,1)|m=120|n_obs=5|shift=-0.05|n_plan=5: -0.180
+    bias: Beta(8,1)|m=20|n_obs=3|break=1|n_plan=10: -0.130
+    bias: Beta(8,1)|m=20|n_obs=3|break=1|n_plan=20: -0.244
+    bias: Beta(8,1)|m=20|n_obs=3|break=3|n_plan=3: -0.239
+    bias: Beta(8,1)|m=20|n_obs=3|break=3|n_plan=5: -0.351
+    bias: Beta(8,1)|m=20|n_obs=3|shift=-0.05|n_plan=10: -0.110
+    bias: Beta(8,1)|m=20|n_obs=3|shift=-0.05|n_plan=20: -0.158
+    bias: Beta(8,1)|m=20|n_obs=4|break=1|n_plan=10: -0.119
+    bias: Beta(8,1)|m=20|n_obs=4|break=1|n_plan=20: -0.229
+    bias: Beta(8,1)|m=20|n_obs=4|break=3|n_plan=4: -0.289
+    bias: Beta(8,1)|m=20|n_obs=4|break=3|n_plan=5: -0.317
+    bias: Beta(8,1)|m=20|n_obs=4|shift=-0.05|n_plan=10: -0.101
+    bias: Beta(8,1)|m=20|n_obs=4|shift=-0.05|n_plan=20: -0.157
+    bias: Beta(8,1)|m=20|n_obs=5|break=1|n_plan=10: -0.115
+    bias: Beta(8,1)|m=20|n_obs=5|break=1|n_plan=20: -0.219
+    bias: Beta(8,1)|m=20|n_obs=5|break=3|n_plan=5: -0.273
+    bias: Beta(8,1)|m=20|n_obs=5|shift=-0.05|n_plan=20: -0.153
+    bias: Beta(8,1)|m=50|n_obs=3|break=1|n_plan=20: -0.120
+    bias: Beta(8,1)|m=50|n_obs=3|break=3|n_plan=10: -0.367
+    bias: Beta(8,1)|m=50|n_obs=3|break=3|n_plan=3: -0.136
+    bias: Beta(8,1)|m=50|n_obs=3|break=3|n_plan=5: -0.231
+    bias: Beta(8,1)|m=50|n_obs=3|shift=-0.05|n_plan=10: -0.199
+    bias: Beta(8,1)|m=50|n_obs=3|shift=-0.05|n_plan=5: -0.144
+    bias: Beta(8,1)|m=50|n_obs=4|break=1|n_plan=20: -0.114
+    bias: Beta(8,1)|m=50|n_obs=4|break=3|n_plan=10: -0.326
+    bias: Beta(8,1)|m=50|n_obs=4|break=3|n_plan=4: -0.170
+    bias: Beta(8,1)|m=50|n_obs=4|break=3|n_plan=5: -0.207
+    bias: Beta(8,1)|m=50|n_obs=4|shift=-0.05|n_plan=10: -0.184
+    bias: Beta(8,1)|m=50|n_obs=4|shift=-0.05|n_plan=4: -0.115
+    bias: Beta(8,1)|m=50|n_obs=4|shift=-0.05|n_plan=5: -0.131
+    bias: Beta(8,1)|m=50|n_obs=5|break=1|n_plan=20: -0.107
+    bias: Beta(8,1)|m=50|n_obs=5|break=3|n_plan=10: -0.287
+    bias: Beta(8,1)|m=50|n_obs=5|break=3|n_plan=5: -0.193
+    bias: Beta(8,1)|m=50|n_obs=5|shift=-0.05|n_plan=10: -0.170
+    bias: Beta(8,1)|m=50|n_obs=5|shift=-0.05|n_plan=5: -0.121
+    bias: Mix90Z|m=120|n_obs=3|break=3|n_plan=10: -0.537
+    bias: Mix90Z|m=120|n_obs=3|break=3|n_plan=5: -0.104
+    bias: Mix90Z|m=120|n_obs=3|shift=-0.05|n_plan=3: -0.313
+    bias: Mix90Z|m=120|n_obs=4|break=3|n_plan=10: -0.550
+    bias: Mix90Z|m=120|n_obs=4|break=3|n_plan=5: -0.119
+    bias: Mix90Z|m=120|n_obs=4|shift=-0.05|n_plan=4: -0.382
+    bias: Mix90Z|m=120|n_obs=5|break=3|n_plan=10: -0.511
+    bias: Mix90Z|m=120|n_obs=5|break=3|n_plan=5: -0.104
+    bias: Mix90Z|m=50|n_obs=5|break=1|n_plan=20: -0.320
+    bias: Mix90Z|m=50|n_obs=5|break=3|n_plan=5: -0.423
+    bias: Mix90Z|m=50|n_obs=5|shift=-0.05|n_plan=10: -0.337
+    bias: Mix90Z|m=50|n_obs=5|shift=-0.05|n_plan=5: -0.211
+    bias: Mix95|m=120|n_obs=3|break=1|n_plan=20: -0.324
+    bias: Mix95|m=120|n_obs=3|break=3|n_plan=3: -0.289
+    bias: Mix95|m=120|n_obs=3|break=3|n_plan=5: -0.547
+    bias: Mix95|m=120|n_obs=4|break=1|n_plan=20: -0.392
+    bias: Mix95|m=120|n_obs=4|break=3|n_plan=4: -0.485
+    bias: Mix95|m=120|n_obs=4|break=3|n_plan=5: -0.599
+    bias: Mix95|m=120|n_obs=5|break=1|n_plan=20: -0.390
+    bias: Mix95|m=120|n_obs=5|break=3|n_plan=5: -0.598
+    bias: Mix95|m=50|n_obs=5|break=1|n_plan=10: -0.199
+    bias: Mix95|m=50|n_obs=5|break=1|n_plan=20: -0.515
+    bias: Mix95|m=50|n_obs=5|break=3|n_plan=5: -0.600
+    bias: Mix95|m=50|n_obs=5|shift=-0.05|n_plan=5: -0.405
+    bias: Mix|m=120|n_obs=3|break=3|n_plan=10: -0.381
+    bias: Mix|m=120|n_obs=3|break=3|n_plan=5: -0.142
+    bias: Mix|m=120|n_obs=3|shift=-0.05|n_plan=3: -0.296
+    bias: Mix|m=120|n_obs=3|shift=-0.05|n_plan=5: -0.336
+    bias: Mix|m=120|n_obs=4|break=3|n_plan=10: -0.378
+    bias: Mix|m=120|n_obs=4|break=3|n_plan=5: -0.155
+    bias: Mix|m=120|n_obs=4|shift=-0.05|n_plan=4: -0.323
+    bias: Mix|m=120|n_obs=4|shift=-0.05|n_plan=5: -0.315
+    bias: Mix|m=120|n_obs=5|break=3|n_plan=10: -0.340
+    bias: Mix|m=120|n_obs=5|break=3|n_plan=5: -0.133
+    bias: Mix|m=120|n_obs=5|shift=-0.05|n_plan=5: -0.288
+    bias: Mix|m=20|n_obs=3|break=1|n_plan=10: -0.127
+    bias: Mix|m=20|n_obs=3|break=1|n_plan=20: -0.321
+    bias: Mix|m=20|n_obs=3|break=3|n_plan=3: -0.243
+    bias: Mix|m=20|n_obs=3|break=3|n_plan=5: -0.379
+    bias: Mix|m=20|n_obs=3|shift=-0.05|n_plan=10: -0.109
+    bias: Mix|m=20|n_obs=3|shift=-0.05|n_plan=20: -0.239
+    bias: Mix|m=20|n_obs=4|break=1|n_plan=10: -0.153
+    bias: Mix|m=20|n_obs=4|break=1|n_plan=20: -0.348
+    bias: Mix|m=20|n_obs=4|break=3|n_plan=4: -0.368
+    bias: Mix|m=20|n_obs=4|break=3|n_plan=5: -0.372
+    bias: Mix|m=20|n_obs=4|shift=-0.05|n_plan=10: -0.133
+    bias: Mix|m=20|n_obs=4|shift=-0.05|n_plan=20: -0.255
+    bias: Mix|m=20|n_obs=5|break=1|n_plan=10: -0.159
+    bias: Mix|m=20|n_obs=5|break=1|n_plan=20: -0.349
+    bias: Mix|m=20|n_obs=5|break=3|n_plan=5: -0.339
+    bias: Mix|m=20|n_obs=5|shift=-0.05|n_plan=10: -0.132
+    bias: Mix|m=20|n_obs=5|shift=-0.05|n_plan=20: -0.261
+    bias: Mix|m=50|n_obs=3|break=1|n_plan=20: -0.216
+    bias: Mix|m=50|n_obs=3|break=3|n_plan=10: -0.480
+    bias: Mix|m=50|n_obs=3|break=3|n_plan=3: -0.158
+    bias: Mix|m=50|n_obs=3|break=3|n_plan=5: -0.340
+    bias: Mix|m=50|n_obs=3|shift=-0.05|n_plan=10: -0.334
+    bias: Mix|m=50|n_obs=3|shift=-0.05|n_plan=5: -0.193
+    bias: Mix|m=50|n_obs=4|break=1|n_plan=20: -0.239
+    bias: Mix|m=50|n_obs=4|break=3|n_plan=4: -0.277
+    bias: Mix|m=50|n_obs=4|break=3|n_plan=5: -0.364
+    bias: Mix|m=50|n_obs=4|shift=-0.05|n_plan=10: -0.317
+    bias: Mix|m=50|n_obs=4|shift=-0.05|n_plan=4: -0.174
+    bias: Mix|m=50|n_obs=4|shift=-0.05|n_plan=5: -0.224
+    bias: Mix|m=50|n_obs=5|break=1|n_plan=20: -0.234
+    bias: Mix|m=50|n_obs=5|break=3|n_plan=5: -0.348
+    bias: Mix|m=50|n_obs=5|shift=-0.05|n_plan=10: -0.301
+    bias: Mix|m=50|n_obs=5|shift=-0.05|n_plan=5: -0.213
+    bias: Tri|m=120|n_obs=3|shift=-0.05|n_plan=10: +0.178
+    bias: Tri|m=120|n_obs=4|shift=-0.05|n_plan=10: +0.199
+    bias: Tri|m=120|n_obs=5|shift=-0.05|n_plan=10: +0.197
+    bias: Tri|m=20|n_obs=3|break=3|n_plan=10: -0.107
+    bias: Tri|m=20|n_obs=3|shift=-0.05|n_plan=20: +0.113
+    bias: Tri|m=20|n_obs=4|shift=-0.05|n_plan=20: +0.138
+    bias: Tri|m=20|n_obs=5|shift=-0.05|n_plan=20: +0.120
+    bias: Tri|m=50|n_obs=3|break=3|n_plan=20: -0.146
+    bias: Tri|m=50|n_obs=3|shift=-0.05|n_plan=10: +0.188
+    bias: Tri|m=50|n_obs=3|shift=-0.05|n_plan=20: +0.115
+    bias: Tri|m=50|n_obs=4|break=3|n_plan=20: -0.137
+    bias: Tri|m=50|n_obs=4|shift=-0.05|n_plan=10: +0.196
+    bias: Tri|m=50|n_obs=4|shift=-0.05|n_plan=20: +0.137
+    bias: Tri|m=50|n_obs=5|break=3|n_plan=20: -0.123
+    bias: Tri|m=50|n_obs=5|shift=-0.05|n_plan=10: +0.197
+    bias: Tri|m=50|n_obs=5|shift=-0.05|n_plan=20: +0.147
+    mae: Beta(20,1)|m=120|n_obs=3|break=1|n_plan=20: 0.164
+    mae: Beta(20,1)|m=120|n_obs=3|break=3|n_plan=10: 0.528
+    mae: Beta(20,1)|m=120|n_obs=3|break=3|n_plan=3: 0.177
+    mae: Beta(20,1)|m=120|n_obs=3|break=3|n_plan=5: 0.307
+    mae: Beta(20,1)|m=120|n_obs=3|shift=-0.05|n_plan=3: 0.399
+    mae: Beta(20,1)|m=120|n_obs=4|break=1|n_plan=20: 0.156
+    mae: Beta(20,1)|m=120|n_obs=4|break=3|n_plan=10: 0.493
+    mae: Beta(20,1)|m=120|n_obs=4|break=3|n_plan=4: 0.229
+    mae: Beta(20,1)|m=120|n_obs=4|break=3|n_plan=5: 0.290
+    mae: Beta(20,1)|m=120|n_obs=4|shift=-0.05|n_plan=4: 0.380
+    mae: Beta(20,1)|m=120|n_obs=5|break=3|n_plan=10: 0.464
+    mae: Beta(20,1)|m=120|n_obs=5|break=3|n_plan=5: 0.271
+    mae: Beta(20,1)|m=20|n_obs=5|break=1|n_plan=10: 0.267
+    mae: Beta(20,1)|m=20|n_obs=5|break=1|n_plan=20: 0.459
+    mae: Beta(20,1)|m=20|n_obs=5|shift=-0.05|n_plan=10: 0.230
+    mae: Beta(20,1)|m=20|n_obs=5|shift=-0.05|n_plan=20: 0.319
+    mae: Beta(20,1)|m=50|n_obs=3|break=1|n_plan=10: 0.159
+    mae: Beta(20,1)|m=50|n_obs=3|break=1|n_plan=20: 0.331
+    mae: Beta(20,1)|m=50|n_obs=3|break=3|n_plan=3: 0.321
+    mae: Beta(20,1)|m=50|n_obs=3|break=3|n_plan=5: 0.504
+    mae: Beta(20,1)|m=50|n_obs=3|shift=-0.05|n_plan=10: 0.388
+    mae: Beta(20,1)|m=50|n_obs=3|shift=-0.05|n_plan=3: 0.212
+    mae: Beta(20,1)|m=50|n_obs=3|shift=-0.05|n_plan=5: 0.328
+    mae: Beta(20,1)|m=50|n_obs=4|break=1|n_plan=10: 0.154
+    mae: Beta(20,1)|m=50|n_obs=4|break=1|n_plan=20: 0.317
+    mae: Beta(20,1)|m=50|n_obs=4|break=3|n_plan=4: 0.413
+    mae: Beta(20,1)|m=50|n_obs=4|break=3|n_plan=5: 0.475
+    mae: Beta(20,1)|m=50|n_obs=4|shift=-0.05|n_plan=10: 0.355
+    mae: Beta(20,1)|m=50|n_obs=4|shift=-0.05|n_plan=4: 0.255
+    mae: Beta(20,1)|m=50|n_obs=4|shift=-0.05|n_plan=5: 0.306
+    mae: Beta(20,1)|m=50|n_obs=5|break=1|n_plan=10: 0.150
+    mae: Beta(20,1)|m=50|n_obs=5|break=1|n_plan=20: 0.302
+    mae: Beta(20,1)|m=50|n_obs=5|break=3|n_plan=5: 0.439
+    mae: Beta(20,1)|m=50|n_obs=5|shift=-0.05|n_plan=10: 0.329
+    mae: Beta(20,1)|m=50|n_obs=5|shift=-0.05|n_plan=5: 0.293
+    mae: Beta(50,1)|m=120|n_obs=3|break=1|n_plan=10: 0.187
+    mae: Beta(50,1)|m=120|n_obs=3|break=1|n_plan=20: 0.385
+    mae: Beta(50,1)|m=120|n_obs=3|break=3|n_plan=3: 0.373
+    mae: Beta(50,1)|m=120|n_obs=3|break=3|n_plan=5: 0.601
+    mae: Beta(50,1)|m=120|n_obs=4|break=1|n_plan=10: 0.184
+    mae: Beta(50,1)|m=120|n_obs=4|break=1|n_plan=20: 0.368
+    mae: Beta(50,1)|m=120|n_obs=4|break=3|n_plan=4: 0.489
+    mae: Beta(50,1)|m=120|n_obs=4|break=3|n_plan=5: 0.590
+    mae: Beta(50,1)|m=120|n_obs=5|break=1|n_plan=10: 0.177
+    mae: Beta(50,1)|m=120|n_obs=5|break=1|n_plan=20: 0.371
+    mae: Beta(50,1)|m=120|n_obs=5|break=3|n_plan=5: 0.568
+    mae: Beta(50,1)|m=50|n_obs=4|break=1|n_plan=10: 0.333
+    mae: Beta(50,1)|m=50|n_obs=4|break=1|n_plan=20: 0.605
+    mae: Beta(50,1)|m=50|n_obs=4|break=3|n_plan=4: 0.636
+    mae: Beta(50,1)|m=50|n_obs=4|shift=-0.05|n_plan=4: 0.442
+    mae: Beta(50,1)|m=50|n_obs=4|shift=-0.05|n_plan=5: 0.486
+    mae: Beta(50,1)|m=50|n_obs=5|break=1|n_plan=10: 0.335
+    mae: Beta(50,1)|m=50|n_obs=5|break=1|n_plan=20: 0.590
+    mae: Beta(50,1)|m=50|n_obs=5|shift=-0.05|n_plan=5: 0.474
+    mae: Beta(8,1)|m=120|n_obs=3|break=3|n_plan=10: 0.223
+    mae: Beta(8,1)|m=120|n_obs=3|break=3|n_plan=20: 0.349
+    mae: Beta(8,1)|m=120|n_obs=3|shift=-0.05|n_plan=3: 0.191
+    mae: Beta(8,1)|m=120|n_obs=3|shift=-0.05|n_plan=5: 0.215
+    mae: Beta(8,1)|m=120|n_obs=4|break=3|n_plan=10: 0.199
+    mae: Beta(8,1)|m=120|n_obs=4|break=3|n_plan=20: 0.322
+    mae: Beta(8,1)|m=120|n_obs=4|shift=-0.05|n_plan=4: 0.195
+    mae: Beta(8,1)|m=120|n_obs=4|shift=-0.05|n_plan=5: 0.201
+    mae: Beta(8,1)|m=120|n_obs=5|break=3|n_plan=10: 0.184
+    mae: Beta(8,1)|m=120|n_obs=5|break=3|n_plan=20: 0.287
+    mae: Beta(8,1)|m=120|n_obs=5|shift=-0.05|n_plan=5: 0.180
+    mae: Beta(8,1)|m=20|n_obs=3|break=1|n_plan=20: 0.244
+    mae: Beta(8,1)|m=20|n_obs=3|break=3|n_plan=3: 0.239
+    mae: Beta(8,1)|m=20|n_obs=3|break=3|n_plan=5: 0.351
+    mae: Beta(8,1)|m=20|n_obs=3|shift=-0.05|n_plan=20: 0.158
+    mae: Beta(8,1)|m=20|n_obs=4|break=1|n_plan=20: 0.229
+    mae: Beta(8,1)|m=20|n_obs=4|break=3|n_plan=4: 0.289
+    mae: Beta(8,1)|m=20|n_obs=4|break=3|n_plan=5: 0.317
+    mae: Beta(8,1)|m=20|n_obs=4|shift=-0.05|n_plan=20: 0.157
+    mae: Beta(8,1)|m=20|n_obs=5|break=1|n_plan=20: 0.219
+    mae: Beta(8,1)|m=20|n_obs=5|break=3|n_plan=5: 0.273
+    mae: Beta(8,1)|m=20|n_obs=5|shift=-0.05|n_plan=20: 0.153
+    mae: Beta(8,1)|m=50|n_obs=3|break=3|n_plan=10: 0.367
+    mae: Beta(8,1)|m=50|n_obs=3|break=3|n_plan=5: 0.231
+    mae: Beta(8,1)|m=50|n_obs=3|shift=-0.05|n_plan=10: 0.199
+    mae: Beta(8,1)|m=50|n_obs=4|break=3|n_plan=10: 0.326
+    mae: Beta(8,1)|m=50|n_obs=4|break=3|n_plan=4: 0.170
+    mae: Beta(8,1)|m=50|n_obs=4|break=3|n_plan=5: 0.207
+    mae: Beta(8,1)|m=50|n_obs=4|shift=-0.05|n_plan=10: 0.184
+    mae: Beta(8,1)|m=50|n_obs=5|break=3|n_plan=10: 0.287
+    mae: Beta(8,1)|m=50|n_obs=5|break=3|n_plan=5: 0.193
+    mae: Beta(8,1)|m=50|n_obs=5|shift=-0.05|n_plan=10: 0.170
+    mae: Mix90Z|m=120|n_obs=3|break=3|n_plan=10: 0.537
+    mae: Mix90Z|m=120|n_obs=3|shift=-0.05|n_plan=3: 0.313
+    mae: Mix90Z|m=120|n_obs=4|break=3|n_plan=10: 0.550
+    mae: Mix90Z|m=120|n_obs=4|shift=-0.05|n_plan=4: 0.382
+    mae: Mix90Z|m=120|n_obs=5|break=3|n_plan=10: 0.511
+    mae: Mix90Z|m=50|n_obs=5|break=1|n_plan=20: 0.320
+    mae: Mix90Z|m=50|n_obs=5|break=3|n_plan=5: 0.423
+    mae: Mix90Z|m=50|n_obs=5|shift=-0.05|n_plan=10: 0.337
+    mae: Mix90Z|m=50|n_obs=5|shift=-0.05|n_plan=5: 0.217
+    mae: Mix95|m=120|n_obs=3|break=1|n_plan=20: 0.324
+    mae: Mix95|m=120|n_obs=3|break=3|n_plan=3: 0.289
+    mae: Mix95|m=120|n_obs=3|break=3|n_plan=5: 0.547
+    mae: Mix95|m=120|n_obs=4|break=1|n_plan=20: 0.392
+    mae: Mix95|m=120|n_obs=4|break=3|n_plan=4: 0.485
+    mae: Mix95|m=120|n_obs=4|break=3|n_plan=5: 0.599
+    mae: Mix95|m=120|n_obs=5|break=1|n_plan=20: 0.390
+    mae: Mix95|m=120|n_obs=5|break=3|n_plan=5: 0.598
+    mae: Mix95|m=50|n_obs=5|break=1|n_plan=10: 0.199
+    mae: Mix95|m=50|n_obs=5|break=1|n_plan=20: 0.515
+    mae: Mix95|m=50|n_obs=5|break=3|n_plan=5: 0.600
+    mae: Mix95|m=50|n_obs=5|shift=-0.05|n_plan=5: 0.405
+    mae: Mix|m=120|n_obs=3|break=3|n_plan=10: 0.381
+    mae: Mix|m=120|n_obs=3|shift=-0.05|n_plan=3: 0.296
+    mae: Mix|m=120|n_obs=3|shift=-0.05|n_plan=5: 0.336
+    mae: Mix|m=120|n_obs=4|break=3|n_plan=10: 0.378
+    mae: Mix|m=120|n_obs=4|break=3|n_plan=5: 0.155
+    mae: Mix|m=120|n_obs=4|shift=-0.05|n_plan=4: 0.323
+    mae: Mix|m=120|n_obs=4|shift=-0.05|n_plan=5: 0.315
+    mae: Mix|m=120|n_obs=5|break=3|n_plan=10: 0.340
+    mae: Mix|m=120|n_obs=5|shift=-0.05|n_plan=5: 0.288
+    mae: Mix|m=20|n_obs=3|break=1|n_plan=20: 0.321
+    mae: Mix|m=20|n_obs=3|break=3|n_plan=3: 0.243
+    mae: Mix|m=20|n_obs=3|break=3|n_plan=5: 0.379
+    mae: Mix|m=20|n_obs=3|shift=-0.05|n_plan=20: 0.239
+    mae: Mix|m=20|n_obs=4|break=1|n_plan=10: 0.154
+    mae: Mix|m=20|n_obs=4|break=1|n_plan=20: 0.348
+    mae: Mix|m=20|n_obs=4|break=3|n_plan=4: 0.368
+    mae: Mix|m=20|n_obs=4|break=3|n_plan=5: 0.372
+    mae: Mix|m=20|n_obs=4|shift=-0.05|n_plan=20: 0.255
+    mae: Mix|m=20|n_obs=5|break=1|n_plan=10: 0.159
+    mae: Mix|m=20|n_obs=5|break=1|n_plan=20: 0.349
+    mae: Mix|m=20|n_obs=5|break=3|n_plan=5: 0.339
+    mae: Mix|m=20|n_obs=5|shift=-0.05|n_plan=20: 0.261
+    mae: Mix|m=50|n_obs=3|break=1|n_plan=20: 0.216
+    mae: Mix|m=50|n_obs=3|break=3|n_plan=10: 0.480
+    mae: Mix|m=50|n_obs=3|break=3|n_plan=3: 0.158
+    mae: Mix|m=50|n_obs=3|break=3|n_plan=5: 0.340
+    mae: Mix|m=50|n_obs=3|shift=-0.05|n_plan=10: 0.334
+    mae: Mix|m=50|n_obs=3|shift=-0.05|n_plan=5: 0.193
+    mae: Mix|m=50|n_obs=4|break=1|n_plan=20: 0.239
+    mae: Mix|m=50|n_obs=4|break=3|n_plan=4: 0.277
+    mae: Mix|m=50|n_obs=4|break=3|n_plan=5: 0.364
+    mae: Mix|m=50|n_obs=4|shift=-0.05|n_plan=10: 0.317
+    mae: Mix|m=50|n_obs=4|shift=-0.05|n_plan=4: 0.174
+    mae: Mix|m=50|n_obs=4|shift=-0.05|n_plan=5: 0.224
+    mae: Mix|m=50|n_obs=5|break=1|n_plan=20: 0.234
+    mae: Mix|m=50|n_obs=5|break=3|n_plan=5: 0.348
+    mae: Mix|m=50|n_obs=5|shift=-0.05|n_plan=10: 0.301
+    mae: Mix|m=50|n_obs=5|shift=-0.05|n_plan=5: 0.213
+    mae: Tri|m=120|n_obs=3|shift=-0.05|n_plan=10: 0.178
+    mae: Tri|m=120|n_obs=4|shift=-0.05|n_plan=10: 0.199
+    mae: Tri|m=120|n_obs=5|shift=-0.05|n_plan=10: 0.197
+    mae: Tri|m=50|n_obs=3|shift=-0.05|n_plan=10: 0.188
+    mae: Tri|m=50|n_obs=4|shift=-0.05|n_plan=10: 0.196
+    mae: Tri|m=50|n_obs=5|shift=-0.05|n_plan=10: 0.197
+    p90: Beta(20,1)|m=120|n_obs=3|break=3|n_plan=10: 0.582
+    p90: Beta(20,1)|m=120|n_obs=3|break=3|n_plan=3: 0.208
+    p90: Beta(20,1)|m=120|n_obs=3|break=3|n_plan=5: 0.348
+    p90: Beta(20,1)|m=120|n_obs=3|shift=-0.05|n_plan=3: 0.458
+    p90: Beta(20,1)|m=120|n_obs=4|break=3|n_plan=10: 0.549
+    p90: Beta(20,1)|m=120|n_obs=4|break=3|n_plan=4: 0.263
+    p90: Beta(20,1)|m=120|n_obs=4|break=3|n_plan=5: 0.331
+    p90: Beta(20,1)|m=120|n_obs=4|shift=-0.05|n_plan=4: 0.431
+    p90: Beta(20,1)|m=120|n_obs=5|break=3|n_plan=10: 0.525
+    p90: Beta(20,1)|m=120|n_obs=5|break=3|n_plan=5: 0.317
+    p90: Beta(20,1)|m=50|n_obs=3|break=1|n_plan=10: 0.213
+    p90: Beta(20,1)|m=50|n_obs=3|break=1|n_plan=20: 0.398
+    p90: Beta(20,1)|m=50|n_obs=3|break=3|n_plan=3: 0.377
+    p90: Beta(20,1)|m=50|n_obs=3|break=3|n_plan=5: 0.586
+    p90: Beta(20,1)|m=50|n_obs=3|shift=-0.05|n_plan=10: 0.446
+    p90: Beta(20,1)|m=50|n_obs=3|shift=-0.05|n_plan=3: 0.252
+    p90: Beta(20,1)|m=50|n_obs=3|shift=-0.05|n_plan=5: 0.393
+    p90: Beta(20,1)|m=50|n_obs=4|break=1|n_plan=20: 0.390
+    p90: Beta(20,1)|m=50|n_obs=4|break=3|n_plan=4: 0.478
+    p90: Beta(20,1)|m=50|n_obs=4|break=3|n_plan=5: 0.536
+    p90: Beta(20,1)|m=50|n_obs=4|shift=-0.05|n_plan=10: 0.410
+    p90: Beta(20,1)|m=50|n_obs=4|shift=-0.05|n_plan=4: 0.298
+    p90: Beta(20,1)|m=50|n_obs=4|shift=-0.05|n_plan=5: 0.358
+    p90: Beta(20,1)|m=50|n_obs=5|break=1|n_plan=20: 0.372
+    p90: Beta(20,1)|m=50|n_obs=5|break=3|n_plan=5: 0.500
+    p90: Beta(20,1)|m=50|n_obs=5|shift=-0.05|n_plan=10: 0.377
+    p90: Beta(20,1)|m=50|n_obs=5|shift=-0.05|n_plan=5: 0.366
+    p90: Beta(50,1)|m=120|n_obs=3|break=1|n_plan=10: 0.211
+    p90: Beta(50,1)|m=120|n_obs=3|break=1|n_plan=20: 0.442
+    p90: Beta(50,1)|m=120|n_obs=3|break=3|n_plan=3: 0.415
+    p90: Beta(50,1)|m=120|n_obs=3|break=3|n_plan=5: 0.648
+    p90: Beta(50,1)|m=120|n_obs=4|break=1|n_plan=10: 0.218
+    p90: Beta(50,1)|m=120|n_obs=4|break=1|n_plan=20: 0.410
+    p90: Beta(50,1)|m=120|n_obs=4|break=3|n_plan=4: 0.543
+    p90: Beta(50,1)|m=120|n_obs=4|break=3|n_plan=5: 0.645
+    p90: Beta(50,1)|m=120|n_obs=5|break=1|n_plan=10: 0.205
+    p90: Beta(50,1)|m=120|n_obs=5|break=1|n_plan=20: 0.417
+    p90: Beta(50,1)|m=120|n_obs=5|break=3|n_plan=5: 0.621
+    p90: Beta(8,1)|m=120|n_obs=3|break=3|n_plan=10: 0.273
+    p90: Beta(8,1)|m=120|n_obs=3|break=3|n_plan=20: 0.410
+    p90: Beta(8,1)|m=120|n_obs=3|shift=-0.05|n_plan=3: 0.247
+    p90: Beta(8,1)|m=120|n_obs=3|shift=-0.05|n_plan=5: 0.271
+    p90: Beta(8,1)|m=120|n_obs=4|break=3|n_plan=10: 0.241
+    p90: Beta(8,1)|m=120|n_obs=4|break=3|n_plan=20: 0.364
+    p90: Beta(8,1)|m=120|n_obs=4|shift=-0.05|n_plan=4: 0.250
+    p90: Beta(8,1)|m=120|n_obs=4|shift=-0.05|n_plan=5: 0.245
+    p90: Beta(8,1)|m=120|n_obs=5|break=3|n_plan=10: 0.243
+    p90: Beta(8,1)|m=120|n_obs=5|break=3|n_plan=20: 0.352
+    p90: Beta(8,1)|m=120|n_obs=5|shift=-0.05|n_plan=5: 0.242
+    p90: Beta(8,1)|m=20|n_obs=3|break=1|n_plan=20: 0.332
+    p90: Beta(8,1)|m=20|n_obs=3|break=3|n_plan=3: 0.321
+    p90: Beta(8,1)|m=20|n_obs=3|break=3|n_plan=5: 0.456
+    p90: Beta(8,1)|m=20|n_obs=3|shift=-0.05|n_plan=20: 0.239
+    p90: Beta(8,1)|m=20|n_obs=4|break=1|n_plan=20: 0.328
+    p90: Beta(8,1)|m=20|n_obs=4|break=3|n_plan=4: 0.370
+    p90: Beta(8,1)|m=20|n_obs=4|break=3|n_plan=5: 0.396
+    p90: Beta(8,1)|m=20|n_obs=4|shift=-0.05|n_plan=20: 0.231
+    p90: Beta(8,1)|m=20|n_obs=5|break=1|n_plan=20: 0.321
+    p90: Beta(8,1)|m=20|n_obs=5|break=3|n_plan=5: 0.387
+    p90: Beta(8,1)|m=20|n_obs=5|shift=-0.05|n_plan=20: 0.223
+    p90: Beta(8,1)|m=50|n_obs=3|break=3|n_plan=10: 0.447
+    p90: Beta(8,1)|m=50|n_obs=3|break=3|n_plan=5: 0.281
+    p90: Beta(8,1)|m=50|n_obs=3|shift=-0.05|n_plan=10: 0.264
+    p90: Beta(8,1)|m=50|n_obs=4|break=3|n_plan=10: 0.386
+    p90: Beta(8,1)|m=50|n_obs=4|break=3|n_plan=4: 0.223
+    p90: Beta(8,1)|m=50|n_obs=4|break=3|n_plan=5: 0.253
+    p90: Beta(8,1)|m=50|n_obs=4|shift=-0.05|n_plan=10: 0.239
+    p90: Beta(8,1)|m=50|n_obs=5|break=3|n_plan=10: 0.356
+    p90: Beta(8,1)|m=50|n_obs=5|break=3|n_plan=5: 0.255
+    p90: Beta(8,1)|m=50|n_obs=5|shift=-0.05|n_plan=10: 0.224
+    p90: Mix90Z|m=120|n_obs=3|break=3|n_plan=10: 0.685
+    p90: Mix90Z|m=120|n_obs=3|break=3|n_plan=5: 0.253
+    p90: Mix90Z|m=120|n_obs=3|shift=-0.05|n_plan=3: 0.462
+    p90: Mix90Z|m=120|n_obs=4|break=3|n_plan=10: 0.684
+    p90: Mix90Z|m=120|n_obs=4|break=3|n_plan=5: 0.306
+    p90: Mix90Z|m=120|n_obs=4|shift=-0.05|n_plan=4: 0.473
+    p90: Mix90Z|m=120|n_obs=5|break=3|n_plan=10: 0.659
+    p90: Mix90Z|m=120|n_obs=5|break=3|n_plan=5: 0.321
+    p90: Mix95|m=120|n_obs=4|break=1|n_plan=20: 0.576
+    p90: Mix95|m=120|n_obs=4|break=3|n_plan=4: 0.688
+    p90: Mix95|m=120|n_obs=4|break=3|n_plan=5: 0.765
+    p90: Mix95|m=120|n_obs=5|break=1|n_plan=20: 0.547
+    p90: Mix95|m=120|n_obs=5|break=3|n_plan=5: 0.728
+    p90: Mix|m=120|n_obs=3|break=3|n_plan=10: 0.494
+    p90: Mix|m=120|n_obs=3|break=3|n_plan=5: 0.207
+    p90: Mix|m=120|n_obs=3|shift=-0.05|n_plan=3: 0.392
+    p90: Mix|m=120|n_obs=3|shift=-0.05|n_plan=5: 0.400
+    p90: Mix|m=120|n_obs=4|break=3|n_plan=10: 0.497
+    p90: Mix|m=120|n_obs=4|break=3|n_plan=5: 0.228
+    p90: Mix|m=120|n_obs=4|shift=-0.05|n_plan=4: 0.386
+    p90: Mix|m=120|n_obs=4|shift=-0.05|n_plan=5: 0.378
+    p90: Mix|m=120|n_obs=5|break=3|n_plan=10: 0.447
+    p90: Mix|m=120|n_obs=5|break=3|n_plan=5: 0.211
+    p90: Mix|m=120|n_obs=5|shift=-0.05|n_plan=5: 0.347
+    p90: Mix|m=20|n_obs=5|break=1|n_plan=10: 0.270
+    p90: Mix|m=20|n_obs=5|break=1|n_plan=20: 0.518
+    p90: Mix|m=20|n_obs=5|break=3|n_plan=5: 0.419
+    p90: Mix|m=20|n_obs=5|shift=-0.05|n_plan=10: 0.229
+    p90: Mix|m=20|n_obs=5|shift=-0.05|n_plan=20: 0.378
+    p90: Mix|m=50|n_obs=3|break=1|n_plan=20: 0.327
+    p90: Mix|m=50|n_obs=3|break=3|n_plan=10: 0.559
+    p90: Mix|m=50|n_obs=3|break=3|n_plan=3: 0.251
+    p90: Mix|m=50|n_obs=3|break=3|n_plan=5: 0.474
+    p90: Mix|m=50|n_obs=3|shift=-0.05|n_plan=10: 0.442
+    p90: Mix|m=50|n_obs=3|shift=-0.05|n_plan=5: 0.297
+    p90: Mix|m=50|n_obs=4|break=1|n_plan=20: 0.385
+    p90: Mix|m=50|n_obs=4|break=3|n_plan=4: 0.419
+    p90: Mix|m=50|n_obs=4|break=3|n_plan=5: 0.554
+    p90: Mix|m=50|n_obs=4|shift=-0.05|n_plan=10: 0.406
+    p90: Mix|m=50|n_obs=4|shift=-0.05|n_plan=4: 0.277
+    p90: Mix|m=50|n_obs=4|shift=-0.05|n_plan=5: 0.344
+    p90: Mix|m=50|n_obs=5|break=1|n_plan=20: 0.364
+    p90: Mix|m=50|n_obs=5|break=3|n_plan=5: 0.511
+    p90: Mix|m=50|n_obs=5|shift=-0.05|n_plan=10: 0.377
+    p90: Mix|m=50|n_obs=5|shift=-0.05|n_plan=5: 0.323
+    p90: Tri|m=120|n_obs=3|shift=-0.05|n_plan=10: 0.265
+    p90: Tri|m=120|n_obs=4|shift=-0.05|n_plan=10: 0.281
+    p90: Tri|m=120|n_obs=5|shift=-0.05|n_plan=10: 0.290
+    p90: Tri|m=20|n_obs=3|shift=-0.05|n_plan=20: 0.201
+    p90: Tri|m=20|n_obs=4|shift=-0.05|n_plan=20: 0.220
+    p90: Tri|m=20|n_obs=5|shift=-0.05|n_plan=20: 0.226
+    p90: Tri|m=50|n_obs=3|break=3|n_plan=20: 0.220
+    p90: Tri|m=50|n_obs=3|shift=-0.05|n_plan=10: 0.259
+    p90: Tri|m=50|n_obs=3|shift=-0.05|n_plan=20: 0.225
+    p90: Tri|m=50|n_obs=4|break=3|n_plan=20: 0.202
+    p90: Tri|m=50|n_obs=4|shift=-0.05|n_plan=10: 0.277
+    p90: Tri|m=50|n_obs=4|shift=-0.05|n_plan=20: 0.264
+    p90: Tri|m=50|n_obs=5|shift=-0.05|n_plan=10: 0.282
+    p90: Tri|m=50|n_obs=5|shift=-0.05|n_plan=20: 0.270
+    fa: Mix95|m=50|n_obs=5|n_plan=5: +0.033
+    fa: Mix95|m=120|n_obs=3|n_plan=10: +0.030
+    fa: Mix95|m=120|n_obs=3|n_plan=20: +0.033
+    fa: Mix95|m=120|n_obs=4|n_plan=4: +0.030
+    fa: Mix95|m=120|n_obs=4|n_plan=10: +0.031
+    fa: Mix95|m=120|n_obs=4|n_plan=20: +0.032
+    fa: Mix95|m=120|n_obs=5|n_plan=10: +0.030
+    fa: Mix95|m=120|n_obs=5|n_plan=20: +0.032
+    fa: Mix90Z|m=50|n_obs=5|n_plan=10: +0.033
+    fa: Mix90Z|m=50|n_obs=5|n_plan=20: +0.036
+    fa: Mix90Z|m=120|n_obs=3|n_plan=5: +0.031
+    fa: Mix90Z|m=120|n_obs=3|n_plan=10: +0.038
+    fa: Mix90Z|m=120|n_obs=3|n_plan=20: +0.038
+    fa: Mix90Z|m=120|n_obs=4|n_plan=10: +0.032
+    fa: Mix90Z|m=120|n_obs=4|n_plan=20: +0.037
+    fa: Mix90Z|m=120|n_obs=5|n_plan=10: +0.032
+    fa: Mix90Z|m=120|n_obs=5|n_plan=20: +0.036
+  Plug-in: FAILS; pooled p90 |error| 0.134; cells failing bias 36, MAE 7, p90 10; false-alarm cells 0
+    bias: Beta(0.5,0.5)|m=120|n_obs=3|shift=-0.05|n_plan=10: -0.216
+    bias: Beta(0.5,0.5)|m=120|n_obs=3|shift=-0.05|n_plan=5: -0.195
+    bias: Beta(0.5,0.5)|m=120|n_obs=4|shift=-0.05|n_plan=10: -0.173
+    bias: Beta(0.5,0.5)|m=120|n_obs=4|shift=-0.05|n_plan=4: -0.140
+    bias: Beta(0.5,0.5)|m=120|n_obs=4|shift=-0.05|n_plan=5: -0.163
+    bias: Beta(0.5,0.5)|m=120|n_obs=5|shift=-0.05|n_plan=10: -0.149
+    bias: Beta(0.5,0.5)|m=120|n_obs=5|shift=-0.05|n_plan=5: -0.147
+    bias: Beta(0.5,0.5)|m=20|n_obs=3|shift=-0.05|n_plan=20: -0.127
+    bias: Beta(0.5,0.5)|m=50|n_obs=3|break=3|n_plan=20: +0.055
+    bias: Beta(0.5,0.5)|m=50|n_obs=3|shift=-0.05|n_plan=10: -0.163
+    bias: Beta(0.5,0.5)|m=50|n_obs=3|shift=-0.05|n_plan=20: -0.178
+    bias: Beta(0.5,0.5)|m=50|n_obs=4|shift=-0.05|n_plan=10: -0.130
+    bias: Beta(0.5,0.5)|m=50|n_obs=4|shift=-0.05|n_plan=20: -0.141
+    bias: Beta(0.5,0.5)|m=50|n_obs=5|shift=-0.05|n_plan=10: -0.116
+    bias: Beta(0.5,0.5)|m=50|n_obs=5|shift=-0.05|n_plan=20: -0.132
+    bias: Beta(20,1)|m=120|n_obs=3|break=3|n_plan=10: +0.053
+    bias: Beta(4,2)|m=120|n_obs=3|break=3|n_plan=20: +0.053
+    bias: Beta(4,2)|m=20|n_obs=3|break=3|n_plan=10: +0.062
+    bias: Beta(4,2)|m=50|n_obs=3|break=3|n_plan=20: +0.093
+    bias: Beta(4,2)|m=50|n_obs=4|break=3|n_plan=20: +0.077
+    bias: Beta(4,2)|m=50|n_obs=4|shift=-0.05|n_plan=20: +0.053
+    bias: Beta(50,1)|m=50|n_obs=4|break=1|n_plan=10: -0.145
+    bias: Beta(50,1)|m=50|n_obs=4|break=1|n_plan=20: -0.167
+    bias: Beta(50,1)|m=50|n_obs=4|break=3|n_plan=4: -0.111
+    bias: Beta(50,1)|m=50|n_obs=4|shift=-0.05|n_plan=4: -0.117
+    bias: Beta(50,1)|m=50|n_obs=4|shift=-0.05|n_plan=5: -0.126
+    bias: Beta(8,1)|m=120|n_obs=3|break=3|n_plan=20: +0.080
+    bias: Beta(8,1)|m=120|n_obs=4|break=3|n_plan=20: +0.062
+    bias: Beta(8,1)|m=120|n_obs=5|break=3|n_plan=20: +0.061
+    bias: Beta(8,1)|m=20|n_obs=5|break=1|n_plan=20: +0.063
+    bias: Beta(8,1)|m=50|n_obs=3|break=3|n_plan=10: +0.062
+    bias: Beta(8,1)|m=50|n_obs=3|shift=-0.05|n_plan=10: +0.067
+    bias: Beta(8,1)|m=50|n_obs=4|break=3|n_plan=10: +0.050
+    bias: Beta(8,1)|m=50|n_obs=4|shift=-0.05|n_plan=10: +0.051
+    bias: Beta(8,1)|m=50|n_obs=5|break=3|n_plan=10: +0.051
+    bias: Tri|m=50|n_obs=3|break=3|n_plan=20: +0.052
+    mae: Beta(0.5,0.5)|m=120|n_obs=3|shift=-0.05|n_plan=10: 0.216
+    mae: Beta(0.5,0.5)|m=120|n_obs=3|shift=-0.05|n_plan=5: 0.195
+    mae: Beta(0.5,0.5)|m=120|n_obs=4|shift=-0.05|n_plan=10: 0.173
+    mae: Beta(0.5,0.5)|m=120|n_obs=4|shift=-0.05|n_plan=5: 0.163
+    mae: Beta(0.5,0.5)|m=50|n_obs=3|shift=-0.05|n_plan=10: 0.163
+    mae: Beta(0.5,0.5)|m=50|n_obs=3|shift=-0.05|n_plan=20: 0.178
+    mae: Beta(50,1)|m=50|n_obs=4|break=1|n_plan=20: 0.167
+    p90: Beta(0.5,0.5)|m=120|n_obs=3|shift=-0.05|n_plan=10: 0.299
+    p90: Beta(0.5,0.5)|m=120|n_obs=3|shift=-0.05|n_plan=5: 0.257
+    p90: Beta(0.5,0.5)|m=120|n_obs=4|shift=-0.05|n_plan=10: 0.244
+    p90: Beta(0.5,0.5)|m=120|n_obs=4|shift=-0.05|n_plan=5: 0.222
+    p90: Beta(0.5,0.5)|m=120|n_obs=5|shift=-0.05|n_plan=10: 0.213
+    p90: Beta(0.5,0.5)|m=20|n_obs=3|shift=-0.05|n_plan=20: 0.218
+    p90: Beta(0.5,0.5)|m=50|n_obs=3|shift=-0.05|n_plan=10: 0.222
+    p90: Beta(0.5,0.5)|m=50|n_obs=3|shift=-0.05|n_plan=20: 0.269
+    p90: Beta(0.5,0.5)|m=50|n_obs=4|shift=-0.05|n_plan=20: 0.222
+    p90: Beta(0.5,0.5)|m=50|n_obs=5|shift=-0.05|n_plan=20: 0.219
+
+== F_min 10: eligible False; 211 decision cells; coverage by m {'20': {'near_ceiling_cells': 5, 'with_n_obs_3': 0}, '50': {'near_ceiling_cells': 29, 'with_n_obs_3': 7}, '120': {'near_ceiling_cells': 39, 'with_n_obs_3': 9}}
+
+Decision: no eligible F_min at which P-pooled meets every criterion; nothing ships; plan --from is shelved (no round 3)
+
+Reported (not decisive), at F_min 3:
+  per decision cell: gated suites, p90 criterion applies (>= 50), p90 |error| per method
+    Beta(0.5,0.5)|m=120|n_obs=3|shift=-0.05|n_plan=10          n=100 yes  P-pooled 0.053  P-uniform 0.066  Plug-in 0.299  Oracle 0.053
+    Beta(0.5,0.5)|m=120|n_obs=3|shift=-0.05|n_plan=5           n=100 yes  P-pooled 0.091  P-uniform 0.106  Plug-in 0.257  Oracle 0.053
+    Beta(0.5,0.5)|m=120|n_obs=4|shift=-0.05|n_plan=10          n=100 yes  P-pooled 0.055  P-uniform 0.052  Plug-in 0.244  Oracle 0.057
+    Beta(0.5,0.5)|m=120|n_obs=4|shift=-0.05|n_plan=4           n=100 yes  P-pooled 0.094  P-uniform 0.086  Plug-in 0.179  Oracle 0.058
+    Beta(0.5,0.5)|m=120|n_obs=4|shift=-0.05|n_plan=5           n=100 yes  P-pooled 0.102  P-uniform 0.099  Plug-in 0.222  Oracle 0.055
+    Beta(0.5,0.5)|m=120|n_obs=5|shift=-0.05|n_plan=10          n=100 yes  P-pooled 0.054  P-uniform 0.053  Plug-in 0.213  Oracle 0.058
+    Beta(0.5,0.5)|m=120|n_obs=5|shift=-0.05|n_plan=5           n=100 yes  P-pooled 0.113  P-uniform 0.108  Plug-in 0.198  Oracle 0.053
+    Beta(0.5,0.5)|m=20|n_obs=3|break=3|n_plan=10               n=100 yes  P-pooled 0.114  P-uniform 0.100  Plug-in 0.117  Oracle 0.052
+    Beta(0.5,0.5)|m=20|n_obs=3|break=3|n_plan=20               n=100 yes  P-pooled 0.116  P-uniform 0.114  Plug-in 0.123  Oracle 0.056
+    Beta(0.5,0.5)|m=20|n_obs=3|shift=-0.05|n_plan=20           n=100 yes  P-pooled 0.077  P-uniform 0.088  Plug-in 0.221  Oracle 0.061
+    Beta(0.5,0.5)|m=20|n_obs=4|break=3|n_plan=10               n=100 yes  P-pooled 0.128  P-uniform 0.132  Plug-in 0.105  Oracle 0.069
+    Beta(0.5,0.5)|m=20|n_obs=4|break=3|n_plan=20               n=100 yes  P-pooled 0.124  P-uniform 0.112  Plug-in 0.112  Oracle 0.061
+    Beta(0.5,0.5)|m=20|n_obs=4|break=3|n_plan=5                n=100 yes  P-pooled 0.086  P-uniform 0.071  Plug-in 0.094  Oracle 0.049
+    Beta(0.5,0.5)|m=20|n_obs=4|shift=-0.05|n_plan=20           n=100 yes  P-pooled 0.081  P-uniform 0.087  Plug-in 0.186  Oracle 0.059
+    Beta(0.5,0.5)|m=20|n_obs=5|break=3|n_plan=10               n=100 yes  P-pooled 0.110  P-uniform 0.108  Plug-in 0.120  Oracle 0.053
+    Beta(0.5,0.5)|m=20|n_obs=5|break=3|n_plan=20               n=100 yes  P-pooled 0.106  P-uniform 0.093  Plug-in 0.117  Oracle 0.052
+    Beta(0.5,0.5)|m=20|n_obs=5|shift=-0.05|n_plan=20           n=100 yes  P-pooled 0.072  P-uniform 0.082  Plug-in 0.158  Oracle 0.058
+    Beta(0.5,0.5)|m=50|n_obs=3|break=3|n_plan=20               n=100 yes  P-pooled 0.118  P-uniform 0.108  Plug-in 0.137  Oracle 0.068
+    Beta(0.5,0.5)|m=50|n_obs=3|shift=-0.05|n_plan=10           n=100 yes  P-pooled 0.098  P-uniform 0.084  Plug-in 0.222  Oracle 0.056
+    Beta(0.5,0.5)|m=50|n_obs=3|shift=-0.05|n_plan=20           n=100 yes  P-pooled 0.069  P-uniform 0.081  Plug-in 0.269  Oracle 0.045
+    Beta(0.5,0.5)|m=50|n_obs=4|break=3|n_plan=20               n=100 yes  P-pooled 0.096  P-uniform 0.104  Plug-in 0.108  Oracle 0.060
+    Beta(0.5,0.5)|m=50|n_obs=4|shift=-0.05|n_plan=10           n=100 yes  P-pooled 0.086  P-uniform 0.091  Plug-in 0.198  Oracle 0.056
+    Beta(0.5,0.5)|m=50|n_obs=4|shift=-0.05|n_plan=20           n=100 yes  P-pooled 0.077  P-uniform 0.073  Plug-in 0.222  Oracle 0.057
+    Beta(0.5,0.5)|m=50|n_obs=5|break=3|n_plan=20               n=100 yes  P-pooled 0.094  P-uniform 0.103  Plug-in 0.101  Oracle 0.058
+    Beta(0.5,0.5)|m=50|n_obs=5|shift=-0.05|n_plan=10           n=100 yes  P-pooled 0.087  P-uniform 0.100  Plug-in 0.172  Oracle 0.053
+    Beta(0.5,0.5)|m=50|n_obs=5|shift=-0.05|n_plan=20           n=100 yes  P-pooled 0.081  P-uniform 0.071  Plug-in 0.219  Oracle 0.057
+    Beta(20,1)|m=120|n_obs=3|break=1|n_plan=20                 n=100 yes  P-pooled 0.098  P-uniform 0.199  Plug-in 0.087  Oracle 0.042
+    Beta(20,1)|m=120|n_obs=3|break=3|n_plan=10                 n=100 yes  P-pooled 0.161  P-uniform 0.582  Plug-in 0.158  Oracle 0.049
+    Beta(20,1)|m=120|n_obs=3|break=3|n_plan=3                  n=100 yes  P-pooled 0.092  P-uniform 0.208  Plug-in 0.109  Oracle 0.057
+    Beta(20,1)|m=120|n_obs=3|break=3|n_plan=5                  n=100 yes  P-pooled 0.174  P-uniform 0.348  Plug-in 0.152  Oracle 0.051
+    Beta(20,1)|m=120|n_obs=3|shift=-0.05|n_plan=3              n=100 yes  P-pooled 0.102  P-uniform 0.458  Plug-in 0.117  Oracle 0.048
+    Beta(20,1)|m=120|n_obs=4|break=1|n_plan=20                 n=100 yes  P-pooled 0.073  P-uniform 0.184  Plug-in 0.067  Oracle 0.049
+    Beta(20,1)|m=120|n_obs=4|break=3|n_plan=10                 n=100 yes  P-pooled 0.119  P-uniform 0.549  Plug-in 0.125  Oracle 0.054
+    Beta(20,1)|m=120|n_obs=4|break=3|n_plan=4                  n=100 yes  P-pooled 0.080  P-uniform 0.263  Plug-in 0.093  Oracle 0.055
+    Beta(20,1)|m=120|n_obs=4|break=3|n_plan=5                  n=100 yes  P-pooled 0.106  P-uniform 0.331  Plug-in 0.115  Oracle 0.060
+    Beta(20,1)|m=120|n_obs=4|shift=-0.05|n_plan=4              n=100 yes  P-pooled 0.066  P-uniform 0.431  Plug-in 0.069  Oracle 0.039
+    Beta(20,1)|m=120|n_obs=5|break=1|n_plan=20                 n=100 yes  P-pooled 0.084  P-uniform 0.182  Plug-in 0.077  Oracle 0.049
+    Beta(20,1)|m=120|n_obs=5|break=3|n_plan=10                 n=100 yes  P-pooled 0.138  P-uniform 0.525  Plug-in 0.136  Oracle 0.044
+    Beta(20,1)|m=120|n_obs=5|break=3|n_plan=5                  n=100 yes  P-pooled 0.114  P-uniform 0.317  Plug-in 0.124  Oracle 0.055
+    Beta(20,1)|m=20|n_obs=3|break=1|n_plan=10                  n= 50 yes  P-pooled 0.179  P-uniform 0.376  Plug-in 0.175  Oracle 0.047
+    Beta(20,1)|m=20|n_obs=3|break=1|n_plan=20                  n= 50 yes  P-pooled 0.229  P-uniform 0.617  Plug-in 0.224  Oracle 0.048
+    Beta(20,1)|m=20|n_obs=3|break=1|n_plan=5                   n= 50 yes  P-pooled 0.110  P-uniform 0.183  Plug-in 0.127  Oracle 0.047
+    Beta(20,1)|m=20|n_obs=3|break=3|n_plan=3                   n= 50 yes  P-pooled 0.244  P-uniform 0.542  Plug-in 0.207  Oracle 0.054
+    Beta(20,1)|m=20|n_obs=3|shift=-0.05|n_plan=10              n= 50 yes  P-pooled 0.145  P-uniform 0.320  Plug-in 0.166  Oracle 0.065
+    Beta(20,1)|m=20|n_obs=3|shift=-0.05|n_plan=20              n= 50 yes  P-pooled 0.163  P-uniform 0.448  Plug-in 0.126  Oracle 0.049
+    Beta(20,1)|m=20|n_obs=3|shift=-0.05|n_plan=5               n= 50 yes  P-pooled 0.111  P-uniform 0.182  Plug-in 0.130  Oracle 0.050
+    Beta(20,1)|m=20|n_obs=4|break=1|n_plan=10                  n= 76 yes  P-pooled 0.140  P-uniform 0.379  Plug-in 0.164  Oracle 0.058
+    Beta(20,1)|m=20|n_obs=4|break=1|n_plan=20                  n= 76 yes  P-pooled 0.133  P-uniform 0.567  Plug-in 0.155  Oracle 0.033
+    Beta(20,1)|m=20|n_obs=4|break=1|n_plan=5                   n= 76 yes  P-pooled 0.092  P-uniform 0.166  Plug-in 0.111  Oracle 0.038
+    Beta(20,1)|m=20|n_obs=4|break=3|n_plan=4                   n= 76 yes  P-pooled 0.125  P-uniform 0.523  Plug-in 0.108  Oracle 0.042
+    Beta(20,1)|m=20|n_obs=4|shift=-0.05|n_plan=10              n= 76 yes  P-pooled 0.116  P-uniform 0.291  Plug-in 0.114  Oracle 0.070
+    Beta(20,1)|m=20|n_obs=4|shift=-0.05|n_plan=20              n= 76 yes  P-pooled 0.116  P-uniform 0.430  Plug-in 0.118  Oracle 0.044
+    Beta(20,1)|m=20|n_obs=4|shift=-0.05|n_plan=4               n= 76 yes  P-pooled 0.071  P-uniform 0.133  Plug-in 0.095  Oracle 0.046
+    Beta(20,1)|m=20|n_obs=4|shift=-0.05|n_plan=5               n= 76 yes  P-pooled 0.081  P-uniform 0.167  Plug-in 0.092  Oracle 0.049
+    Beta(20,1)|m=20|n_obs=5|break=1|n_plan=10                  n= 78 yes  P-pooled 0.185  P-uniform 0.389  Plug-in 0.189  Oracle 0.064
+    Beta(20,1)|m=20|n_obs=5|break=1|n_plan=20                  n= 78 yes  P-pooled 0.169  P-uniform 0.560  Plug-in 0.159  Oracle 0.045
+    Beta(20,1)|m=20|n_obs=5|break=1|n_plan=5                   n= 78 yes  P-pooled 0.091  P-uniform 0.171  Plug-in 0.086  Oracle 0.058
+    Beta(20,1)|m=20|n_obs=5|shift=-0.05|n_plan=10              n= 78 yes  P-pooled 0.127  P-uniform 0.306  Plug-in 0.130  Oracle 0.058
+    Beta(20,1)|m=20|n_obs=5|shift=-0.05|n_plan=20              n= 78 yes  P-pooled 0.116  P-uniform 0.416  Plug-in 0.137  Oracle 0.041
+    Beta(20,1)|m=20|n_obs=5|shift=-0.05|n_plan=5               n= 78 yes  P-pooled 0.092  P-uniform 0.175  Plug-in 0.082  Oracle 0.062
+    Beta(20,1)|m=50|n_obs=3|break=1|n_plan=10                  n= 93 yes  P-pooled 0.125  P-uniform 0.211  Plug-in 0.131  Oracle 0.053
+    Beta(20,1)|m=50|n_obs=3|break=1|n_plan=20                  n= 93 yes  P-pooled 0.244  P-uniform 0.392  Plug-in 0.278  Oracle 0.061
+    Beta(20,1)|m=50|n_obs=3|break=3|n_plan=3                   n= 93 yes  P-pooled 0.203  P-uniform 0.381  Plug-in 0.224  Oracle 0.057
+    Beta(20,1)|m=50|n_obs=3|break=3|n_plan=5                   n= 93 yes  P-pooled 0.201  P-uniform 0.589  Plug-in 0.207  Oracle 0.044
+    Beta(20,1)|m=50|n_obs=3|shift=-0.05|n_plan=10              n= 93 yes  P-pooled 0.105  P-uniform 0.439  Plug-in 0.116  Oracle 0.038
+    Beta(20,1)|m=50|n_obs=3|shift=-0.05|n_plan=3               n= 93 yes  P-pooled 0.131  P-uniform 0.255  Plug-in 0.128  Oracle 0.069
+    Beta(20,1)|m=50|n_obs=3|shift=-0.05|n_plan=5               n= 93 yes  P-pooled 0.176  P-uniform 0.401  Plug-in 0.169  Oracle 0.057
+    Beta(20,1)|m=50|n_obs=4|break=1|n_plan=10                  n= 99 yes  P-pooled 0.124  P-uniform 0.187  Plug-in 0.095  Oracle 0.046
+    Beta(20,1)|m=50|n_obs=4|break=1|n_plan=20                  n= 99 yes  P-pooled 0.215  P-uniform 0.391  Plug-in 0.213  Oracle 0.067
+    Beta(20,1)|m=50|n_obs=4|break=3|n_plan=4                   n= 99 yes  P-pooled 0.189  P-uniform 0.477  Plug-in 0.161  Oracle 0.052
+    Beta(20,1)|m=50|n_obs=4|break=3|n_plan=5                   n= 99 yes  P-pooled 0.165  P-uniform 0.537  Plug-in 0.169  Oracle 0.054
+    Beta(20,1)|m=50|n_obs=4|shift=-0.05|n_plan=10              n= 99 yes  P-pooled 0.083  P-uniform 0.407  Plug-in 0.087  Oracle 0.042
+    Beta(20,1)|m=50|n_obs=4|shift=-0.05|n_plan=4               n= 99 yes  P-pooled 0.144  P-uniform 0.298  Plug-in 0.145  Oracle 0.059
+    Beta(20,1)|m=50|n_obs=4|shift=-0.05|n_plan=5               n= 99 yes  P-pooled 0.137  P-uniform 0.354  Plug-in 0.160  Oracle 0.055
+    Beta(20,1)|m=50|n_obs=5|break=1|n_plan=10                  n=100 yes  P-pooled 0.107  P-uniform 0.195  Plug-in 0.116  Oracle 0.052
+    Beta(20,1)|m=50|n_obs=5|break=1|n_plan=20                  n=100 yes  P-pooled 0.188  P-uniform 0.379  Plug-in 0.194  Oracle 0.058
+    Beta(20,1)|m=50|n_obs=5|break=3|n_plan=5                   n=100 yes  P-pooled 0.161  P-uniform 0.503  Plug-in 0.164  Oracle 0.060
+    Beta(20,1)|m=50|n_obs=5|shift=-0.05|n_plan=10              n=100 yes  P-pooled 0.094  P-uniform 0.377  Plug-in 0.092  Oracle 0.041
+    Beta(20,1)|m=50|n_obs=5|shift=-0.05|n_plan=5               n=100 yes  P-pooled 0.134  P-uniform 0.365  Plug-in 0.146  Oracle 0.054
+    Beta(4,2)|m=120|n_obs=3|break=3|n_plan=20                  n=100 yes  P-pooled 0.084  P-uniform 0.074  Plug-in 0.119  Oracle 0.058
+    Beta(4,2)|m=120|n_obs=3|shift=-0.05|n_plan=10              n=100 yes  P-pooled 0.075  P-uniform 0.063  Plug-in 0.072  Oracle 0.049
+    Beta(4,2)|m=120|n_obs=3|shift=-0.05|n_plan=3               n=100 yes  P-pooled 0.060  P-uniform 0.070  Plug-in 0.115  Oracle 0.058
+    Beta(4,2)|m=120|n_obs=3|shift=-0.05|n_plan=5               n=100 yes  P-pooled 0.072  P-uniform 0.075  Plug-in 0.100  Oracle 0.059
+    Beta(4,2)|m=120|n_obs=4|break=3|n_plan=20                  n=100 yes  P-pooled 0.081  P-uniform 0.072  Plug-in 0.101  Oracle 0.056
+    Beta(4,2)|m=120|n_obs=4|shift=-0.05|n_plan=10              n=100 yes  P-pooled 0.078  P-uniform 0.054  Plug-in 0.075  Oracle 0.045
+    Beta(4,2)|m=120|n_obs=4|shift=-0.05|n_plan=4               n=100 yes  P-pooled 0.056  P-uniform 0.068  Plug-in 0.080  Oracle 0.067
+    Beta(4,2)|m=120|n_obs=4|shift=-0.05|n_plan=5               n=100 yes  P-pooled 0.079  P-uniform 0.066  Plug-in 0.065  Oracle 0.058
+    Beta(4,2)|m=120|n_obs=5|break=3|n_plan=20                  n=100 yes  P-pooled 0.073  P-uniform 0.069  Plug-in 0.072  Oracle 0.051
+    Beta(4,2)|m=120|n_obs=5|shift=-0.05|n_plan=10              n=100 yes  P-pooled 0.078  P-uniform 0.058  Plug-in 0.076  Oracle 0.047
+    Beta(4,2)|m=120|n_obs=5|shift=-0.05|n_plan=5               n=100 yes  P-pooled 0.057  P-uniform 0.067  Plug-in 0.074  Oracle 0.054
+    Beta(4,2)|m=20|n_obs=3|break=3|n_plan=10                   n=100 yes  P-pooled 0.179  P-uniform 0.169  Plug-in 0.201  Oracle 0.051
+    Beta(4,2)|m=20|n_obs=3|break=3|n_plan=20                   n=100 yes  P-pooled 0.108  P-uniform 0.151  Plug-in 0.095  Oracle 0.038
+    Beta(4,2)|m=20|n_obs=3|break=3|n_plan=3                    n=100 yes  P-pooled 0.083  P-uniform 0.100  Plug-in 0.084  Oracle 0.046
+    Beta(4,2)|m=20|n_obs=3|break=3|n_plan=5                    n=100 yes  P-pooled 0.133  P-uniform 0.118  Plug-in 0.144  Oracle 0.055
+    Beta(4,2)|m=20|n_obs=3|shift=-0.05|n_plan=20               n=100 yes  P-pooled 0.093  P-uniform 0.064  Plug-in 0.102  Oracle 0.059
+    Beta(4,2)|m=20|n_obs=4|break=3|n_plan=10                   n=100 yes  P-pooled 0.156  P-uniform 0.174  Plug-in 0.170  Oracle 0.044
+    Beta(4,2)|m=20|n_obs=4|break=3|n_plan=20                   n=100 yes  P-pooled 0.103  P-uniform 0.145  Plug-in 0.086  Oracle 0.042
+    Beta(4,2)|m=20|n_obs=4|break=3|n_plan=4                    n=100 yes  P-pooled 0.084  P-uniform 0.097  Plug-in 0.108  Oracle 0.049
+    Beta(4,2)|m=20|n_obs=4|break=3|n_plan=5                    n=100 yes  P-pooled 0.115  P-uniform 0.112  Plug-in 0.124  Oracle 0.067
+    Beta(4,2)|m=20|n_obs=4|shift=-0.05|n_plan=20               n=100 yes  P-pooled 0.079  P-uniform 0.074  Plug-in 0.086  Oracle 0.058
+    Beta(4,2)|m=20|n_obs=5|break=3|n_plan=10                   n=100 yes  P-pooled 0.123  P-uniform 0.143  Plug-in 0.135  Oracle 0.057
+    Beta(4,2)|m=20|n_obs=5|break=3|n_plan=20                   n=100 yes  P-pooled 0.088  P-uniform 0.113  Plug-in 0.081  Oracle 0.040
+    Beta(4,2)|m=20|n_obs=5|break=3|n_plan=5                    n=100 yes  P-pooled 0.091  P-uniform 0.096  Plug-in 0.086  Oracle 0.059
+    Beta(4,2)|m=20|n_obs=5|shift=-0.05|n_plan=20               n=100 yes  P-pooled 0.081  P-uniform 0.059  Plug-in 0.078  Oracle 0.048
+    Beta(4,2)|m=50|n_obs=3|break=3|n_plan=10                   n=100 yes  P-pooled 0.094  P-uniform 0.094  Plug-in 0.112  Oracle 0.049
+    Beta(4,2)|m=50|n_obs=3|break=3|n_plan=20                   n=100 yes  P-pooled 0.135  P-uniform 0.121  Plug-in 0.170  Oracle 0.057
+    Beta(4,2)|m=50|n_obs=3|shift=-0.05|n_plan=10               n=100 yes  P-pooled 0.078  P-uniform 0.056  Plug-in 0.079  Oracle 0.057
+    Beta(4,2)|m=50|n_obs=3|shift=-0.05|n_plan=20               n=100 yes  P-pooled 0.106  P-uniform 0.064  Plug-in 0.108  Oracle 0.049
+    Beta(4,2)|m=50|n_obs=3|shift=-0.05|n_plan=5                n=100 yes  P-pooled 0.056  P-uniform 0.058  Plug-in 0.090  Oracle 0.048
+    Beta(4,2)|m=50|n_obs=4|break=3|n_plan=10                   n=100 yes  P-pooled 0.084  P-uniform 0.086  Plug-in 0.089  Oracle 0.063
+    Beta(4,2)|m=50|n_obs=4|break=3|n_plan=20                   n=100 yes  P-pooled 0.134  P-uniform 0.113  Plug-in 0.167  Oracle 0.055
+    Beta(4,2)|m=50|n_obs=4|shift=-0.05|n_plan=10               n=100 yes  P-pooled 0.082  P-uniform 0.061  Plug-in 0.076  Oracle 0.053
+    Beta(4,2)|m=50|n_obs=4|shift=-0.05|n_plan=20               n=100 yes  P-pooled 0.100  P-uniform 0.066  Plug-in 0.108  Oracle 0.058
+    Beta(4,2)|m=50|n_obs=4|shift=-0.05|n_plan=5                n=100 yes  P-pooled 0.050  P-uniform 0.057  Plug-in 0.072  Oracle 0.047
+    Beta(4,2)|m=50|n_obs=5|break=3|n_plan=10                   n=100 yes  P-pooled 0.072  P-uniform 0.090  Plug-in 0.083  Oracle 0.047
+    Beta(4,2)|m=50|n_obs=5|break=3|n_plan=20                   n=100 yes  P-pooled 0.112  P-uniform 0.100  Plug-in 0.125  Oracle 0.059
+    Beta(4,2)|m=50|n_obs=5|shift=-0.05|n_plan=10               n=100 yes  P-pooled 0.069  P-uniform 0.059  Plug-in 0.069  Oracle 0.067
+    Beta(4,2)|m=50|n_obs=5|shift=-0.05|n_plan=20               n=100 yes  P-pooled 0.091  P-uniform 0.064  Plug-in 0.097  Oracle 0.056
+    Beta(4,2)|m=50|n_obs=5|shift=-0.05|n_plan=5                n=100 yes  P-pooled 0.055  P-uniform 0.054  Plug-in 0.059  Oracle 0.047
+    Beta(50,1)|m=120|n_obs=3|break=1|n_plan=10                 n= 95 yes  P-pooled 0.113  P-uniform 0.214  Plug-in 0.118  Oracle 0.048
+    Beta(50,1)|m=120|n_obs=3|break=1|n_plan=20                 n= 95 yes  P-pooled 0.217  P-uniform 0.436  Plug-in 0.252  Oracle 0.054
+    Beta(50,1)|m=120|n_obs=3|break=3|n_plan=3                  n= 95 yes  P-pooled 0.194  P-uniform 0.417  Plug-in 0.194  Oracle 0.058
+    Beta(50,1)|m=120|n_obs=3|break=3|n_plan=5                  n= 95 yes  P-pooled 0.170  P-uniform 0.650  Plug-in 0.208  Oracle 0.051
+    Beta(50,1)|m=120|n_obs=4|break=1|n_plan=10                 n= 98 yes  P-pooled 0.122  P-uniform 0.218  Plug-in 0.116  Oracle 0.056
+    Beta(50,1)|m=120|n_obs=4|break=1|n_plan=20                 n= 98 yes  P-pooled 0.221  P-uniform 0.419  Plug-in 0.222  Oracle 0.058
+    Beta(50,1)|m=120|n_obs=4|break=3|n_plan=4                  n= 98 yes  P-pooled 0.188  P-uniform 0.542  Plug-in 0.203  Oracle 0.064
+    Beta(50,1)|m=120|n_obs=4|break=3|n_plan=5                  n= 98 yes  P-pooled 0.173  P-uniform 0.640  Plug-in 0.190  Oracle 0.047
+    Beta(50,1)|m=120|n_obs=5|break=1|n_plan=10                 n=100 yes  P-pooled 0.112  P-uniform 0.205  Plug-in 0.104  Oracle 0.051
+    Beta(50,1)|m=120|n_obs=5|break=1|n_plan=20                 n=100 yes  P-pooled 0.192  P-uniform 0.417  Plug-in 0.168  Oracle 0.055
+    Beta(50,1)|m=120|n_obs=5|break=3|n_plan=5                  n=100 yes  P-pooled 0.161  P-uniform 0.622  Plug-in 0.175  Oracle 0.053
+    Beta(50,1)|m=20|n_obs=4|break=1|n_plan=10                  n= 21 no   P-pooled 0.267  P-uniform 0.609  Plug-in 0.294  Oracle 0.051
+    Beta(50,1)|m=20|n_obs=4|break=1|n_plan=4                   n= 21 no   P-pooled 0.111  P-uniform 0.172  Plug-in 0.135  Oracle 0.052
+    Beta(50,1)|m=20|n_obs=4|break=1|n_plan=5                   n= 21 no   P-pooled 0.155  P-uniform 0.271  Plug-in 0.203  Oracle 0.040
+    Beta(50,1)|m=20|n_obs=4|shift=-0.05|n_plan=10              n= 21 no   P-pooled 0.185  P-uniform 0.491  Plug-in 0.216  Oracle 0.044
+    Beta(50,1)|m=20|n_obs=4|shift=-0.05|n_plan=4               n= 21 no   P-pooled 0.109  P-uniform 0.179  Plug-in 0.129  Oracle 0.071
+    Beta(50,1)|m=20|n_obs=4|shift=-0.05|n_plan=5               n= 21 no   P-pooled 0.147  P-uniform 0.265  Plug-in 0.173  Oracle 0.041
+    Beta(50,1)|m=20|n_obs=5|break=1|n_plan=10                  n= 31 no   P-pooled 0.230  P-uniform 0.602  Plug-in 0.228  Oracle 0.060
+    Beta(50,1)|m=20|n_obs=5|break=1|n_plan=5                   n= 31 no   P-pooled 0.135  P-uniform 0.274  Plug-in 0.150  Oracle 0.044
+    Beta(50,1)|m=20|n_obs=5|shift=-0.05|n_plan=10              n= 31 no   P-pooled 0.172  P-uniform 0.500  Plug-in 0.198  Oracle 0.070
+    Beta(50,1)|m=20|n_obs=5|shift=-0.05|n_plan=5               n= 31 no   P-pooled 0.125  P-uniform 0.265  Plug-in 0.115  Oracle 0.067
+    Beta(50,1)|m=50|n_obs=3|break=1|n_plan=10                  n= 49 no   P-pooled 0.204  P-uniform 0.423  Plug-in 0.227  Oracle 0.060
+    Beta(50,1)|m=50|n_obs=3|break=1|n_plan=20                  n= 49 no   P-pooled 0.231  P-uniform 0.710  Plug-in 0.202  Oracle 0.051
+    Beta(50,1)|m=50|n_obs=3|break=1|n_plan=5                   n= 49 no   P-pooled 0.114  P-uniform 0.181  Plug-in 0.124  Oracle 0.041
+    Beta(50,1)|m=50|n_obs=3|break=3|n_plan=3                   n= 49 no   P-pooled 0.244  P-uniform 0.612  Plug-in 0.218  Oracle 0.047
+    Beta(50,1)|m=50|n_obs=3|shift=-0.05|n_plan=3               n= 49 no   P-pooled 0.162  P-uniform 0.416  Plug-in 0.148  Oracle 0.054
+    Beta(50,1)|m=50|n_obs=3|shift=-0.05|n_plan=5               n= 49 no   P-pooled 0.156  P-uniform 0.573  Plug-in 0.194  Oracle 0.047
+    Beta(50,1)|m=50|n_obs=4|break=1|n_plan=10                  n= 73 yes  P-pooled 0.156  P-uniform 0.428  Plug-in 0.176  Oracle 0.059
+    Beta(50,1)|m=50|n_obs=4|break=1|n_plan=20                  n= 73 yes  P-pooled 0.209  P-uniform 0.686  Plug-in 0.185  Oracle 0.057
+    Beta(50,1)|m=50|n_obs=4|break=1|n_plan=5                   n= 73 yes  P-pooled 0.086  P-uniform 0.176  Plug-in 0.097  Oracle 0.046
+    Beta(50,1)|m=50|n_obs=4|break=3|n_plan=4                   n= 73 yes  P-pooled 0.129  P-uniform 0.682  Plug-in 0.120  Oracle 0.045
+    Beta(50,1)|m=50|n_obs=4|shift=-0.05|n_plan=4               n= 73 yes  P-pooled 0.127  P-uniform 0.494  Plug-in 0.122  Oracle 0.050
+    Beta(50,1)|m=50|n_obs=4|shift=-0.05|n_plan=5               n= 73 yes  P-pooled 0.112  P-uniform 0.544  Plug-in 0.130  Oracle 0.042
+    Beta(50,1)|m=50|n_obs=5|break=1|n_plan=10                  n= 82 yes  P-pooled 0.174  P-uniform 0.401  Plug-in 0.161  Oracle 0.058
+    Beta(50,1)|m=50|n_obs=5|break=1|n_plan=20                  n= 82 yes  P-pooled 0.167  P-uniform 0.672  Plug-in 0.173  Oracle 0.048
+    Beta(50,1)|m=50|n_obs=5|break=1|n_plan=5                   n= 82 yes  P-pooled 0.077  P-uniform 0.164  Plug-in 0.070  Oracle 0.044
+    Beta(50,1)|m=50|n_obs=5|shift=-0.05|n_plan=5               n= 82 yes  P-pooled 0.113  P-uniform 0.531  Plug-in 0.124  Oracle 0.054
+    Beta(8,1)|m=120|n_obs=3|break=3|n_plan=10                  n=100 yes  P-pooled 0.103  P-uniform 0.273  Plug-in 0.120  Oracle 0.064
+    Beta(8,1)|m=120|n_obs=3|break=3|n_plan=20                  n=100 yes  P-pooled 0.152  P-uniform 0.410  Plug-in 0.164  Oracle 0.049
+    Beta(8,1)|m=120|n_obs=3|break=3|n_plan=5                   n=100 yes  P-pooled 0.074  P-uniform 0.142  Plug-in 0.075  Oracle 0.047
+    Beta(8,1)|m=120|n_obs=3|shift=-0.05|n_plan=3               n=100 yes  P-pooled 0.112  P-uniform 0.247  Plug-in 0.101  Oracle 0.055
+    Beta(8,1)|m=120|n_obs=3|shift=-0.05|n_plan=5               n=100 yes  P-pooled 0.103  P-uniform 0.271  Plug-in 0.110  Oracle 0.065
+    Beta(8,1)|m=120|n_obs=4|break=3|n_plan=10                  n=100 yes  P-pooled 0.096  P-uniform 0.241  Plug-in 0.105  Oracle 0.054
+    Beta(8,1)|m=120|n_obs=4|break=3|n_plan=20                  n=100 yes  P-pooled 0.109  P-uniform 0.364  Plug-in 0.126  Oracle 0.060
+    Beta(8,1)|m=120|n_obs=4|break=3|n_plan=5                   n=100 yes  P-pooled 0.063  P-uniform 0.143  Plug-in 0.067  Oracle 0.052
+    Beta(8,1)|m=120|n_obs=4|shift=-0.05|n_plan=4               n=100 yes  P-pooled 0.094  P-uniform 0.250  Plug-in 0.088  Oracle 0.056
+    Beta(8,1)|m=120|n_obs=4|shift=-0.05|n_plan=5               n=100 yes  P-pooled 0.078  P-uniform 0.245  Plug-in 0.084  Oracle 0.044
+    Beta(8,1)|m=120|n_obs=5|break=3|n_plan=10                  n=100 yes  P-pooled 0.089  P-uniform 0.243  Plug-in 0.103  Oracle 0.062
+    Beta(8,1)|m=120|n_obs=5|break=3|n_plan=20                  n=100 yes  P-pooled 0.116  P-uniform 0.352  Plug-in 0.133  Oracle 0.058
+    Beta(8,1)|m=120|n_obs=5|break=3|n_plan=5                   n=100 yes  P-pooled 0.054  P-uniform 0.124  Plug-in 0.066  Oracle 0.053
+    Beta(8,1)|m=120|n_obs=5|shift=-0.05|n_plan=5               n=100 yes  P-pooled 0.081  P-uniform 0.242  Plug-in 0.080  Oracle 0.059
+    Beta(8,1)|m=20|n_obs=3|break=1|n_plan=10                   n= 92 yes  P-pooled 0.154  P-uniform 0.190  Plug-in 0.175  Oracle 0.053
+    Beta(8,1)|m=20|n_obs=3|break=1|n_plan=20                   n= 92 yes  P-pooled 0.240  P-uniform 0.339  Plug-in 0.278  Oracle 0.059
+    Beta(8,1)|m=20|n_obs=3|break=3|n_plan=3                    n= 92 yes  P-pooled 0.172  P-uniform 0.327  Plug-in 0.193  Oracle 0.061
+    Beta(8,1)|m=20|n_obs=3|break=3|n_plan=5                    n= 92 yes  P-pooled 0.170  P-uniform 0.452  Plug-in 0.185  Oracle 0.042
+    Beta(8,1)|m=20|n_obs=3|shift=-0.05|n_plan=10               n= 92 yes  P-pooled 0.142  P-uniform 0.163  Plug-in 0.122  Oracle 0.062
+    Beta(8,1)|m=20|n_obs=3|shift=-0.05|n_plan=20               n= 92 yes  P-pooled 0.180  P-uniform 0.240  Plug-in 0.215  Oracle 0.059
+    Beta(8,1)|m=20|n_obs=4|break=1|n_plan=10                   n=100 yes  P-pooled 0.131  P-uniform 0.179  Plug-in 0.118  Oracle 0.059
+    Beta(8,1)|m=20|n_obs=4|break=1|n_plan=20                   n=100 yes  P-pooled 0.220  P-uniform 0.333  Plug-in 0.200  Oracle 0.065
+    Beta(8,1)|m=20|n_obs=4|break=3|n_plan=4                    n=100 yes  P-pooled 0.186  P-uniform 0.365  Plug-in 0.179  Oracle 0.066
+    Beta(8,1)|m=20|n_obs=4|break=3|n_plan=5                    n=100 yes  P-pooled 0.160  P-uniform 0.393  Plug-in 0.178  Oracle 0.047
+    Beta(8,1)|m=20|n_obs=4|shift=-0.05|n_plan=10               n=100 yes  P-pooled 0.107  P-uniform 0.152  Plug-in 0.114  Oracle 0.059
+    Beta(8,1)|m=20|n_obs=4|shift=-0.05|n_plan=20               n=100 yes  P-pooled 0.155  P-uniform 0.236  Plug-in 0.178  Oracle 0.056
+    Beta(8,1)|m=20|n_obs=5|break=1|n_plan=10                   n=100 yes  P-pooled 0.122  P-uniform 0.170  Plug-in 0.120  Oracle 0.053
+    Beta(8,1)|m=20|n_obs=5|break=1|n_plan=20                   n=100 yes  P-pooled 0.198  P-uniform 0.320  Plug-in 0.213  Oracle 0.058
+    Beta(8,1)|m=20|n_obs=5|break=3|n_plan=5                    n=100 yes  P-pooled 0.148  P-uniform 0.387  Plug-in 0.159  Oracle 0.057
+    Beta(8,1)|m=20|n_obs=5|shift=-0.05|n_plan=10               n=100 yes  P-pooled 0.107  P-uniform 0.140  Plug-in 0.104  Oracle 0.060
+    Beta(8,1)|m=20|n_obs=5|shift=-0.05|n_plan=20               n=100 yes  P-pooled 0.158  P-uniform 0.222  Plug-in 0.159  Oracle 0.059
+    Beta(8,1)|m=50|n_obs=3|break=1|n_plan=20                   n=100 yes  P-pooled 0.108  P-uniform 0.165  Plug-in 0.111  Oracle 0.045
+    Beta(8,1)|m=50|n_obs=3|break=3|n_plan=10                   n=100 yes  P-pooled 0.143  P-uniform 0.446  Plug-in 0.174  Oracle 0.048
+    Beta(8,1)|m=50|n_obs=3|break=3|n_plan=3                    n=100 yes  P-pooled 0.086  P-uniform 0.178  Plug-in 0.107  Oracle 0.050
+    Beta(8,1)|m=50|n_obs=3|break=3|n_plan=5                    n=100 yes  P-pooled 0.173  P-uniform 0.281  Plug-in 0.163  Oracle 0.063
+    Beta(8,1)|m=50|n_obs=3|shift=-0.05|n_plan=10               n=100 yes  P-pooled 0.148  P-uniform 0.263  Plug-in 0.156  Oracle 0.064
+    Beta(8,1)|m=50|n_obs=3|shift=-0.05|n_plan=3                n=100 yes  P-pooled 0.076  P-uniform 0.131  Plug-in 0.095  Oracle 0.052
+    Beta(8,1)|m=50|n_obs=3|shift=-0.05|n_plan=5                n=100 yes  P-pooled 0.109  P-uniform 0.191  Plug-in 0.101  Oracle 0.056
+    Beta(8,1)|m=50|n_obs=4|break=1|n_plan=20                   n=100 yes  P-pooled 0.094  P-uniform 0.153  Plug-in 0.085  Oracle 0.053
+    Beta(8,1)|m=50|n_obs=4|break=3|n_plan=10                   n=100 yes  P-pooled 0.115  P-uniform 0.386  Plug-in 0.142  Oracle 0.052
+    Beta(8,1)|m=50|n_obs=4|break=3|n_plan=4                    n=100 yes  P-pooled 0.093  P-uniform 0.223  Plug-in 0.092  Oracle 0.062
+    Beta(8,1)|m=50|n_obs=4|break=3|n_plan=5                    n=100 yes  P-pooled 0.111  P-uniform 0.253  Plug-in 0.123  Oracle 0.052
+    Beta(8,1)|m=50|n_obs=4|shift=-0.05|n_plan=10               n=100 yes  P-pooled 0.123  P-uniform 0.239  Plug-in 0.121  Oracle 0.058
+    Beta(8,1)|m=50|n_obs=4|shift=-0.05|n_plan=4                n=100 yes  P-pooled 0.068  P-uniform 0.156  Plug-in 0.079  Oracle 0.055
+    Beta(8,1)|m=50|n_obs=4|shift=-0.05|n_plan=5                n=100 yes  P-pooled 0.083  P-uniform 0.181  Plug-in 0.088  Oracle 0.054
+    Beta(8,1)|m=50|n_obs=5|break=1|n_plan=20                   n=100 yes  P-pooled 0.086  P-uniform 0.147  Plug-in 0.085  Oracle 0.054
+    Beta(8,1)|m=50|n_obs=5|break=3|n_plan=10                   n=100 yes  P-pooled 0.135  P-uniform 0.356  Plug-in 0.142  Oracle 0.053
+    Beta(8,1)|m=50|n_obs=5|break=3|n_plan=5                    n=100 yes  P-pooled 0.126  P-uniform 0.255  Plug-in 0.110  Oracle 0.051
+    Beta(8,1)|m=50|n_obs=5|shift=-0.05|n_plan=10               n=100 yes  P-pooled 0.108  P-uniform 0.224  Plug-in 0.132  Oracle 0.053
+    Beta(8,1)|m=50|n_obs=5|shift=-0.05|n_plan=5                n=100 yes  P-pooled 0.083  P-uniform 0.162  Plug-in 0.096  Oracle 0.057
+    Mix90Z|m=120|n_obs=3|break=3|n_plan=10                     n= 86 yes  P-pooled 0.201  P-uniform 0.686  Plug-in 0.087  Oracle 0.043
+    Mix90Z|m=120|n_obs=3|break=3|n_plan=5                      n= 86 yes  P-pooled 0.158  P-uniform 0.276  Plug-in 0.096  Oracle 0.041
+    Mix90Z|m=120|n_obs=3|shift=-0.05|n_plan=3                  n= 86 yes  P-pooled 0.084  P-uniform 0.473  Plug-in 0.090  Oracle 0.055
+    Mix90Z|m=120|n_obs=4|break=3|n_plan=10                     n= 94 yes  P-pooled 0.173  P-uniform 0.688  Plug-in 0.079  Oracle 0.042
+    Mix90Z|m=120|n_obs=4|break=3|n_plan=5                      n= 94 yes  P-pooled 0.159  P-uniform 0.321  Plug-in 0.097  Oracle 0.048
+    Mix90Z|m=120|n_obs=4|shift=-0.05|n_plan=4                  n= 94 yes  P-pooled 0.083  P-uniform 0.471  Plug-in 0.051  Oracle 0.044
+    Mix90Z|m=120|n_obs=5|break=3|n_plan=10                     n= 97 yes  P-pooled 0.179  P-uniform 0.668  Plug-in 0.069  Oracle 0.045
+    Mix90Z|m=120|n_obs=5|break=3|n_plan=5                      n= 97 yes  P-pooled 0.147  P-uniform 0.375  Plug-in 0.078  Oracle 0.045
+    Mix90Z|m=20|n_obs=4|break=1|n_plan=10                      n= 23 no   P-pooled 0.132  P-uniform 0.407  Plug-in 0.070  Oracle 0.063
+    Mix90Z|m=20|n_obs=4|break=1|n_plan=20                      n= 23 no   P-pooled 0.241  P-uniform 0.608  Plug-in 0.098  Oracle 0.055
+    Mix90Z|m=20|n_obs=4|break=3|n_plan=4                       n= 23 no   P-pooled 0.139  P-uniform 0.525  Plug-in 0.085  Oracle 0.051
+    Mix90Z|m=20|n_obs=4|shift=-0.05|n_plan=10                  n= 23 no   P-pooled 0.095  P-uniform 0.361  Plug-in 0.107  Oracle 0.041
+    Mix90Z|m=20|n_obs=4|shift=-0.05|n_plan=20                  n= 23 no   P-pooled 0.140  P-uniform 0.465  Plug-in 0.075  Oracle 0.046
+    Mix90Z|m=20|n_obs=5|break=1|n_plan=10                      n= 33 no   P-pooled 0.124  P-uniform 0.543  Plug-in 0.106  Oracle 0.046
+    Mix90Z|m=20|n_obs=5|break=1|n_plan=20                      n= 33 no   P-pooled 0.226  P-uniform 0.600  Plug-in 0.077  Oracle 0.041
+    Mix90Z|m=20|n_obs=5|shift=-0.05|n_plan=10                  n= 33 no   P-pooled 0.123  P-uniform 0.363  Plug-in 0.107  Oracle 0.058
+    Mix90Z|m=20|n_obs=5|shift=-0.05|n_plan=20                  n= 33 no   P-pooled 0.120  P-uniform 0.490  Plug-in 0.069  Oracle 0.051
+    Mix90Z|m=50|n_obs=3|break=1|n_plan=20                      n= 34 no   P-pooled 0.183  P-uniform 0.481  Plug-in 0.093  Oracle 0.055
+    Mix90Z|m=50|n_obs=3|break=3|n_plan=3                       n= 34 no   P-pooled 0.147  P-uniform 0.340  Plug-in 0.092  Oracle 0.041
+    Mix90Z|m=50|n_obs=3|break=3|n_plan=5                       n= 34 no   P-pooled 0.151  P-uniform 0.649  Plug-in 0.091  Oracle 0.047
+    Mix90Z|m=50|n_obs=3|shift=-0.05|n_plan=10                  n= 34 no   P-pooled 0.105  P-uniform 0.464  Plug-in 0.074  Oracle 0.045
+    Mix90Z|m=50|n_obs=3|shift=-0.05|n_plan=5                   n= 34 no   P-pooled 0.143  P-uniform 0.374  Plug-in 0.094  Oracle 0.049
+    Mix90Z|m=50|n_obs=4|break=1|n_plan=20                      n= 59 yes  P-pooled 0.154  P-uniform 0.573  Plug-in 0.109  Oracle 0.050
+    Mix90Z|m=50|n_obs=4|break=3|n_plan=4                       n= 59 yes  P-pooled 0.139  P-uniform 0.586  Plug-in 0.108  Oracle 0.037
+    Mix90Z|m=50|n_obs=4|break=3|n_plan=5                       n= 59 yes  P-pooled 0.174  P-uniform 0.638  Plug-in 0.106  Oracle 0.042
+    Mix90Z|m=50|n_obs=4|shift=-0.05|n_plan=10                  n= 59 yes  P-pooled 0.084  P-uniform 0.450  Plug-in 0.054  Oracle 0.037
+    Mix90Z|m=50|n_obs=4|shift=-0.05|n_plan=4                   n= 59 yes  P-pooled 0.168  P-uniform 0.321  Plug-in 0.068  Oracle 0.050
+    Mix90Z|m=50|n_obs=4|shift=-0.05|n_plan=5                   n= 59 yes  P-pooled 0.146  P-uniform 0.402  Plug-in 0.071  Oracle 0.056
+    Mix90Z|m=50|n_obs=5|break=1|n_plan=20                      n= 72 yes  P-pooled 0.183  P-uniform 0.662  Plug-in 0.108  Oracle 0.055
+    Mix90Z|m=50|n_obs=5|break=3|n_plan=5                       n= 72 yes  P-pooled 0.164  P-uniform 0.651  Plug-in 0.098  Oracle 0.045
+    Mix90Z|m=50|n_obs=5|shift=-0.05|n_plan=5                   n= 72 yes  P-pooled 0.112  P-uniform 0.432  Plug-in 0.081  Oracle 0.058
+    Mix95|m=120|n_obs=3|break=1|n_plan=20                      n= 88 yes  P-pooled 0.161  P-uniform 0.566  Plug-in 0.215  Oracle 0.053
+    Mix95|m=120|n_obs=3|break=3|n_plan=3                       n= 88 yes  P-pooled 0.172  P-uniform 0.509  Plug-in 0.189  Oracle 0.057
+    Mix95|m=120|n_obs=3|break=3|n_plan=5                       n= 88 yes  P-pooled 0.168  P-uniform 0.774  Plug-in 0.177  Oracle 0.050
+    Mix95|m=120|n_obs=4|break=1|n_plan=10                      n= 91 yes  P-pooled 0.120  P-uniform 0.358  Plug-in 0.140  Oracle 0.051
+    Mix95|m=120|n_obs=4|break=1|n_plan=20                      n= 91 yes  P-pooled 0.152  P-uniform 0.760  Plug-in 0.168  Oracle 0.054
+    Mix95|m=120|n_obs=4|break=3|n_plan=4                       n= 91 yes  P-pooled 0.146  P-uniform 0.789  Plug-in 0.150  Oracle 0.050
+    Mix95|m=120|n_obs=4|break=3|n_plan=5                       n= 91 yes  P-pooled 0.132  P-uniform 0.838  Plug-in 0.114  Oracle 0.048
+    Mix95|m=120|n_obs=5|break=1|n_plan=10                      n= 95 yes  P-pooled 0.099  P-uniform 0.292  Plug-in 0.110  Oracle 0.048
+    Mix95|m=120|n_obs=5|break=1|n_plan=20                      n= 95 yes  P-pooled 0.127  P-uniform 0.684  Plug-in 0.135  Oracle 0.059
+    Mix95|m=120|n_obs=5|break=3|n_plan=5                       n= 95 yes  P-pooled 0.109  P-uniform 0.804  Plug-in 0.110  Oracle 0.043
+    Mix95|m=20|n_obs=4|break=1|n_plan=10                       n= 23 no   P-pooled 0.216  P-uniform 0.560  Plug-in 0.177  Oracle 0.045
+    Mix95|m=20|n_obs=4|shift=-0.05|n_plan=10                   n= 23 no   P-pooled 0.147  P-uniform 0.432  Plug-in 0.155  Oracle 0.046
+    Mix95|m=20|n_obs=4|shift=-0.05|n_plan=20                   n= 23 no   P-pooled 0.120  P-uniform 0.526  Plug-in 0.086  Oracle 0.027
+    Mix95|m=20|n_obs=4|shift=-0.05|n_plan=5                    n= 23 no   P-pooled 0.095  P-uniform 0.220  Plug-in 0.128  Oracle 0.041
+    Mix95|m=20|n_obs=5|break=1|n_plan=10                       n= 38 no   P-pooled 0.238  P-uniform 0.588  Plug-in 0.215  Oracle 0.041
+    Mix95|m=20|n_obs=5|shift=-0.05|n_plan=10                   n= 38 no   P-pooled 0.153  P-uniform 0.463  Plug-in 0.155  Oracle 0.044
+    Mix95|m=20|n_obs=5|shift=-0.05|n_plan=20                   n= 38 no   P-pooled 0.089  P-uniform 0.482  Plug-in 0.068  Oracle 0.026
+    Mix95|m=20|n_obs=5|shift=-0.05|n_plan=5                    n= 38 no   P-pooled 0.110  P-uniform 0.213  Plug-in 0.178  Oracle 0.050
+    Mix95|m=50|n_obs=3|break=1|n_plan=10                       n= 34 no   P-pooled 0.183  P-uniform 0.475  Plug-in 0.160  Oracle 0.061
+    Mix95|m=50|n_obs=3|break=1|n_plan=20                       n= 34 no   P-pooled 0.181  P-uniform 0.780  Plug-in 0.133  Oracle 0.049
+    Mix95|m=50|n_obs=3|break=3|n_plan=3                        n= 34 no   P-pooled 0.154  P-uniform 0.678  Plug-in 0.187  Oracle 0.053
+    Mix95|m=50|n_obs=3|shift=-0.05|n_plan=3                    n= 34 no   P-pooled 0.120  P-uniform 0.414  Plug-in 0.130  Oracle 0.049
+    Mix95|m=50|n_obs=3|shift=-0.05|n_plan=5                    n= 34 no   P-pooled 0.120  P-uniform 0.594  Plug-in 0.107  Oracle 0.049
+    Mix95|m=50|n_obs=4|break=1|n_plan=10                       n= 51 yes  P-pooled 0.146  P-uniform 0.538  Plug-in 0.153  Oracle 0.062
+    Mix95|m=50|n_obs=4|break=1|n_plan=20                       n= 51 yes  P-pooled 0.184  P-uniform 0.784  Plug-in 0.109  Oracle 0.053
+    Mix95|m=50|n_obs=4|break=3|n_plan=4                        n= 51 yes  P-pooled 0.158  P-uniform 0.780  Plug-in 0.128  Oracle 0.039
+    Mix95|m=50|n_obs=4|shift=-0.05|n_plan=4                    n= 51 yes  P-pooled 0.116  P-uniform 0.545  Plug-in 0.134  Oracle 0.060
+    Mix95|m=50|n_obs=4|shift=-0.05|n_plan=5                    n= 51 yes  P-pooled 0.126  P-uniform 0.599  Plug-in 0.119  Oracle 0.055
+    Mix95|m=50|n_obs=5|break=1|n_plan=10                       n= 74 yes  P-pooled 0.151  P-uniform 0.536  Plug-in 0.166  Oracle 0.053
+    Mix95|m=50|n_obs=5|break=1|n_plan=20                       n= 74 yes  P-pooled 0.157  P-uniform 0.777  Plug-in 0.116  Oracle 0.042
+    Mix95|m=50|n_obs=5|shift=-0.05|n_plan=5                    n= 74 yes  P-pooled 0.100  P-uniform 0.590  Plug-in 0.099  Oracle 0.042
+    Mix|m=120|n_obs=3|break=3|n_plan=10                        n=100 yes  P-pooled 0.103  P-uniform 0.494  Plug-in 0.130  Oracle 0.054
+    Mix|m=120|n_obs=3|break=3|n_plan=5                         n=100 yes  P-pooled 0.080  P-uniform 0.207  Plug-in 0.099  Oracle 0.055
+    Mix|m=120|n_obs=3|shift=-0.05|n_plan=3                     n=100 yes  P-pooled 0.084  P-uniform 0.392  Plug-in 0.112  Oracle 0.059
+    Mix|m=120|n_obs=3|shift=-0.05|n_plan=5                     n=100 yes  P-pooled 0.066  P-uniform 0.400  Plug-in 0.066  Oracle 0.037
+    Mix|m=120|n_obs=4|break=3|n_plan=10                        n=100 yes  P-pooled 0.097  P-uniform 0.497  Plug-in 0.151  Oracle 0.057
+    Mix|m=120|n_obs=4|break=3|n_plan=5                         n=100 yes  P-pooled 0.093  P-uniform 0.228  Plug-in 0.087  Oracle 0.054
+    Mix|m=120|n_obs=4|shift=-0.05|n_plan=4                     n=100 yes  P-pooled 0.068  P-uniform 0.386  Plug-in 0.071  Oracle 0.046
+    Mix|m=120|n_obs=4|shift=-0.05|n_plan=5                     n=100 yes  P-pooled 0.064  P-uniform 0.378  Plug-in 0.057  Oracle 0.040
+    Mix|m=120|n_obs=5|break=3|n_plan=10                        n=100 yes  P-pooled 0.090  P-uniform 0.447  Plug-in 0.087  Oracle 0.055
+    Mix|m=120|n_obs=5|break=3|n_plan=5                         n=100 yes  P-pooled 0.065  P-uniform 0.211  Plug-in 0.082  Oracle 0.049
+    Mix|m=120|n_obs=5|shift=-0.05|n_plan=5                     n=100 yes  P-pooled 0.067  P-uniform 0.347  Plug-in 0.054  Oracle 0.036
+    Mix|m=20|n_obs=3|break=1|n_plan=10                         n= 62 yes  P-pooled 0.139  P-uniform 0.335  Plug-in 0.122  Oracle 0.047
+    Mix|m=20|n_obs=3|break=1|n_plan=20                         n= 62 yes  P-pooled 0.153  P-uniform 0.583  Plug-in 0.168  Oracle 0.056
+    Mix|m=20|n_obs=3|break=3|n_plan=3                          n= 62 yes  P-pooled 0.151  P-uniform 0.499  Plug-in 0.164  Oracle 0.059
+    Mix|m=20|n_obs=3|break=3|n_plan=5                          n= 62 yes  P-pooled 0.133  P-uniform 0.493  Plug-in 0.111  Oracle 0.028
+    Mix|m=20|n_obs=3|shift=-0.05|n_plan=10                     n= 62 yes  P-pooled 0.090  P-uniform 0.297  Plug-in 0.118  Oracle 0.053
+    Mix|m=20|n_obs=3|shift=-0.05|n_plan=20                     n= 62 yes  P-pooled 0.125  P-uniform 0.440  Plug-in 0.125  Oracle 0.044
+    Mix|m=20|n_obs=4|break=1|n_plan=10                         n= 75 yes  P-pooled 0.137  P-uniform 0.334  Plug-in 0.159  Oracle 0.052
+    Mix|m=20|n_obs=4|break=1|n_plan=20                         n= 75 yes  P-pooled 0.166  P-uniform 0.542  Plug-in 0.163  Oracle 0.051
+    Mix|m=20|n_obs=4|break=3|n_plan=4                          n= 75 yes  P-pooled 0.142  P-uniform 0.510  Plug-in 0.146  Oracle 0.040
+    Mix|m=20|n_obs=4|break=3|n_plan=5                          n= 75 yes  P-pooled 0.117  P-uniform 0.451  Plug-in 0.102  Oracle 0.034
+    Mix|m=20|n_obs=4|shift=-0.05|n_plan=10                     n= 75 yes  P-pooled 0.098  P-uniform 0.289  Plug-in 0.107  Oracle 0.068
+    Mix|m=20|n_obs=4|shift=-0.05|n_plan=20                     n= 75 yes  P-pooled 0.122  P-uniform 0.408  Plug-in 0.110  Oracle 0.052
+    Mix|m=20|n_obs=5|break=1|n_plan=10                         n= 89 yes  P-pooled 0.136  P-uniform 0.381  Plug-in 0.129  Oracle 0.061
+    Mix|m=20|n_obs=5|break=1|n_plan=20                         n= 89 yes  P-pooled 0.117  P-uniform 0.551  Plug-in 0.120  Oracle 0.046
+    Mix|m=20|n_obs=5|break=3|n_plan=5                          n= 89 yes  P-pooled 0.080  P-uniform 0.412  Plug-in 0.082  Oracle 0.033
+    Mix|m=20|n_obs=5|shift=-0.05|n_plan=10                     n= 89 yes  P-pooled 0.112  P-uniform 0.311  Plug-in 0.121  Oracle 0.056
+    Mix|m=20|n_obs=5|shift=-0.05|n_plan=20                     n= 89 yes  P-pooled 0.099  P-uniform 0.442  Plug-in 0.087  Oracle 0.051
+    Mix|m=50|n_obs=3|break=1|n_plan=20                         n=100 yes  P-pooled 0.145  P-uniform 0.354  Plug-in 0.168  Oracle 0.054
+    Mix|m=50|n_obs=3|break=3|n_plan=10                         n=100 yes  P-pooled 0.096  P-uniform 0.556  Plug-in 0.088  Oracle 0.038
+    Mix|m=50|n_obs=3|break=3|n_plan=3                          n=100 yes  P-pooled 0.128  P-uniform 0.271  Plug-in 0.165  Oracle 0.049
+    Mix|m=50|n_obs=3|break=3|n_plan=5                          n=100 yes  P-pooled 0.160  P-uniform 0.504  Plug-in 0.167  Oracle 0.056
+    Mix|m=50|n_obs=3|shift=-0.05|n_plan=10                     n=100 yes  P-pooled 0.089  P-uniform 0.441  Plug-in 0.098  Oracle 0.040
+    Mix|m=50|n_obs=3|shift=-0.05|n_plan=3                      n=100 yes  P-pooled 0.098  P-uniform 0.170  Plug-in 0.110  Oracle 0.043
+    Mix|m=50|n_obs=3|shift=-0.05|n_plan=5                      n=100 yes  P-pooled 0.119  P-uniform 0.315  Plug-in 0.144  Oracle 0.063
+    Mix|m=50|n_obs=4|break=1|n_plan=20                         n=100 yes  P-pooled 0.110  P-uniform 0.435  Plug-in 0.108  Oracle 0.055
+    Mix|m=50|n_obs=4|break=3|n_plan=4                          n=100 yes  P-pooled 0.147  P-uniform 0.504  Plug-in 0.152  Oracle 0.062
+    Mix|m=50|n_obs=4|break=3|n_plan=5                          n=100 yes  P-pooled 0.140  P-uniform 0.575  Plug-in 0.145  Oracle 0.067
+    Mix|m=50|n_obs=4|shift=-0.05|n_plan=10                     n=100 yes  P-pooled 0.077  P-uniform 0.417  Plug-in 0.083  Oracle 0.045
+    Mix|m=50|n_obs=4|shift=-0.05|n_plan=4                      n=100 yes  P-pooled 0.105  P-uniform 0.307  Plug-in 0.106  Oracle 0.068
+    Mix|m=50|n_obs=4|shift=-0.05|n_plan=5                      n=100 yes  P-pooled 0.100  P-uniform 0.358  Plug-in 0.125  Oracle 0.061
+    Mix|m=50|n_obs=5|break=1|n_plan=20                         n= 99 yes  P-pooled 0.125  P-uniform 0.456  Plug-in 0.128  Oracle 0.061
+    Mix|m=50|n_obs=5|break=3|n_plan=5                          n= 99 yes  P-pooled 0.110  P-uniform 0.554  Plug-in 0.122  Oracle 0.050
+    Mix|m=50|n_obs=5|shift=-0.05|n_plan=10                     n= 99 yes  P-pooled 0.068  P-uniform 0.393  Plug-in 0.072  Oracle 0.047
+    Mix|m=50|n_obs=5|shift=-0.05|n_plan=5                      n= 99 yes  P-pooled 0.112  P-uniform 0.344  Plug-in 0.105  Oracle 0.060
+    Tri|m=120|n_obs=3|break=3|n_plan=20                        n=100 yes  P-pooled 0.113  P-uniform 0.132  Plug-in 0.076  Oracle 0.054
+    Tri|m=120|n_obs=3|shift=-0.05|n_plan=10                    n=100 yes  P-pooled 0.256  P-uniform 0.265  Plug-in 0.118  Oracle 0.069
+    Tri|m=120|n_obs=4|break=3|n_plan=20                        n=100 yes  P-pooled 0.117  P-uniform 0.138  Plug-in 0.075  Oracle 0.053
+    Tri|m=120|n_obs=4|shift=-0.05|n_plan=10                    n=100 yes  P-pooled 0.278  P-uniform 0.281  Plug-in 0.078  Oracle 0.057
+    Tri|m=120|n_obs=5|break=3|n_plan=20                        n=100 yes  P-pooled 0.105  P-uniform 0.119  Plug-in 0.071  Oracle 0.060
+    Tri|m=120|n_obs=5|shift=-0.05|n_plan=10                    n=100 yes  P-pooled 0.294  P-uniform 0.290  Plug-in 0.084  Oracle 0.059
+    Tri|m=20|n_obs=3|break=1|n_plan=20                         n= 92 yes  P-pooled 0.160  P-uniform 0.161  Plug-in 0.124  Oracle 0.055
+    Tri|m=20|n_obs=3|break=3|n_plan=10                         n= 92 yes  P-pooled 0.144  P-uniform 0.192  Plug-in 0.107  Oracle 0.052
+    Tri|m=20|n_obs=3|break=3|n_plan=20                         n= 92 yes  P-pooled 0.128  P-uniform 0.132  Plug-in 0.080  Oracle 0.054
+    Tri|m=20|n_obs=3|break=3|n_plan=5                          n= 92 yes  P-pooled 0.076  P-uniform 0.101  Plug-in 0.068  Oracle 0.057
+    Tri|m=20|n_obs=3|shift=-0.05|n_plan=20                     n= 92 yes  P-pooled 0.247  P-uniform 0.244  Plug-in 0.096  Oracle 0.055
+    Tri|m=20|n_obs=4|break=1|n_plan=20                         n= 95 yes  P-pooled 0.149  P-uniform 0.181  Plug-in 0.118  Oracle 0.055
+    Tri|m=20|n_obs=4|break=3|n_plan=10                         n= 95 yes  P-pooled 0.121  P-uniform 0.155  Plug-in 0.099  Oracle 0.057
+    Tri|m=20|n_obs=4|break=3|n_plan=20                         n= 95 yes  P-pooled 0.104  P-uniform 0.118  Plug-in 0.074  Oracle 0.042
+    Tri|m=20|n_obs=4|break=3|n_plan=5                          n= 95 yes  P-pooled 0.082  P-uniform 0.093  Plug-in 0.074  Oracle 0.043
+    Tri|m=20|n_obs=4|shift=-0.05|n_plan=20                     n= 95 yes  P-pooled 0.225  P-uniform 0.217  Plug-in 0.081  Oracle 0.056
+    Tri|m=20|n_obs=5|break=1|n_plan=20                         n= 98 yes  P-pooled 0.149  P-uniform 0.159  Plug-in 0.100  Oracle 0.052
+    Tri|m=20|n_obs=5|break=3|n_plan=10                         n= 98 yes  P-pooled 0.126  P-uniform 0.172  Plug-in 0.092  Oracle 0.061
+    Tri|m=20|n_obs=5|break=3|n_plan=20                         n= 98 yes  P-pooled 0.120  P-uniform 0.109  Plug-in 0.054  Oracle 0.039
+    Tri|m=20|n_obs=5|break=3|n_plan=5                          n= 98 yes  P-pooled 0.093  P-uniform 0.094  Plug-in 0.065  Oracle 0.047
+    Tri|m=20|n_obs=5|shift=-0.05|n_plan=20                     n= 98 yes  P-pooled 0.236  P-uniform 0.223  Plug-in 0.078  Oracle 0.052
+    Tri|m=50|n_obs=3|break=3|n_plan=10                         n=100 yes  P-pooled 0.073  P-uniform 0.101  Plug-in 0.084  Oracle 0.053
+    Tri|m=50|n_obs=3|break=3|n_plan=20                         n=100 yes  P-pooled 0.180  P-uniform 0.220  Plug-in 0.111  Oracle 0.058
+    Tri|m=50|n_obs=3|shift=-0.05|n_plan=10                     n=100 yes  P-pooled 0.280  P-uniform 0.259  Plug-in 0.104  Oracle 0.055
+    Tri|m=50|n_obs=3|shift=-0.05|n_plan=20                     n=100 yes  P-pooled 0.237  P-uniform 0.225  Plug-in 0.085  Oracle 0.061
+    Tri|m=50|n_obs=4|break=3|n_plan=10                         n=100 yes  P-pooled 0.069  P-uniform 0.101  Plug-in 0.056  Oracle 0.050
+    Tri|m=50|n_obs=4|break=3|n_plan=20                         n=100 yes  P-pooled 0.157  P-uniform 0.202  Plug-in 0.078  Oracle 0.058
+    Tri|m=50|n_obs=4|shift=-0.05|n_plan=10                     n=100 yes  P-pooled 0.278  P-uniform 0.277  Plug-in 0.084  Oracle 0.050
+    Tri|m=50|n_obs=4|shift=-0.05|n_plan=20                     n=100 yes  P-pooled 0.263  P-uniform 0.264  Plug-in 0.084  Oracle 0.061
+    Tri|m=50|n_obs=5|break=3|n_plan=10                         n=100 yes  P-pooled 0.070  P-uniform 0.090  Plug-in 0.065  Oracle 0.043
+    Tri|m=50|n_obs=5|break=3|n_plan=20                         n=100 yes  P-pooled 0.148  P-uniform 0.175  Plug-in 0.079  Oracle 0.057
+    Tri|m=50|n_obs=5|shift=-0.05|n_plan=10                     n=100 yes  P-pooled 0.289  P-uniform 0.282  Plug-in 0.073  Oracle 0.053
+    Tri|m=50|n_obs=5|shift=-0.05|n_plan=20                     n=100 yes  P-pooled 0.268  P-uniform 0.270  Plug-in 0.082  Oracle 0.057
+  p90-constrained cells / decision cells, by distribution x m: Beta(0.5,0.5)|m=120: 7/7, Beta(0.5,0.5)|m=20: 10/10, Beta(0.5,0.5)|m=50: 9/9, Beta(20,1)|m=120: 13/13, Beta(20,1)|m=20: 21/21, Beta(20,1)|m=50: 19/19, Beta(4,2)|m=120: 11/11, Beta(4,2)|m=20: 14/14, Beta(4,2)|m=50: 15/15, Beta(50,1)|m=120: 11/11, Beta(50,1)|m=20: 0/10, Beta(50,1)|m=50: 10/16, Beta(8,1)|m=120: 14/14, Beta(8,1)|m=20: 17/17, Beta(8,1)|m=50: 19/19, Mix90Z|m=120: 8/8, Mix90Z|m=20: 0/9, Mix90Z|m=50: 9/14, Mix95|m=120: 10/10, Mix95|m=20: 0/8, Mix95|m=50: 8/13, Mix|m=120: 11/11, Mix|m=20: 17/17, Mix|m=50: 17/17, Tri|m=120: 6/6, Tri|m=20: 15/15, Tri|m=50: 12/12
+  worst decision-cell p90 |error| of P-pooled (upper bound for the printed bands): 0.294 (Tri|m=120|n_obs=5|shift=-0.05|n_plan=10)
+  refusal rate (files with F* < F_min) by setting:
+    Beta(0.5,0.5)|m=120|n_obs=3: 0.00
+    Beta(0.5,0.5)|m=120|n_obs=4: 0.00
+    Beta(0.5,0.5)|m=120|n_obs=5: 0.00
+    Beta(0.5,0.5)|m=20|n_obs=3: 0.00
+    Beta(0.5,0.5)|m=20|n_obs=4: 0.00
+    Beta(0.5,0.5)|m=20|n_obs=5: 0.00
+    Beta(0.5,0.5)|m=50|n_obs=3: 0.00
+    Beta(0.5,0.5)|m=50|n_obs=4: 0.00
+    Beta(0.5,0.5)|m=50|n_obs=5: 0.00
+    Beta(20,1)|m=120|n_obs=3: 0.00
+    Beta(20,1)|m=120|n_obs=4: 0.00
+    Beta(20,1)|m=120|n_obs=5: 0.00
+    Beta(20,1)|m=20|n_obs=3: 0.50
+    Beta(20,1)|m=20|n_obs=4: 0.24
+    Beta(20,1)|m=20|n_obs=5: 0.22
+    Beta(20,1)|m=50|n_obs=3: 0.07
+    Beta(20,1)|m=50|n_obs=4: 0.01
+    Beta(20,1)|m=50|n_obs=5: 0.00
+    Beta(4,2)|m=120|n_obs=3: 0.00
+    Beta(4,2)|m=120|n_obs=4: 0.00
+    Beta(4,2)|m=120|n_obs=5: 0.00
+    Beta(4,2)|m=20|n_obs=3: 0.00
+    Beta(4,2)|m=20|n_obs=4: 0.00
+    Beta(4,2)|m=20|n_obs=5: 0.00
+    Beta(4,2)|m=50|n_obs=3: 0.00
+    Beta(4,2)|m=50|n_obs=4: 0.00
+    Beta(4,2)|m=50|n_obs=5: 0.00
+    Beta(50,1)|m=120|n_obs=3: 0.05
+    Beta(50,1)|m=120|n_obs=4: 0.02
+    Beta(50,1)|m=120|n_obs=5: 0.00
+    Beta(50,1)|m=20|n_obs=3: 0.92
+    Beta(50,1)|m=20|n_obs=4: 0.79
+    Beta(50,1)|m=20|n_obs=5: 0.69
+    Beta(50,1)|m=50|n_obs=3: 0.51
+    Beta(50,1)|m=50|n_obs=4: 0.27
+    Beta(50,1)|m=50|n_obs=5: 0.18
+    Beta(8,1)|m=120|n_obs=3: 0.00
+    Beta(8,1)|m=120|n_obs=4: 0.00
+    Beta(8,1)|m=120|n_obs=5: 0.00
+    Beta(8,1)|m=20|n_obs=3: 0.08
+    Beta(8,1)|m=20|n_obs=4: 0.00
+    Beta(8,1)|m=20|n_obs=5: 0.00
+    Beta(8,1)|m=50|n_obs=3: 0.00
+    Beta(8,1)|m=50|n_obs=4: 0.00
+    Beta(8,1)|m=50|n_obs=5: 0.00
+    Mix90Z|m=120|n_obs=3: 0.14
+    Mix90Z|m=120|n_obs=4: 0.06
+    Mix90Z|m=120|n_obs=5: 0.03
+    Mix90Z|m=20|n_obs=3: 0.91
+    Mix90Z|m=20|n_obs=4: 0.77
+    Mix90Z|m=20|n_obs=5: 0.67
+    Mix90Z|m=50|n_obs=3: 0.66
+    Mix90Z|m=50|n_obs=4: 0.41
+    Mix90Z|m=50|n_obs=5: 0.28
+    Mix95|m=120|n_obs=3: 0.12
+    Mix95|m=120|n_obs=4: 0.09
+    Mix95|m=120|n_obs=5: 0.05
+    Mix95|m=20|n_obs=3: 0.94
+    Mix95|m=20|n_obs=4: 0.77
+    Mix95|m=20|n_obs=5: 0.62
+    Mix95|m=50|n_obs=3: 0.66
+    Mix95|m=50|n_obs=4: 0.49
+    Mix95|m=50|n_obs=5: 0.26
+    Mix|m=120|n_obs=3: 0.00
+    Mix|m=120|n_obs=4: 0.00
+    Mix|m=120|n_obs=5: 0.00
+    Mix|m=20|n_obs=3: 0.38
+    Mix|m=20|n_obs=4: 0.25
+    Mix|m=20|n_obs=5: 0.11
+    Mix|m=50|n_obs=3: 0.00
+    Mix|m=50|n_obs=4: 0.00
+    Mix|m=50|n_obs=5: 0.01
+    Tri|m=120|n_obs=3: 0.00
+    Tri|m=120|n_obs=4: 0.00
+    Tri|m=120|n_obs=5: 0.00
+    Tri|m=20|n_obs=3: 0.08
+    Tri|m=20|n_obs=4: 0.05
+    Tri|m=20|n_obs=5: 0.02
+    Tri|m=50|n_obs=3: 0.00
+    Tri|m=50|n_obs=4: 0.00
+    Tri|m=50|n_obs=5: 0.00
+  paired |error| P-pooled minus Plug-in over decision cells: mean +0.0008, P-pooled smaller in 49.1%, equal in 3.5% of 29317 suite-cells
+  first n_plan reaching 0.8 agrees with truth: P-pooled 17337/20286 (85.5%)
+  first n_plan reaching 0.8 agrees with truth: P-uniform 12354/20286 (60.9%)
+  first n_plan reaching 0.8 agrees with truth: Plug-in 17792/20286 (87.7%)
+  first n_plan reaching 0.8 agrees with truth: Oracle 19387/20286 (95.6%)

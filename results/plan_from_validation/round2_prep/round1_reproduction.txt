@@ -1,0 +1,7 @@
+script sha256: 2a4c204a52bacafc32cd39f746d32c6fee3536a841c070060b10c9a7c91e6ede  scripts/plan_from_validation.py
+setting 0 identical: 9 cells
+setting 15 identical: 6 cells
+parallel truth phase: same keys True ; identical rows True
+decision cells identical True
+parallel methods phase: same cells True ; identical rows True ; same protocol sha True
+exit 0

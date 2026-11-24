@@ -1,0 +1,27 @@
+Beta(20,1)     m=10 n= 3 ok=  9.0%  {'all_same': 54, 'degenerate': 1, 'no_converge': 78, 'ok': 18, 'start_dependent': 49}
+Beta(20,1)     m=10 n= 5 ok= 26.5%  {'all_same': 24, 'no_converge': 52, 'ok': 53, 'start_dependent': 71}
+Beta(20,1)     m=10 n=10 ok= 44.0%  {'all_same': 7, 'degenerate': 8, 'no_converge': 27, 'ok': 88, 'start_dependent': 70}
+Beta(20,1)     m=30 n= 3 ok= 30.0%  {'no_converge': 105, 'ok': 60, 'start_dependent': 35}
+Beta(20,1)     m=30 n= 5 ok= 53.5%  {'degenerate': 11, 'no_converge': 41, 'ok': 107, 'start_dependent': 41}
+Beta(20,1)     m=30 n=10 ok= 77.0%  {'degenerate': 1, 'no_converge': 17, 'ok': 154, 'start_dependent': 28}
+Beta(20,1)     m=50 n= 3 ok= 43.0%  {'all_same': 1, 'no_converge': 55, 'ok': 86, 'start_dependent': 58}
+Beta(20,1)     m=50 n= 5 ok= 72.5%  {'no_converge': 30, 'ok': 145, 'start_dependent': 25}
+Beta(20,1)     m=50 n=10 ok= 88.0%  {'no_converge': 10, 'ok': 176, 'start_dependent': 14}
+Beta(4,2)      m=10 n= 3 ok= 64.5%  {'no_converge': 54, 'ok': 129, 'start_dependent': 17}
+Beta(4,2)      m=10 n= 5 ok= 76.0%  {'no_converge': 40, 'ok': 152, 'start_dependent': 8}
+Beta(4,2)      m=10 n=10 ok= 96.0%  {'no_converge': 5, 'ok': 192, 'start_dependent': 3}
+Beta(4,2)      m=30 n= 3 ok= 88.0%  {'no_converge': 15, 'ok': 176, 'start_dependent': 9}
+Beta(4,2)      m=30 n= 5 ok= 97.0%  {'no_converge': 3, 'ok': 194, 'start_dependent': 3}
+Beta(4,2)      m=30 n=10 ok=100.0%  {'ok': 200}
+Beta(4,2)      m=50 n= 3 ok= 93.5%  {'no_converge': 10, 'ok': 187, 'start_dependent': 3}
+Beta(4,2)      m=50 n= 5 ok= 99.0%  {'no_converge': 1, 'ok': 198, 'start_dependent': 1}
+Beta(4,2)      m=50 n=10 ok=100.0%  {'ok': 200}
+Beta(0.5,0.5)  m=10 n= 3 ok= 98.0%  {'no_converge': 3, 'ok': 196, 'start_dependent': 1}
+Beta(0.5,0.5)  m=10 n= 5 ok= 99.5%  {'no_converge': 1, 'ok': 199}
+Beta(0.5,0.5)  m=10 n=10 ok=100.0%  {'ok': 200}
+Beta(0.5,0.5)  m=30 n= 3 ok=100.0%  {'ok': 200}
+Beta(0.5,0.5)  m=30 n= 5 ok=100.0%  {'ok': 200}
+Beta(0.5,0.5)  m=30 n=10 ok=100.0%  {'ok': 200}
+Beta(0.5,0.5)  m=50 n= 3 ok=100.0%  {'ok': 200}
+Beta(0.5,0.5)  m=50 n= 5 ok=100.0%  {'ok': 200}
+Beta(0.5,0.5)  m=50 n=10 ok=100.0%  {'ok': 200}

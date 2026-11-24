@@ -1,0 +1,10 @@
+Beta(20,1): 200 files checked
+Beta(4,2): 200 files checked
+Beta(0.5,0.5): 200 files checked
+Mix: 200 files checked
+Beta(8,1): 200 files checked
+Tri: 200 files checked
+Beta(50,1): 200 files checked
+Mix95: 200 files checked
+Mix90Z: 200 files checked
+mismatches: 0

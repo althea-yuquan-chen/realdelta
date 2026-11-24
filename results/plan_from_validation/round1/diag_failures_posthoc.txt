@@ -1,0 +1,99 @@
+== P-pooled: decision-cell errors by observed failures in the file (N - X)
+  Beta(0.5,0.5)  m=10  fails  6-10: n=  12 mean +0.049 MAE 0.074 p90 0.113
+  Beta(0.5,0.5)  m=10  fails   >10: n= 188 mean -0.014 MAE 0.049 p90 0.102
+  Beta(0.5,0.5)  m=30  fails   >10: n= 200 mean +0.005 MAE 0.040 p90 0.080
+  Beta(20,1)     m=10  fails     0: n=  90 mean +0.315 MAE 0.315 p90 0.506
+  Beta(20,1)     m=10  fails   1-2: n= 155 mean +0.038 MAE 0.089 p90 0.183
+  Beta(20,1)     m=10  fails   3-5: n=  92 mean -0.099 MAE 0.106 p90 0.222
+  Beta(20,1)     m=10  fails  6-10: n=  13 mean -0.091 MAE 0.091 p90 0.151
+  Beta(20,1)     m=30  fails   1-2: n=  53 mean +0.153 MAE 0.154 p90 0.245
+  Beta(20,1)     m=30  fails   3-5: n= 179 mean +0.044 MAE 0.076 p90 0.171
+  Beta(20,1)     m=30  fails  6-10: n= 144 mean -0.044 MAE 0.076 p90 0.164
+  Beta(20,1)     m=30  fails   >10: n=  24 mean -0.100 MAE 0.102 p90 0.153
+  Beta(4,2)      m=10  fails   3-5: n=   4 mean +0.198 MAE 0.198 p90 0.278
+  Beta(4,2)      m=10  fails  6-10: n=  62 mean +0.070 MAE 0.089 p90 0.204
+  Beta(4,2)      m=10  fails   >10: n= 134 mean -0.004 MAE 0.051 p90 0.117
+  Beta(4,2)      m=30  fails   >10: n= 300 mean +0.011 MAE 0.041 p90 0.094
+  Mix            m=10  fails     0: n= 111 mean +0.016 MAE 0.085 p90 0.225
+  Mix            m=10  fails   1-2: n= 118 mean +0.060 MAE 0.110 p90 0.223
+  Mix            m=10  fails   3-5: n= 147 mean -0.013 MAE 0.069 p90 0.159
+  Mix            m=10  fails  6-10: n=  62 mean -0.037 MAE 0.046 p90 0.118
+  Mix            m=10  fails   >10: n=  12 mean -0.023 MAE 0.035 p90 0.096
+  Mix            m=30  fails   1-2: n=  34 mean +0.069 MAE 0.074 p90 0.169
+  Mix            m=30  fails   3-5: n=  96 mean +0.044 MAE 0.091 p90 0.175
+  Mix            m=30  fails  6-10: n= 186 mean +0.007 MAE 0.050 p90 0.103
+  Mix            m=30  fails   >10: n= 134 mean -0.030 MAE 0.051 p90 0.100
+== Plug-in: decision-cell errors by observed failures in the file (N - X)
+  Beta(0.5,0.5)  m=10  fails  6-10: n=  12 mean +0.085 MAE 0.092 p90 0.191
+  Beta(0.5,0.5)  m=10  fails   >10: n= 188 mean +0.009 MAE 0.052 p90 0.111
+  Beta(0.5,0.5)  m=30  fails   >10: n= 200 mean -0.030 MAE 0.067 p90 0.138
+  Beta(20,1)     m=10  fails     0: n=  90 mean +0.386 MAE 0.386 p90 0.667
+  Beta(20,1)     m=10  fails   1-2: n= 155 mean +0.035 MAE 0.092 p90 0.188
+  Beta(20,1)     m=10  fails   3-5: n=  92 mean -0.099 MAE 0.113 p90 0.220
+  Beta(20,1)     m=10  fails  6-10: n=  13 mean -0.095 MAE 0.098 p90 0.210
+  Beta(20,1)     m=30  fails   1-2: n=  53 mean +0.165 MAE 0.167 p90 0.262
+  Beta(20,1)     m=30  fails   3-5: n= 179 mean +0.042 MAE 0.080 p90 0.167
+  Beta(20,1)     m=30  fails  6-10: n= 144 mean -0.052 MAE 0.078 p90 0.162
+  Beta(20,1)     m=30  fails   >10: n=  24 mean -0.106 MAE 0.110 p90 0.205
+  Beta(4,2)      m=10  fails   3-5: n=   4 mean +0.249 MAE 0.249 p90 0.308
+  Beta(4,2)      m=10  fails  6-10: n=  62 mean +0.085 MAE 0.090 p90 0.171
+  Beta(4,2)      m=10  fails   >10: n= 134 mean +0.002 MAE 0.055 p90 0.106
+  Beta(4,2)      m=30  fails   >10: n= 300 mean +0.010 MAE 0.047 p90 0.099
+  Mix            m=10  fails     0: n= 111 mean +0.068 MAE 0.070 p90 0.247
+  Mix            m=10  fails   1-2: n= 118 mean +0.073 MAE 0.111 p90 0.255
+  Mix            m=10  fails   3-5: n= 147 mean -0.011 MAE 0.076 p90 0.171
+  Mix            m=10  fails  6-10: n=  62 mean -0.039 MAE 0.056 p90 0.103
+  Mix            m=10  fails   >10: n=  12 mean -0.037 MAE 0.041 p90 0.068
+  Mix            m=30  fails   1-2: n=  34 mean +0.084 MAE 0.088 p90 0.231
+  Mix            m=30  fails   3-5: n=  96 mean +0.066 MAE 0.098 p90 0.198
+  Mix            m=30  fails  6-10: n= 186 mean +0.012 MAE 0.050 p90 0.105
+  Mix            m=30  fails   >10: n= 134 mean -0.043 MAE 0.063 p90 0.119
+== P-pooled: all decision cells, by failure bucket (0,1-2,3-5,6-10,>10) x m
+  bucket 0 m=10  n= 201 mean +0.150 MAE 0.188 p90 0.459
+  bucket 1 m=10  n= 273 mean +0.048 MAE 0.098 p90 0.198
+  bucket 1 m=30  n=  87 mean +0.120 MAE 0.123 p90 0.237
+  bucket 2 m=10  n= 243 mean -0.042 MAE 0.085 p90 0.190
+  bucket 2 m=30  n= 275 mean +0.044 MAE 0.081 p90 0.175
+  bucket 3 m=10  n= 149 mean +0.010 MAE 0.070 p90 0.142
+  bucket 3 m=30  n= 330 mean -0.016 MAE 0.061 p90 0.124
+  bucket 4 m=10  n= 334 mean -0.010 MAE 0.049 p90 0.108
+  bucket 4 m=30  n= 658 mean -0.003 MAE 0.045 p90 0.096
+== Plug-in: all decision cells, by failure bucket (0,1-2,3-5,6-10,>10) x m
+  bucket 0 m=10  n= 201 mean +0.210 MAE 0.211 p90 0.639
+  bucket 1 m=10  n= 273 mean +0.052 MAE 0.100 p90 0.215
+  bucket 1 m=30  n=  87 mean +0.133 MAE 0.136 p90 0.251
+  bucket 2 m=10  n= 243 mean -0.040 MAE 0.093 p90 0.189
+  bucket 2 m=30  n= 275 mean +0.050 MAE 0.086 p90 0.181
+  bucket 3 m=10  n= 149 mean +0.017 MAE 0.077 p90 0.154
+  bucket 3 m=30  n= 330 mean -0.016 MAE 0.062 p90 0.131
+  bucket 4 m=10  n= 334 mean +0.004 MAE 0.053 p90 0.110
+  bucket 4 m=30  n= 658 mean -0.017 MAE 0.058 p90 0.124
+== P-pooled per decision cell: p90 |error|, SE of mean error (sd/sqrt(50))
+  Beta(0.5,0.5)|m=30|n_obs=3|break=3|n_plan=10            p90 0.074 se 0.006
+  Beta(0.5,0.5)|m=30|n_obs=3|shift=-0.05|n_plan=10        p90 0.081 se 0.006
+  Beta(0.5,0.5)|m=30|n_obs=5|break=3|n_plan=10            p90 0.073 se 0.006
+  Beta(0.5,0.5)|m=30|n_obs=5|shift=-0.05|n_plan=10        p90 0.084 se 0.006
+  Beta(20,1)|m=30|n_obs=3|break=1|n_plan=10               p90 0.224 se 0.019
+  Beta(20,1)|m=30|n_obs=3|break=3|n_plan=3                p90 0.232 se 0.020
+  Beta(20,1)|m=30|n_obs=3|shift=-0.05|n_plan=10           p90 0.203 se 0.016
+  Beta(20,1)|m=30|n_obs=3|shift=-0.05|n_plan=3            p90 0.091 se 0.008
+  Beta(20,1)|m=30|n_obs=3|shift=-0.05|n_plan=5            p90 0.137 se 0.013
+  Beta(20,1)|m=30|n_obs=5|break=1|n_plan=10               p90 0.212 se 0.017
+  Beta(20,1)|m=30|n_obs=5|shift=-0.05|n_plan=10           p90 0.180 se 0.016
+  Beta(20,1)|m=30|n_obs=5|shift=-0.05|n_plan=5            p90 0.130 se 0.012
+  Beta(4,2)|m=30|n_obs=3|break=3|n_plan=10                p90 0.131 se 0.010
+  Beta(4,2)|m=30|n_obs=3|break=3|n_plan=5                 p90 0.095 se 0.007
+  Beta(4,2)|m=30|n_obs=3|shift=-0.05|n_plan=10            p90 0.059 se 0.005
+  Beta(4,2)|m=30|n_obs=5|break=3|n_plan=10                p90 0.113 se 0.010
+  Beta(4,2)|m=30|n_obs=5|break=3|n_plan=5                 p90 0.066 se 0.006
+  Beta(4,2)|m=30|n_obs=5|shift=-0.05|n_plan=10            p90 0.051 se 0.004
+  Mix|m=30|n_obs=3|break=1|n_plan=10                      p90 0.166 se 0.013
+  Mix|m=30|n_obs=3|break=3|n_plan=3                       p90 0.175 se 0.015
+  Mix|m=30|n_obs=3|break=3|n_plan=5                       p90 0.118 se 0.012
+  Mix|m=30|n_obs=3|shift=-0.05|n_plan=10                  p90 0.129 se 0.012
+  Mix|m=30|n_obs=3|shift=-0.05|n_plan=5                   p90 0.117 se 0.010
+  Mix|m=30|n_obs=5|break=1|n_plan=10                      p90 0.108 se 0.010
+  Mix|m=30|n_obs=5|break=3|n_plan=5                       p90 0.101 se 0.009
+  Mix|m=30|n_obs=5|shift=-0.05|n_plan=10                  p90 0.093 se 0.008
+  Mix|m=30|n_obs=5|shift=-0.05|n_plan=5                   p90 0.095 se 0.008
+  m=30 cells: max p90 0.232; SE range 0.004-0.037
