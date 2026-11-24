@@ -25,7 +25,7 @@ def test_interval_reads_tau2_json_and_reports_dropped_infra(capsys):
     assert meta["domain"] == "mock" and meta["infra_dropped"] == 1 and meta["unscored_failures"] == 1
     assert any("infrastructure error were dropped" in w for w in out["warnings"])
     assert any("without a reward" in w for w in out["warnings"])
-    assert any("--infra-errors fail" in n for n in out["notes"])
+    assert any("--errors fail" in n for n in out["notes"])
 
 
 def test_dropping_infra_errors_keeps_the_unequal_trials_warnings(tmp_path, capsys):
@@ -66,15 +66,15 @@ def test_compare_refuses_different_domains(capsys):
 
 
 def test_infra_errors_fail_mode_is_passed_through(capsys):
-    code, out = run_json(capsys, ["interval", str(FIX / "all_infra.json"), "--infra-errors", "fail"])
-    assert code == 0 and out["summary"]["tau2"]["infra_errors"] == "fail"
+    code, out = run_json(capsys, ["interval", str(FIX / "all_infra.json"), "--errors", "fail"])
+    assert code == 0 and out["summary"]["tau2"]["errors"] == "fail"
     assert out["summary"]["tau2"]["infra_dropped"] == 0
 
 
 def test_all_infra_task_is_an_error_by_default(capsys):
     code = main(["interval", str(FIX / "all_infra.json"), "--json"])
     assert code != 0
-    assert "--infra-errors fail" in json.loads(capsys.readouterr().out)["error"]
+    assert "--errors fail" in json.loads(capsys.readouterr().out)["error"]
 
 
 def test_jsonl_output_has_no_tau2_block(tmp_path, capsys):

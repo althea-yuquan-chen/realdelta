@@ -26,9 +26,12 @@ dropping runs because of their outcome breaks assumption A4 (README, Limitations
 from __future__ import annotations
 
 import csv
+import hashlib
 import io as _io
 import json
+import math
 import re
+import sys
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -174,7 +177,7 @@ def load_outcomes(path) -> dict[str, list[bool]]:
     suffix = path.suffix.lower()
     if suffix not in (".jsonl", ".csv"):
         raise ResultFileError(f"{path.name}: unknown file type; use .jsonl or .csv (or a tau2-bench .json results "
-                              "file, read with load_tau2_results)")
+                              "file, read with load_tau2_results, or an Inspect AI log, read with load_inspect_log)")
     text = _decode(path)
     records = list((_jsonl_records if suffix == ".jsonl" else _csv_records)(path.name, text))
     if not records:
@@ -331,7 +334,7 @@ def load_tau2_results(path, *, infra_errors: str = "drop") -> Tau2Outcomes:
         if reason == _INFRA:
             if infra_errors == "error":
                 raise ResultFileError(f"{name}: {_task(tid)} trial {trial}: infrastructure error; "
-                                      "use --infra-errors drop or fail to read this file")
+                                      "use --errors drop or fail to read this file")
             infra_tasks[tid] = infra_tasks.get(tid, 0) + 1
             if infra_errors == "drop":
                 dropped += 1
@@ -353,7 +356,7 @@ def load_tau2_results(path, *, infra_errors: str = "drop") -> Tau2Outcomes:
     emptied = [t for t in infra_tasks if t not in per_task]
     if emptied:
         raise ResultFileError(f"{name}: {_task(emptied[0])} ({len(emptied)} task(s) in all): every simulation is an "
-                              "infrastructure error, so dropping them would remove the task; use --infra-errors fail "
+                              "infrastructure error, so dropping them would remove the task; use --errors fail "
                               "to count them as failures")
 
     order_ids = [t for t in dict.fromkeys(e[0] for e in entries) if t in per_task]
@@ -367,3 +370,270 @@ def load_tau2_results(path, *, infra_errors: str = "drop") -> Tau2Outcomes:
     return Tau2Outcomes(outcomes=outcomes, domain=domain, num_trials=info.get("num_trials"),
                         user_llm=user.get("llm"), infra_dropped=dropped, unscored_failures=unscored,
                         trials_from_file_order=from_order)
+
+
+# ---- Inspect AI eval logs ----
+
+INSPECT_MIN_VERSION = "0.3.218"  # oldest inspect_ai the tests were run on (README, Result files)
+_PASS_WORDS = ("yes", "true")
+_FAIL_WORDS = ("no", "false")
+
+
+@dataclass(frozen=True)
+class InspectOutcomes:
+    """Outcomes read from one Inspect AI eval log, with what the reader did to get them.
+
+    A case is a sample id and a trial is an epoch. ``fingerprints`` holds, per case, a SHA-256 of the sample's
+    input (text and roles only) and target, so two logs can be checked for pairing without keeping prompts.
+    """
+
+    outcomes: dict[str, list[bool]]
+    task: str
+    model: str
+    scorer: str
+    epochs: int | None
+    errors: str
+    errored: int
+    errored_cases: int
+    unscored: int
+    unscored_cases: int
+    retried: int
+    reducer_not_mean: bool
+    task_version: str
+    task_args_digest: str
+    dataset_name: str | None
+    dataset_samples: int | None
+    dataset_shuffled: bool
+    fingerprints: dict[str, str]
+
+
+class _NotPassFail(Exception):
+    pass
+
+
+def _inspect_value(value) -> bool | None:
+    """True or False for a pass/fail score value, None for an unscored (NaN) one; anything else raises."""
+    if isinstance(value, bool):
+        return value
+    if isinstance(value, (int, float)):
+        if isinstance(value, float) and math.isnan(value):
+            return None
+        if value == 1:
+            return True
+        if value == 0:
+            return False
+        raise _NotPassFail
+    if isinstance(value, str):
+        if value == "C":
+            return True
+        if value in ("I", "N"):
+            return False
+        if value.lower() in _PASS_WORDS:
+            return True
+        if value.lower() in _FAIL_WORDS:
+            return False
+        try:
+            number = float(value)
+        except ValueError:
+            raise _NotPassFail from None
+        if number == 1:
+            return True
+        if number == 0:
+            return False
+    raise _NotPassFail
+
+
+def _fingerprint(inp, target) -> str:
+    if isinstance(inp, str):
+        parts: list = ["text", inp]
+    else:
+        parts = ["chat"] + [[getattr(m, "role", None), getattr(m, "text", None)] for m in inp or []]
+    blob = json.dumps([parts, target], ensure_ascii=False, sort_keys=True, default=str)
+    return hashlib.sha256(blob.encode("utf-8")).hexdigest()
+
+
+def _inspect_readers():
+    try:
+        from inspect_ai.log import read_eval_log, read_eval_log_sample_summaries
+    except ImportError:
+        if sys.version_info < (3, 11):
+            raise ImportError("reading Inspect AI logs needs inspect_ai, which needs Python 3.11 or later") from None
+        raise ImportError(f"reading Inspect AI logs needs inspect_ai (>= {INSPECT_MIN_VERSION}): "
+                          "pip install 'realdelta[inspect]'") from None
+    return read_eval_log, read_eval_log_sample_summaries
+
+
+_STATUS_HELP = {
+    "error": "the run stopped on an error (Inspect's default when a sample errors); finish it with "
+             "'inspect eval-retry', or rerun with fail_on_error=False",
+    "cancelled": "the run was cancelled; finish it with 'inspect eval-retry'",
+    "started": "the run has not finished",
+}
+
+
+def load_inspect_log(path, *, scorer: str | None = None, errors: str = "drop") -> InspectOutcomes:
+    """Read an Inspect AI eval log (``.eval`` or ``.json``) into per-sample pass/fail outcomes over epochs.
+
+    Needs the ``inspect`` extra (``pip install 'realdelta[inspect]'``, Python 3.11 or later); the log is read
+    with inspect_ai's own sample-summary reader, so messages and events are not loaded from ``.eval`` files.
+
+    Only finished runs are read (status ``success``). A score passes when its value is ``C``, ``True``, 1,
+    ``"1"``, ``yes`` or ``true``, and fails when it is ``I``, ``N`` (no answer, a failure as in Inspect's
+    accuracy), ``False``, 0, ``"0"``, ``no`` or ``false``; any other value (partial credit such as ``P``,
+    other numbers or strings, dicts) raises, because realdelta needs pass/fail. With several scorers in the log,
+    ``scorer`` names the one to use.
+
+    ``errors`` applies to samples that raised an error and to unscored samples (value NaN, for example a
+    model grader whose output could not be parsed): ``"drop"`` removes them, which is what Inspect's own metrics
+    do; ``"fail"`` counts them as failures; ``"error"`` refuses a log that has any. A case left with no epochs
+    raises. Dropping keeps assumption A4 only if the errors do not depend on how the trial would have gone; in
+    Inspect a sample error can be any exception, including one caused by the agent's own actions.
+
+    Before comparing two logs with ``compare(a.outcomes, b.outcomes)``, call ``check_inspect_pairing(a, b)``: it
+    refuses logs whose sample ids do not refer to the same samples. The command line does this for you.
+    """
+    if errors not in INFRA_MODES:
+        raise ValueError(f"errors must be one of {INFRA_MODES}, got {errors!r}")
+    read_eval_log, read_summaries = _inspect_readers()
+    path = Path(path)
+    name = path.name
+    if not path.is_file():
+        raise FileNotFoundError(2, "No such file", str(path))
+    try:
+        header = read_eval_log(str(path), header_only=True)
+        summaries = read_summaries(str(path))
+    except Exception as exc:  # upstream messages may quote file content, so only the exception's class is shown
+        raise ResultFileError(f"{name}: not a readable Inspect AI log for the installed inspect_ai "
+                              f"({type(exc).__name__})") from None
+
+    if header.status != "success":
+        status = header.status if header.status in _STATUS_HELP else "unknown"
+        raise ResultFileError(f"{name}: status is {status!r}, not 'success': {_STATUS_HELP.get(status, '')}".rstrip(": "))
+    if header.invalidated:
+        raise ResultFileError(f"{name}: some samples in this log were invalidated; the log does not say which "
+                              "trials to keep")
+    if header.results is None:
+        raise ResultFileError(f"{name}: the log has no results")
+    total = header.results.total_samples
+    if total is not None and total != len(summaries):
+        raise ResultFileError(f"{name}: the log lists {total} sample-epochs but holds {len(summaries)}")
+    if not summaries:
+        raise ResultFileError(f"{name}: no samples")
+
+    names = list(dict.fromkeys(k for s in summaries for k in (s.scores or {})))
+    if scorer is None:
+        if len(names) != 1:
+            raise ResultFileError(f"{name}: the log has {len(names)} scorers ({_names(names)}); "
+                                  "choose one with --scorer (scorer= in Python)" if names else f"{name}: no scores")
+        scorer = names[0]
+    elif scorer not in names:
+        raise ResultFileError(f"{name}: no scorer named {_names([scorer]) or 'that'}; the log has {_names(names)}")
+
+    seen_ids: dict[str, object] = {}
+    seen_trials: set[tuple[str, int]] = set()
+    fingerprints: dict[str, str] = {}
+    per_case: dict[str, list[tuple[int, bool]]] = {}
+    errored_cases: set[str] = set()
+    unscored_cases: set[str] = set()
+    errored = unscored = retried = 0
+    for s in summaries:
+        cid = str(s.id)
+        shown = _task(cid)
+        if cid in seen_ids and seen_ids[cid] != s.id:
+            raise ResultFileError(f"{name}: sample ids {shown} of different types (number and text) collide")
+        seen_ids[cid] = s.id
+        if (cid, s.epoch) in seen_trials:
+            raise ResultFileError(f"{name}: {shown} epoch {s.epoch}: the log repeats the same sample and epoch")
+        seen_trials.add((cid, s.epoch))
+        fp = _fingerprint(s.input, s.target)
+        if fingerprints.setdefault(cid, fp) != fp:
+            raise ResultFileError(f"{name}: {shown}: the epochs of this sample have different inputs or targets")
+        if s.retries and s.error is None:  # succeeded only after a retry
+            retried += 1
+        if s.error is not None:
+            kind = "an error"
+            outcome = None
+            errored += 1
+            errored_cases.add(cid)
+        else:
+            score = (s.scores or {}).get(scorer)
+            if score is None:
+                raise ResultFileError(f"{name}: {shown} epoch {s.epoch}: no score from {_names([scorer])} and no error")
+            try:
+                outcome = _inspect_value(score.value)
+            except _NotPassFail:
+                raise ResultFileError(
+                    f"{name}: {shown} epoch {s.epoch}: scorer {_names([scorer])} gave a {type(score.value).__name__} "
+                    "value that is not pass/fail (partial credit and other values are not read)") from None
+            if outcome is None:
+                kind = "an unscored value (NaN)"
+                unscored += 1
+                unscored_cases.add(cid)
+        if outcome is None:
+            if errors == "error":
+                raise ResultFileError(f"{name}: {shown} epoch {s.epoch}: {kind}; use --errors drop or fail to read "
+                                      "this log")
+            if errors == "drop":
+                continue
+            outcome = False
+        per_case.setdefault(cid, []).append((s.epoch, outcome))
+
+    emptied = [c for c in seen_ids if c not in per_case]
+    if emptied:
+        raise ResultFileError(f"{name}: {_task(emptied[0])} ({len(emptied)} sample(s) in all): every epoch errored or "
+                              "is unscored, so dropping them would remove the sample; use --errors fail to count "
+                              "them as failures")
+    outcomes = {c: [ok for _, ok in sorted(per_case[c])] for c in seen_ids}
+    spec = header.eval
+    reducers = spec.config.epochs_reducer
+    args_blob = json.dumps(spec.task_args, sort_keys=True, default=str)
+    return InspectOutcomes(
+        outcomes=outcomes, task=spec.task, model=spec.model, scorer=scorer, epochs=spec.config.epochs, errors=errors,
+        errored=errored, errored_cases=len(errored_cases), unscored=unscored, unscored_cases=len(unscored_cases),
+        retried=retried, reducer_not_mean=bool(reducers) and any(r != "mean" for r in reducers),
+        task_version=str(spec.task_version), task_args_digest=hashlib.sha256(args_blob.encode()).hexdigest(),
+        dataset_name=spec.dataset.name, dataset_samples=spec.dataset.samples,
+        dataset_shuffled=bool(spec.dataset.shuffled), fingerprints=fingerprints)
+
+
+def check_inspect_pairing(baseline: InspectOutcomes, candidate: InspectOutcomes) -> list[str]:
+    """Check that two Inspect logs can be compared case by case; returns warnings, raises when they cannot.
+
+    Raises when the tasks differ, or when a sample (same input and target) appears in both logs under different
+    ids, as happens when a dataset without ids is numbered after shuffling. Other differences in a sample's input or
+    target, task arguments, task version, dataset, scorer or epochs give warnings.
+    """
+    if baseline.task != candidate.task:
+        raise ValueError(f"baseline and candidate are different Inspect tasks ({_task(baseline.task)} and "
+                         f"{_task(candidate.task)}); a paired comparison needs the same samples")
+    warnings = []
+    ids_a: dict[str, set[str]] = {}
+    ids_b: dict[str, set[str]] = {}
+    for c, fp in baseline.fingerprints.items():
+        ids_a.setdefault(fp, set()).add(c)
+    for c, fp in candidate.fingerprints.items():
+        ids_b.setdefault(fp, set()).add(c)
+    moved = [fp for fp in ids_a.keys() & ids_b.keys() if ids_a[fp] != ids_b[fp]]
+    if moved:
+        raise ResultFileError(
+            f"{len(moved)} sample(s) appear in both logs under different ids, so pairing by id would compare different "
+            "samples; this happens when a dataset without ids is shuffled differently. Give the samples ids")
+    shared = baseline.fingerprints.keys() & candidate.fingerprints.keys()
+    differ = [c for c in shared if baseline.fingerprints[c] != candidate.fingerprints[c]]
+    if differ:
+        shuffled = " One of the logs comes from a shuffled dataset." if (
+            baseline.dataset_shuffled or candidate.dataset_shuffled) else ""
+        warnings.append(f"{len(differ)} case(s) have a different input or target in the two logs. This is expected "
+                        "if you changed the prompts or targets; otherwise the logs may hold different samples under "
+                        f"the same ids (for example different subsets).{shuffled}")
+    if baseline.task_version != candidate.task_version:
+        warnings.append("baseline and candidate ran different versions of the task.")
+    if baseline.task_args_digest != candidate.task_args_digest:
+        warnings.append("baseline and candidate ran the task with different arguments; the change includes them.")
+    if (baseline.dataset_name, baseline.dataset_samples) != (candidate.dataset_name, candidate.dataset_samples):
+        warnings.append("baseline and candidate logs name different datasets or dataset sizes.")
+    if baseline.scorer != candidate.scorer:
+        warnings.append("baseline and candidate were read with different scorers; the change includes that difference.")
+    if baseline.epochs != candidate.epochs:
+        warnings.append("baseline and candidate were run with different numbers of epochs.")
+    return warnings

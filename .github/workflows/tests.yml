@@ -5,12 +5,16 @@ on:
   push:
     branches: [main]
   pull_request:
+  schedule:
+    - cron: "17 6 * * 1"  # weekly: the Inspect job against the latest inspect_ai release
+  workflow_dispatch:
 
 permissions:
   contents: read
 
 jobs:
   test:
+    if: github.event_name != 'schedule'
     strategy:
       fail-fast: false
       matrix:
@@ -43,3 +47,47 @@ jobs:
         run: python -m pip install -e ".[dev]" ${{ matrix.numpy }}
       - name: Test
         run: python -m pytest -q -rs
+
+  # The Inspect AI reader, against the oldest and newest inspect_ai versions it was tested on (required), and
+  # weekly against the latest release so a format change upstream shows up as a failed scheduled run (GitHub
+  # disables scheduled workflows after 60 days without repository activity; re-enable it in the Actions tab).
+  # REALDELTA_REQUIRE_INSPECT makes the Inspect tests fail rather than skip if inspect_ai is missing.
+  inspect:
+    if: github.event_name != 'schedule'
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        inspect_ai: ["0.3.218", "0.3.292"]
+        include:
+          - os: windows-latest
+            inspect_ai: "0.3.292"
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    env:
+      REALDELTA_REQUIRE_INSPECT: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install
+        run: python -m pip install -e ".[dev,inspect]" "inspect_ai==${{ matrix.inspect_ai }}"
+      - name: Test
+        run: python -m pytest -q -rs tests/test_inspect_io.py tests/test_cli_inspect.py
+
+  inspect-latest:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      REALDELTA_REQUIRE_INSPECT: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install
+        run: python -m pip install -e ".[dev,inspect]" --upgrade inspect_ai
+      - name: Test
+        run: python -m pytest -q -rs tests/test_inspect_io.py tests/test_cli_inspect.py

@@ -45,7 +45,7 @@ def test_unscored_non_infra_simulation_is_a_failure_and_counted():
 
 
 def test_all_infra_task_raises_in_drop_mode_and_names_the_way_out():
-    with pytest.raises(ResultFileError, match=r"t5.*infrastructure.*--infra-errors fail"):
+    with pytest.raises(ResultFileError, match=r"t5.*infrastructure.*--errors fail"):
         load_tau2_results(FIX / "all_infra.json")
 
 

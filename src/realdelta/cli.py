@@ -16,7 +16,8 @@ import sys
 from pathlib import Path
 from typing import Sequence
 
-from .io import INFRA_MODES, ResultFileError, load_outcomes, load_tau2_results
+from .io import (INFRA_MODES, ResultFileError, check_inspect_pairing, load_inspect_log, load_outcomes,
+                 load_tau2_results)
 from .planner import estimate_cost, plan_trials
 from .stats import compare, pass_rate_interval
 
@@ -69,7 +70,18 @@ NOTE_TAU2_INFRA = (
     "tau2-bench files: simulations ended by an infrastructure error were dropped, as tau2's metrics are written to "
     "do (under pandas 3.1.1, tau2 at commit 768f3d8 counted them as failures instead; README, Result files). This "
     "keeps assumption A4 only if those errors do not depend on how the trial would have gone; use "
-    "--infra-errors fail to count them as failures instead."
+    "--errors fail to count them as failures instead."
+)
+NOTE_INSPECT_ERRORS = (
+    "Inspect logs: samples that raised an error or were left unscored were dropped, as Inspect's own metrics do. "
+    "An Inspect sample error can be any exception, including one caused by the agent's own actions, so dropping "
+    "them keeps assumption A4 only if they do not depend on how the trial would have gone; use --errors fail to "
+    "count them as failures instead."
+)
+NOTE_INSPECT_RETRIES = (
+    "Inspect logs: some samples were scored only after a retry; their earlier attempts raised an error and are not "
+    "counted as trials. This keeps assumption A4 only if whether a sample needed a retry does not depend on how it "
+    "would have gone."
 )
 WARN_ARMS = (
     "Some cases have different trial counts in the two arms: the p-value is not exact and the grid "
@@ -150,23 +162,73 @@ def _p_method(base, cand, args) -> str:
     return f"{args.n_perm} random sign flips, seed {args.seed}"
 
 
+def _label(name: str, meta: dict | None) -> str:
+    if meta and meta["format"] == "inspect":
+        return f"{name} (model {ascii(_short(meta['model'], 60))}, scorer {ascii(_short(meta['scorer']))})"
+    return name
+
+
 def _fmt_summary(label: str, s: dict) -> str:
     return (f"{label}: {s['cases']} cases, trials per case min {s['trials_min']} / median "
             f"{s['trials_median']:g} / max {s['trials_max']}, {s['trials_total']} trials in total")
 
 
-def _is_tau2(path: str) -> bool:
+def _is_inspect_json(p: Path) -> bool:
+    """An Inspect AI log saved as JSON has a top-level ``version`` and an ``eval`` object naming its task;
+    tau2-bench results files have neither."""
+    try:
+        data = json.loads(p.read_text(encoding="utf-8-sig"))
+    except (ValueError, UnicodeDecodeError):
+        return False
+    return (isinstance(data, dict) and "version" in data and isinstance(data.get("eval"), dict)
+            and "task" in data["eval"])
+
+
+def _format(path: str) -> str:
     p = Path(path)
-    return p.is_dir() or p.suffix.lower() == ".json"
+    if p.is_dir():
+        return "tau2"
+    suffix = p.suffix.lower()
+    if suffix == ".eval":
+        return "inspect"
+    if suffix == ".json":
+        return "inspect" if p.is_file() and _is_inspect_json(p) else "tau2"
+    return "plain"
+
+
+def _read_inspect(path: str, args, label: str) -> tuple[dict, dict, list[str]]:
+    res = load_inspect_log(path, scorer=args.scorer, errors=args.errors)
+    meta = {"format": "inspect", "task": res.task, "model": res.model, "scorer": res.scorer, "epochs": res.epochs,
+            "errors": res.errors, "errored": res.errored, "unscored": res.unscored, "retried": res.retried,
+            "dropped": (res.errored + res.unscored) if res.errors == "drop" else 0, "_res": res}
+    verb = "dropped" if res.errors == "drop" else "counted as failures"
+    warnings = []
+    if res.errored:
+        warnings.append(f"{label}: {res.errored} sample-epoch(s) that raised an error ({res.errored_cases} sample(s)) "
+                        f"were {verb}.")
+    if res.unscored:
+        warnings.append(f"{label}: {res.unscored} unscored sample-epoch(s) ({res.unscored_cases} sample(s)) were "
+                        f"{verb}.")
+    if res.retried:
+        warnings.append(f"{label}: {res.retried} sample-epoch(s) were scored only after a retry.")
+    if res.reducer_not_mean:
+        warnings.append(f"{label}: the log reduces epochs with something other than the mean, so its headline score "
+                        "is a different quantity from the pass rate here.")
+    return res.outcomes, meta, warnings
 
 
 def _read(path: str, args, label: str) -> tuple[dict, dict | None, list[str]]:
-    """Outcomes, tau2 metadata (None for .jsonl/.csv) and warnings for one input file."""
-    if not _is_tau2(path):
+    """Outcomes, format metadata (None for .jsonl/.csv) and warnings for one input file."""
+    kind = _format(path)
+    if kind != "inspect" and args.scorer is not None:
+        raise ValueError(f"--scorer applies to Inspect AI logs only; {Path(path).name} is not one")
+    if kind == "plain":
         return load_outcomes(path), None, []
-    res = load_tau2_results(path, infra_errors=args.infra_errors)
+    if kind == "inspect":
+        return _read_inspect(path, args, label)
+    res = load_tau2_results(path, infra_errors=args.errors)
     meta = {"format": "tau2", "domain": res.domain, "num_trials": res.num_trials, "user_llm": res.user_llm,
-            "infra_errors": args.infra_errors, "infra_dropped": res.infra_dropped,
+            "errors": args.errors, "infra_dropped": res.infra_dropped,
             "unscored_failures": res.unscored_failures, "trials_from_file_order": res.trials_from_file_order}
     warnings = []
     if res.infra_dropped:
@@ -181,19 +243,35 @@ def _read(path: str, args, label: str) -> tuple[dict, dict | None, list[str]]:
     return res.outcomes, meta, warnings
 
 
+def _public(meta: dict | None) -> dict:
+    """The format metadata for the JSON payload, under its format's key (no internal fields)."""
+    if not meta:
+        return {}
+    return {meta["format"]: {k: v for k, v in meta.items() if not k.startswith("_")}}
+
+
+def _format_notes(*metas) -> list[str]:
+    notes = []
+    if any(m and m["format"] == "tau2" and m["infra_dropped"] for m in metas):
+        notes.append(NOTE_TAU2_INFRA)
+    if any(m and m["format"] == "inspect" and m["dropped"] for m in metas):
+        notes.append(NOTE_INSPECT_ERRORS)
+    if any(m and m["format"] == "inspect" and m["retried"] for m in metas):
+        notes.append(NOTE_INSPECT_RETRIES)
+    return notes
+
+
 def _cmd_interval(args) -> int:
     outcomes, meta, read_warnings = _read(args.file, args, Path(args.file).name)
     s = _summary(outcomes)
     iv = pass_rate_interval(outcomes, scope=args.scope, conf=args.conf)
-    notes = [NOTE_POPULATION] if args.scope == "population" else []
-    if meta and meta["infra_dropped"]:
-        notes.append(NOTE_TAU2_INFRA)
+    notes = ([NOTE_POPULATION] if args.scope == "population" else []) + _format_notes(meta)
     warnings = ([WARN_CONF] if args.conf != 0.95 else []) + read_warnings + _rate_warnings(s)
-    summary = {**s, "tau2": meta} if meta else s
+    summary = {**s, **_public(meta)}
     payload = {"command": "interval", "file": Path(args.file).name, "scope": args.scope, "conf": args.conf,
                "estimate": iv.estimate, "low": iv.low, "high": iv.high, "summary": summary,
                "notes": notes, "warnings": warnings}
-    lines = [_fmt_summary(Path(args.file).name, s),
+    lines = [_fmt_summary(_label(Path(args.file).name, meta), s),
              f"Pass rate ({args.scope} scope): {iv.estimate:.4f}, {args.conf:.0%} interval [{iv.low:.4f}, {iv.high:.4f}]"]
     return _emit(args, payload, lines)
 
@@ -201,7 +279,9 @@ def _cmd_interval(args) -> int:
 def _cmd_compare(args) -> int:
     base, mb, wb = _read(args.baseline, args, "baseline")
     cand, mc, wc = _read(args.candidate, args, "candidate")
-    if mb and mc:
+    if mb and mc and mb["format"] == mc["format"] == "inspect":
+        wc.extend(check_inspect_pairing(mb["_res"], mc["_res"]))
+    if mb and mc and mb["format"] == mc["format"] == "tau2":
         if mb["domain"] and mc["domain"] and mb["domain"] != mc["domain"]:
             raise ValueError(f"baseline and candidate are different tau2-bench domains ({_short(mb['domain'])!a} and "
                              f"{_short(mc['domain'])!a}); a paired comparison needs the same tasks")
@@ -224,11 +304,9 @@ def _cmd_compare(args) -> int:
     if any(len(base[c]) != len(cand[c]) for c in base):
         warnings.append(WARN_ARMS)
     d = result.delta
-    notes = [NOTE_ASSUMPTIONS, NOTE_P_VALUE, NOTE_CASES]
-    if (mb and mb["infra_dropped"]) or (mc and mc["infra_dropped"]):
-        notes.append(NOTE_TAU2_INFRA)
-    payload = {"command": "compare", "baseline": {"file": Path(args.baseline).name, **sb, **({"tau2": mb} if mb else {})},
-               "candidate": {"file": Path(args.candidate).name, **sc, **({"tau2": mc} if mc else {})},
+    notes = [NOTE_ASSUMPTIONS, NOTE_P_VALUE, NOTE_CASES] + _format_notes(mb, mc)
+    payload = {"command": "compare", "baseline": {"file": Path(args.baseline).name, **sb, **_public(mb)},
+               "candidate": {"file": Path(args.candidate).name, **sc, **_public(mc)},
                "scope": args.scope, "conf": args.conf,
                "delta": {"estimate": d.estimate, "low": d.low, "high": d.high}, "detected": result.detected,
                "p_value": result.p_value, "n_perm": args.n_perm, "seed": args.seed, "region": region,
@@ -237,8 +315,8 @@ def _cmd_compare(args) -> int:
                     "candidate": {"passes": c.candidate_passes, "trials": c.candidate_trials},
                     "change": c.change, "group": c.group} for c in result.case_changes]},
                "notes": notes, "warnings": warnings}
-    lines = [_fmt_summary(f"Baseline {Path(args.baseline).name}", sb),
-             _fmt_summary(f"Candidate {Path(args.candidate).name}", sc),
+    lines = [_fmt_summary(f"Baseline {_label(Path(args.baseline).name, mb)}", sb),
+             _fmt_summary(f"Candidate {_label(Path(args.candidate).name, mc)}", sc),
              f"Change in pass rate (candidate - baseline, suite scope): {d.estimate:+.4f}, "
              f"{args.conf:.0%} interval [{d.low:+.4f}, {d.high:+.4f}]",
              f"Detected: {'yes' if result.detected else 'no'} (interval {'excludes' if result.detected else 'contains'} 0)",
@@ -324,9 +402,11 @@ def build_parser() -> argparse.ArgumentParser:
     common.add_argument("--json", action="store_true", help="print one JSON object instead of text")
     common.add_argument("--conf", type=float, default=0.95, help="confidence level (only 0.95 was checked)")
     files = argparse.ArgumentParser(add_help=False)
-    files.add_argument("--infra-errors", choices=INFRA_MODES, default="drop",
-                       help="tau2-bench files only: drop simulations ended by an infrastructure error (as tau2's "
-                            "metrics are written to do), count them as failures, or refuse the file")
+    files.add_argument("--errors", choices=INFRA_MODES, default="drop",
+                       help="tau2-bench files: simulations ended by an infrastructure error; Inspect logs: samples "
+                            "that raised an error or are unscored. drop them (as each tool's own metrics do), count "
+                            "them as failures, or refuse the file")
+    files.add_argument("--scorer", help="Inspect logs with several scorers: the scorer to read")
     parser = argparse.ArgumentParser(prog="realdelta", description="Is that change in your agent eval real, or noise?")
     sub = parser.add_subparsers(dest="command", required=True)
 
@@ -366,7 +446,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     try:
         return args.func(args)
-    except (ResultFileError, ValueError, NotImplementedError, OSError) as exc:
+    except (ResultFileError, ValueError, NotImplementedError, OSError, ImportError) as exc:
         if isinstance(exc, OSError):
             where = Path(exc.filename).name if exc.filename else "file"
             message = f"cannot read {where}: {exc.strerror}"

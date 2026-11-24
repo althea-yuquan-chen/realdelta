@@ -41,6 +41,8 @@ realdelta = "realdelta.cli:main"
 [project.optional-dependencies]
 dev = ["pytest>=8"]
 demo = ["openai>=3.37"]  # examples/real_model only (tested with 3.37.0); the library itself calls no model
+# Inspect AI logs (load_inspect_log). Tested on inspect_ai 0.3.218 and 0.3.292; inspect_ai needs Python 3.11+.
+inspect = ["inspect_ai>=0.3.218; python_version >= '3.11'"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/realdelta"]

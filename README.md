@@ -109,8 +109,8 @@ submissions (see [the study](#study-on-public-leaderboard-data-tau2-bench-airlin
 **Status:** version 0.1.1, alpha. The statistics core, its calibration checks, result-file loading, the
 command line, a synthetic demo and one pre-registered demo on a real model are done. The test suite runs
 in CI on Linux and Windows, Python 3.10 to 3.13. Links below point to the files of this release, except in
-the tau2-bench study section and where a link says `main`. Reading tau2-bench files and the per-case change list
-are on `main` only.
+the tau2-bench study section and where a link says `main`. Reading tau2-bench files and Inspect AI logs, and the
+per-case change list, are on `main` only.
 
 ## Install
 
@@ -164,6 +164,7 @@ print(result.delta, result.detected, result.p_value)
 python -m realdelta interval results.jsonl                    # pass rate with its interval
 python -m realdelta compare baseline.jsonl candidate.jsonl    # paired change, suite scope
 python -m realdelta compare base/results.json cand/results.json   # tau2-bench files (main branch, not in 0.1.1)
+python -m realdelta compare logs/base.eval logs/cand.eval       # Inspect AI logs (main branch, not in 0.1.1)
 python -m realdelta plan --cases 40 --delta -0.05             # power per trials option
 python -m realdelta plan --cases 40 --break-cases 2 --trials 3,5,10 \
     --input-tokens 3000 --output-tokens 500 --usd-per-m-input 1 --usd-per-m-output 5
@@ -221,15 +222,33 @@ release 0.1.1; install it with `pip install git+https://github.com/althea-yuquan
 accepted; in the `dir` format only the index in `results.json` is read. A trial passes when tau2's own success
 rule holds for its reward (within 1e-6 of 1). A simulation without a reward that did not end in an
 infrastructure error counts as a failure, as in tau2's metrics. Simulations ended by an infrastructure error are
-dropped by default, as tau2's metrics are written to do, and the report counts them per file; `--infra-errors fail`
-counts them as failures and `--infra-errors error` refuses the file. In our check, tau2 at commit 768f3d8 under
-pandas 3.1.1 did not drop them and counted them as failures, the same as `--infra-errors fail`; under pandas 2.3.3,
+dropped by default, as tau2's metrics are written to do, and the report counts them per file; `--errors fail`
+counts them as failures and `--errors error` refuses the file. In our check, tau2 at commit 768f3d8 under
+pandas 3.1.1 did not drop them and counted them as failures, the same as `--errors fail`; under pandas 2.3.3,
 the version its lock file pins, it dropped them. Unlike tau2, which removes a task whose every
 simulation was an infrastructure error, realdelta stops with an error, because removing it would change the
 suite. A task listed in the file with no simulation also stops it. `compare` refuses two different domains and
 warns when the runs differ in trial count or user simulator. The reader was checked against files written by
 tau2's own code and against tau2's own metrics on them (`tests/fixtures/tau2/`), and against the published
 airline pass^1 of three leaderboard submissions.
+
+**Inspect AI logs** (`.eval`, or a log saved as `.json`) are read by `interval` and `compare`, and by
+`load_inspect_log(path)` in Python. This is on the `main` branch, not in release 0.1.1. Install it with
+`pip install "realdelta[inspect] @ git+https://github.com/althea-yuquan-chen/realdelta"` (inspect_ai needs Python
+3.11 or later). A case is a sample and a trial is an epoch, so run the eval with `--epochs N`. The log is read with
+inspect_ai's own sample-summary reader. Only finished runs are read. A run stopped by an error can be finished with
+`inspect eval-retry`. A score passes when it is `C`, true, 1, `yes` or `true`, and fails when it is `I`, `N` (no
+answer, a failure as in Inspect's accuracy), false, 0, `no` or `false`. Any other value, such as partial credit,
+stops the reader, because realdelta needs pass/fail. A log with several scorers needs `--scorer NAME`. Samples
+that raised an error, and unscored samples (for example a model grader whose output could not be parsed), are
+dropped by default, as Inspect's own metrics do. The report counts them, and samples scored only after a retry, per file. `--errors fail` counts them as failures and `--errors error` refuses the log. One setting covers
+both kinds. An Inspect sample error can be any exception, including one caused by the agent's own actions, so
+dropping them is a stronger assumption than for tau2's infrastructure errors (A4 below). Samples that hit a token
+or time limit are scored by Inspect and counted by their score. `compare` pairs samples by id. It stops when the
+tasks differ, or when a sample appears in both logs under different ids, which happens when a dataset without
+ids is shuffled differently, so give your samples ids. It warns when inputs, task arguments, task version, dataset,
+scorer or epochs differ. In Python, call `check_inspect_pairing(a, b)` before `compare(a.outcomes, b.outcomes)`. The tests write real logs with inspect_ai and its offline mock model, and check the reader
+against Inspect's own accuracy on them. They were run on inspect_ai 0.3.218 and 0.3.292.
 
 ## How the intervals were checked
 
