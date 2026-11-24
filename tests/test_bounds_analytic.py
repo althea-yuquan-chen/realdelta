@@ -64,7 +64,7 @@ def test_all_pass_lower_bound(m):
 
 @pytest.mark.parametrize("m", M_VALUES)
 def test_all_zero_differences_keep_case_level_width(m):
-    from realdelta.stats import _delta_interval, _paired_counts  # not public in v0.1 (Amendment 1)
+    from realdelta.stats import _delta_interval, _paired_counts  # not public (Amendment 1)
 
     # The most favourable data: every case passes every trial in both arms.
     outcomes = {f"c{i}": [True] * 10 for i in range(m)}

@@ -23,8 +23,8 @@ Two scopes answer two different questions:
   0.025 ** (1/m) (about 1 - 3.7/m for large m; 0.48 at m = 5), however many
   trials each case ran.
 
-The delta (:func:`delta_interval`, :func:`compare`) is suite scope only in
-v0.1: MOVER over the two arms' Wilson-based suite intervals. The
+The delta (:func:`delta_interval`, :func:`compare`) is suite scope
+only: MOVER over the two arms' Wilson-based suite intervals. The
 population-scope delta failed the pre-registered width rule and raises
 NotImplementedError.
 
@@ -276,7 +276,7 @@ def delta_interval(
 ) -> Interval:
     """Interval for the change in macro pass rate, candidate minus baseline, paired by case.
 
-    Suite scope only in v0.1. The two arms' Wilson-based suite intervals are
+    Suite scope only. The two arms' Wilson-based suite intervals are
     combined with the MOVER method (Newcombe's hybrid score interval,
     generalised to macro rates). Near a 100% pass rate with few trials, where
     Wilson bounds are known to under-cover, it is not covered by the gated
@@ -293,7 +293,7 @@ def delta_interval(
 
 
 _POPULATION_DELTA_MESSAGE = (
-    "the population-scope delta is not in v0.1: it failed the pre-registered width rule "
+    "the population-scope delta is not available: it failed the pre-registered width rule "
     "(docs/calibration_protocol.md, results/calibration_grid_20261116.md); use scope='suite'"
 )
 
@@ -394,7 +394,7 @@ def compare(
     n_perm: int = 10000,
     seed: int | None = None,
 ) -> Comparison:
-    """Compare a candidate version against a baseline run on the same cases (suite scope only in v0.1)."""
+    """Compare a candidate version against a baseline run on the same cases (suite scope only)."""
     _reject_population_delta(scope)
     pa, ta, pb, tb = _paired_counts(baseline, candidate)
     delta = _delta_interval(pa, ta, pb, tb, scope, conf)

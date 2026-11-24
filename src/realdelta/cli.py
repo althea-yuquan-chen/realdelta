@@ -226,7 +226,7 @@ def _read(path: str, args, label: str) -> tuple[dict, dict | None, list[str]]:
         return load_outcomes(path), None, []
     if kind == "inspect":
         return _read_inspect(path, args, label)
-    res = load_tau2_results(path, infra_errors=args.errors)
+    res = load_tau2_results(path, errors=args.errors)
     meta = {"format": "tau2", "domain": res.domain, "num_trials": res.num_trials, "user_llm": res.user_llm,
             "errors": args.errors, "infra_dropped": res.infra_dropped,
             "unscored_failures": res.unscored_failures, "trials_from_file_order": res.trials_from_file_order}
@@ -419,7 +419,7 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("baseline")
     p.add_argument("candidate")
     p.add_argument("--scope", choices=("suite", "population"), default="suite",
-                   help="population is not available in v0.1")
+                   help="population is not available for comparisons (see README, Limitations)")
     p.add_argument("--n-perm", type=_positive, default=10000)
     p.add_argument("--seed", type=int, default=0)
     p.set_defaults(func=_cmd_compare)

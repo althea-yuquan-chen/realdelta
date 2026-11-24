@@ -19,7 +19,7 @@ from realdelta.stats import _delta_interval, _paired_counts
 
 
 def _delta(baseline, candidate, scope):
-    if scope == "population":  # not public in v0.1 (docs/calibration_protocol.md, Amendment 1)
+    if scope == "population":  # not public (docs/calibration_protocol.md, Amendment 1)
         return _delta_interval(*_paired_counts(baseline, candidate), scope, 0.95)
     return delta_interval(baseline, candidate, scope=scope)
 

@@ -50,7 +50,7 @@ def test_all_infra_task_raises_in_drop_mode_and_names_the_way_out():
 
 
 def test_fail_mode_counts_infra_errors_as_failures():
-    res = load_tau2_results(FIX / "all_infra.json", infra_errors="fail")
+    res = load_tau2_results(FIX / "all_infra.json", errors="fail")
     assert res.outcomes["t5"] == [False] * 4
     assert res.outcomes["t3"] == [False, True, False, False]
     assert res.infra_dropped == 0
@@ -58,7 +58,7 @@ def test_fail_mode_counts_infra_errors_as_failures():
 
 def test_error_mode_refuses_any_infra_error():
     with pytest.raises(ResultFileError, match="infrastructure"):
-        load_tau2_results(FIX / "main.json", infra_errors="error")
+        load_tau2_results(FIX / "main.json", errors="error")
 
 
 def test_missing_task_has_its_own_message():
@@ -131,9 +131,14 @@ def test_metadata_only_results_json_raises(tmp_path):
         load_tau2_results(_edited(tmp_path, "main_dir/results.json", edit))
 
 
-def test_unknown_infra_mode_is_rejected():
-    with pytest.raises(ValueError):
-        load_tau2_results(FIX / "main.json", infra_errors="ignore")
+def test_unknown_errors_mode_is_rejected():
+    with pytest.raises(ValueError, match="errors must be one of"):
+        load_tau2_results(FIX / "main.json", errors="ignore")
+
+
+def test_old_keyword_name_is_not_accepted():
+    with pytest.raises(TypeError):
+        load_tau2_results(FIX / "main.json", infra_errors="fail")
 
 
 def test_error_messages_do_not_echo_values(tmp_path):

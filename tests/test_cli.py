@@ -134,7 +134,7 @@ def test_compare_population_scope_is_refused(tmp_path, capsys):
     base = suite(tmp_path, "b.jsonl", 10, 3, 2)
     code, out = run_json(capsys, ["compare", str(base), str(base), "--scope", "population"])
     assert code == 2
-    assert "not in v0.1" in out["error"]
+    assert "population-scope delta is not available" in out["error"] and "width rule" in out["error"]
 
 
 def test_compare_mismatched_cases_truncates_ids(tmp_path, capsys):

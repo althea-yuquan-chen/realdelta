@@ -276,7 +276,7 @@ def _tau2_entries(name: str, data: dict) -> list[tuple[str, object, object, str 
     return from_index if from_index is not None else from_sims
 
 
-def load_tau2_results(path, *, infra_errors: str = "drop") -> Tau2Outcomes:
+def load_tau2_results(path, *, errors: str = "drop") -> Tau2Outcomes:
     """Read a tau2-bench results file (``json`` or ``dir`` format) into per-task pass/fail outcomes.
 
     ``path`` is a results JSON file or a ``dir``-format folder holding ``results.json``; only the index is read
@@ -285,14 +285,14 @@ def load_tau2_results(path, *, infra_errors: str = "drop") -> Tau2Outcomes:
     a failure, as in tau2's metrics, and is counted in ``unscored_failures``. (If every reward in a file is
     missing, tau2's own metrics raise; this reader reports 0%.)
 
-    ``infra_errors``: ``"drop"`` removes simulations whose termination reason is ``infrastructure_error``, as
+    ``errors``: ``"drop"`` removes simulations whose termination reason is ``infrastructure_error``, as
     tau2's metrics are written to do (under pandas 3.1.1, tau2 at commit 768f3d8 counted them as failures; see the
     README, Result files); a task left with no simulation raises, because dropping it would change the suite.
     ``"fail"`` counts them as failures. ``"error"`` refuses a file that has any. Dropping by termination reason
     keeps assumption A4 only if infrastructure errors do not depend on how the trial would have gone.
     """
-    if infra_errors not in INFRA_MODES:
-        raise ValueError(f"infra_errors must be one of {INFRA_MODES}, got {infra_errors!r}")
+    if errors not in INFRA_MODES:
+        raise ValueError(f"errors must be one of {INFRA_MODES}, got {errors!r}")
     path = Path(path)
     if path.is_dir():
         path = path / "results.json"
@@ -332,11 +332,11 @@ def load_tau2_results(path, *, infra_errors: str = "drop") -> Tau2Outcomes:
     for order, (tid, trial, reward, reason) in enumerate(entries):
         pos = order if from_order else trial
         if reason == _INFRA:
-            if infra_errors == "error":
+            if errors == "error":
                 raise ResultFileError(f"{name}: {_task(tid)} trial {trial}: infrastructure error; "
                                       "use --errors drop or fail to read this file")
             infra_tasks[tid] = infra_tasks.get(tid, 0) + 1
-            if infra_errors == "drop":
+            if errors == "drop":
                 dropped += 1
                 continue
             per_task.setdefault(tid, []).append((pos, False))
