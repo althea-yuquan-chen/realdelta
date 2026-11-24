@@ -9,8 +9,7 @@ need before it can tell.
 
 ## Quick start
 
-The example files live in the repository, and the per-case list in the output below is on the `main` branch
-(release 0.1.1, `pip install realdelta`, prints the same report without it). From a clone:
+The example files live in the repository. From a clone:
 
 ```bash
 git clone https://github.com/althea-yuquan-chen/realdelta
@@ -106,11 +105,10 @@ rates closer to 100% than its gated rows the comparison rests on a reported-only
 It has been applied to public leaderboard data in a pre-registered study of four tau2-bench airline leaderboard
 submissions (see [the study](#study-on-public-leaderboard-data-tau2-bench-airline)).
 
-**Status:** version 0.1.1, alpha. The statistics core, its calibration checks, result-file loading, the
-command line, a synthetic demo and one pre-registered demo on a real model are done. The test suite runs
-in CI on Linux and Windows, Python 3.10 to 3.13. Links below point to the files of this release, except in
-the tau2-bench study section and where a link says `main`. Reading tau2-bench files and Inspect AI logs, and the
-per-case change list, are on `main` only.
+**Status:** version 0.2.0, alpha. The statistics core, its calibration checks, result-file loading (including
+tau2-bench result files and Inspect AI logs), the per-case change list, the command line, a synthetic demo and one
+pre-registered demo on a real model are done. The test suite runs in CI on Linux and Windows, Python 3.10 to
+3.13. Links below point to the files of this release, except one link to the tau2-bench study's protocol on `main`.
 
 ## Install
 
@@ -163,8 +161,8 @@ print(result.delta, result.detected, result.p_value)
 ```bash
 python -m realdelta interval results.jsonl                    # pass rate with its interval
 python -m realdelta compare baseline.jsonl candidate.jsonl    # paired change, suite scope
-python -m realdelta compare base/results.json cand/results.json   # tau2-bench files (main branch, not in 0.1.1)
-python -m realdelta compare logs/base.eval logs/cand.eval       # Inspect AI logs (main branch, not in 0.1.1)
+python -m realdelta compare base/results.json cand/results.json   # tau2-bench files
+python -m realdelta compare logs/base.eval logs/cand.eval       # Inspect AI logs
 python -m realdelta plan --cases 40 --delta -0.05             # power per trials option
 python -m realdelta plan --cases 40 --break-cases 2 --trials 3,5,10 \
     --input-tokens 3000 --output-tokens 500 --usd-per-m-input 1 --usd-per-m-output 5
@@ -180,15 +178,13 @@ enumerates every sign flip) unless you pass `--seed`.
 
 `compare` also lists the cases whose pass rate changed, grouped into cases that now fail every trial, cases that
 now pass every trial and other changes, largest changes first within each group (the first 10 of each group in
-text, all in `--json` under the key `case_changes`, and as `Comparison.case_changes` in Python; not part of
-release 0.1.1). The list is descriptive: with a few trials per case a case's rate moves by chance, and no
+text, all in `--json` under the key `case_changes`, and as `Comparison.case_changes` in Python). The list is descriptive: with a few trials per case a case's rate moves by chance, and no
 per-case test is applied. In the synthetic demo's regression run, where 3 cases were broken and none improved, 14
 cases are listed, 4 of them under "now pass every trial"; in its unchanged rerun, 9 of 40 cases changed, 6 of
 them to "now pass every trial" and none to "now fail every trial". That last group stays empty there only
 because nearly every case passes almost always: a case with true pass rate 0.3 fails all 3 of 3 trials with
 probability 0.7^3, about 0.34
-([`transcript.txt`](https://github.com/althea-yuquan-chen/realdelta/blob/main/examples/synthetic/transcript.txt),
-`main` branch).
+([`transcript.txt`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.2.0/examples/synthetic/transcript.txt)).
 
 ## Result files
 
@@ -217,8 +213,7 @@ detected, so every command prints the number of cases and trials it read; check 
 `load_outcomes(path)` reads a file into the dictionary the Python API takes.
 
 **tau2-bench result files**, a `.json` file or a `dir`-format folder holding `results.json`, are read directly
-by `interval` and `compare`, and by `load_tau2_results(path)` in Python. This is on the `main` branch, not in
-release 0.1.1; install it with `pip install git+https://github.com/althea-yuquan-chen/realdelta`. Both of tau2's storage formats are
+by `interval` and `compare`, and by `load_tau2_results(path)` in Python. Both of tau2's storage formats are
 accepted; in the `dir` format only the index in `results.json` is read. A trial passes when tau2's own success
 rule holds for its reward (within 1e-6 of 1). A simulation without a reward that did not end in an
 infrastructure error counts as a failure, as in tau2's metrics. Simulations ended by an infrastructure error are
@@ -233,9 +228,8 @@ tau2's own code and against tau2's own metrics on them (`tests/fixtures/tau2/`),
 airline pass^1 of three leaderboard submissions.
 
 **Inspect AI logs** (`.eval`, or a log saved as `.json`) are read by `interval` and `compare`, and by
-`load_inspect_log(path)` in Python. This is on the `main` branch, not in release 0.1.1. Install it with
-`pip install "realdelta[inspect] @ git+https://github.com/althea-yuquan-chen/realdelta"` (inspect_ai needs Python
-3.11 or later). A case is a sample and a trial is an epoch, so run the eval with `--epochs N`. The log is read with
+`load_inspect_log(path)` in Python. They need the `inspect` extra, `pip install "realdelta[inspect]"`
+(inspect_ai needs Python 3.11 or later). A case is a sample and a trial is an epoch, so run the eval with `--epochs N`. The log is read with
 inspect_ai's own sample-summary reader. Only finished runs are read. A run stopped by an error can be finished with
 `inspect eval-retry`. A score passes when it is `C`, true, 1, `yes` or `true`, and fails when it is `I`, `N` (no
 answer, a failure as in Inspect's accuracy), false, 0, `no` or `false`. Any other value, such as partial credit,
@@ -253,12 +247,12 @@ against Inspect's own accuracy on them. They were run on inspect_ai 0.3.218 and 
 ## How the intervals were checked
 
 The calibration grid (its settings, the 0.93 gate and the rules for failures) was
-pre-registered in [`docs/calibration_protocol.md`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.1/docs/calibration_protocol.md)
+pre-registered in [`docs/calibration_protocol.md`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.2.0/docs/calibration_protocol.md)
 before any final result existed. The suite pass-rate method was replaced after the
 first final run failed; the steps are below. Each grid row simulates suites with
 known case pass rates and counts how often the 95% interval contains the truth.
 
-**Claim.** On the grid run [`results/calibration_grid_20261117.md`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.1/results/calibration_grid_20261117.md)
+**Claim.** On the grid run [`results/calibration_grid_20261117.md`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.2.0/results/calibration_grid_20261117.md)
 (2000 repetitions per row, so a Monte Carlo standard error of about 0.005; 95% level),
 every gated row has an estimated coverage of at least 0.93. The lowest rows are
 0.956 for the suite pass rate (36 rows), 0.951 for the population pass rate (40 rows)
@@ -278,24 +272,24 @@ this), so the +0.05 and +0.10 delta rows also cover drops of the same realized s
 from the shifted baseline; they do not cover drops from Beta(4,2) or Beta(20,1)
 themselves, nor a few cases breaking outright.
 The table gives ranges, not a full cross of every combination;
-[`results/calibration_grid_20261117.md`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.1/results/calibration_grid_20261117.md) lists every row.
+[`results/calibration_grid_20261117.md`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.2.0/results/calibration_grid_20261117.md) lists every row.
 File names carry the seed base (20261116, 20261117, 20261118, 20261122), not a date; both grid
 runs started on 2026-11-16 (see their provenance files).
 
 **How we got there.** This history is part of the evidence, so it is listed in full.
 
-1. The first final grid ([`results/calibration_grid_20261116.md`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.1/results/calibration_grid_20261116.md))
+1. The first final grid ([`results/calibration_grid_20261116.md`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.2.0/results/calibration_grid_20261116.md))
    failed one suite row and the population-delta width rule. With 5 cases, 1 trial
    each and rates near 100%, the Wilson interval then used covered 0.917: a single
    failure pulls its upper bound below the truth.
 2. Amendment 1 pre-registered an exact analytic check (minimum coverage >= 0.947)
    and two candidates: Clopper-Pearson on the effective sample size, and Wilson
    with a continuity correction. Both failed it, at 0.9449 and 0.9434
-   ([`results/suite_bounds_selection.md`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.1/results/suite_bounds_selection.md)).
+   ([`results/suite_bounds_selection.md`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.2.0/results/suite_bounds_selection.md)).
 3. Amendment 2 added one candidate: Clopper-Pearson with the effective sample size
    capped at the number of trials run. It was designed *after* seeing step 2's
    results, so the analytic check is not independent evidence for it. It passed
-   that check with 0.9503 ([`results/suite_bounds_selection_a2.md`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.1/results/suite_bounds_selection_a2.md)).
+   that check with 0.9503 ([`results/suite_bounds_selection_a2.md`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.2.0/results/suite_bounds_selection_a2.md)).
    The independent evidence is the CI coverage tests, whose gates did not change,
    and the 20261117 grid, which ran once after the implementation.
 
@@ -311,14 +305,14 @@ mode affecting a few percent of cases like them.
 
 ## Limitations
 
-- **No population-scope delta in v0.1.** It failed the pre-registered width rule in
+- **No population-scope delta.** It failed the pre-registered width rule in
   the 20261116 run (mean width 0.368 and 0.364 against a limit of 0.30), so
   `delta_interval(scope="population")`, `compare(scope="population")` and
   `plan_trials(scope="population")` raise `NotImplementedError`.
 - **The suite delta is gated only for 10 to 50 cases with 3 to 10 trials each**
   (plus one unequal-trials setting). It combines the two arms' Wilson-based
   intervals (MOVER), and Wilson bounds under-cover near 100%. A reported-only
-  diagnostic ([`results/delta_boundary_diagnostic_20261118.md`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.1/results/delta_boundary_diagnostic_20261118.md))
+  diagnostic ([`results/delta_boundary_diagnostic_20261118.md`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.2.0/results/delta_boundary_diagnostic_20261118.md))
   covers part of the gap near 100%: with case rates from Beta(50,1) or Beta(20,1),
   5 or 20 cases and 1 or 3 trials each, under no change, a 0.05 drop and (Beta(20,1)
   only) a 0.05 rise, coverage was at least 0.971 across 20 settings. Three cases
@@ -367,9 +361,9 @@ mode affecting a few percent of cases like them.
     at 0.5, 0.961 at 1. The narrowing comes from the shocks within each arm; sharing
     them between the arms offsets it, fully only when both runs see the same shock.
 
-  Sources: [`results/arm_dependence_diagnostic_20261122.md`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.1/results/arm_dependence_diagnostic_20261122.md)
+  Sources: [`results/arm_dependence_diagnostic_20261122.md`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.2.0/results/arm_dependence_diagnostic_20261122.md)
   and the calibration grid; the diagnostic's design is in
-  [`docs/calibration_protocol.md`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.1/docs/calibration_protocol.md)
+  [`docs/calibration_protocol.md`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.2.0/docs/calibration_protocol.md)
   (Diagnostic AD).
 - **Not checked:** confidence levels other than 95%, and the calibration of the
   p-value from `compare`. It tests the sharp null "the two versions behave
@@ -380,12 +374,11 @@ mode affecting a few percent of cases like them.
 
 ### Synthetic demo
 
-[`examples/synthetic_demo.py`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.1/examples/synthetic_demo.py) simulates an agent with 40
+[`examples/synthetic_demo.py`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.2.0/examples/synthetic_demo.py) simulates an agent with 40
 cases that mostly pass (case pass rates from Beta(20,1); true pass rate 0.95507), run 5
 times each, with one fixed seed (the first one tried) and no model calls. Its full
-output is in [`examples/synthetic/transcript.txt`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.1/examples/synthetic/transcript.txt);
-a test re-runs it and compares the output byte for byte. On `main` the transcript also holds the per-case
-change lists, and the test compares against that version. The comparison runs only with
+output is in [`examples/synthetic/transcript.txt`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.2.0/examples/synthetic/transcript.txt);
+a test re-runs it and compares the output byte for byte. The comparison runs only with
 numpy 2.4.4, the version the transcript was recorded with (other versions skip it).
 The CI workflow pins 2.4.4, and the comparison has passed there on Linux and Windows
 with Python 3.11, 3.12 and 3.13.
@@ -418,14 +411,14 @@ the protocol's "Call order (A3)" interleaving keeps run-level drift alike in bot
 shared by both runs: Diagnostic AD's correlation-1 row, coverage 0.961), and the CLI notes inside
 `summary.txt` carry the 0.1.0 text corrected in 0.1.1 (see Limitations).
 
-[`examples/real_model/`](https://github.com/althea-yuquan-chen/realdelta/tree/v0.1.1/examples/real_model/) runs 40 generated puzzles (arithmetic, letter
+[`examples/real_model/`](https://github.com/althea-yuquan-chen/realdelta/tree/v0.2.0/examples/real_model/) runs 40 generated puzzles (arithmetic, letter
 counting, weekdays, sorting; 10 each) on GPT-5.6 Luna served through Azure OpenAI, with reasoning
 effort low. Azure's content filtering is part of the system measured. Everything that decides the
-result was fixed in [`PROTOCOL.md`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.1/examples/real_model/PROTOCOL.md) before any paid call; its
+result was fixed in [`PROTOCOL.md`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.2.0/examples/real_model/PROTOCOL.md) before any paid call; its
 Amendment 1 changed the model from Claude Haiku 5.5 to GPT-5.6 Luna before any call was made. Three
 arms, 5 trials per case each, 600 calls in one interleaved order: A1 and A2 use the same system prompt
 (an A/A pair), B adds "Answer immediately; do not show your working." The run
-([`run_20261116/summary.txt`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.1.1/examples/real_model/run_20261116/summary.txt)) used 51,213 input and
+([`run_20261116/summary.txt`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.2.0/examples/real_model/run_20261116/summary.txt)) used 51,213 input and
 52,408 output tokens with no re-issued calls, timeouts, refusals or truncated outputs. The run
 directory is named after the local date; it started at 2026-11-17T00:54Z.
 
@@ -478,8 +471,7 @@ for this model is uncertain; `summary.txt` gives an upper estimate.
 
 ### Study on public leaderboard data: tau2-bench airline
 
-This study is not part of release 0.1.1. Its links point to the `main` branch.
-[`examples/tau2_leaderboard/`](https://github.com/althea-yuquan-chen/realdelta/tree/main/examples/tau2_leaderboard/)
+[`examples/tau2_leaderboard/`](https://github.com/althea-yuquan-chen/realdelta/tree/v0.2.0/examples/tau2_leaderboard/)
 applies `compare` to the published per-trial results of four submissions on the tau2-bench airline
 leaderboard, labeled A to D. Sierra (the benchmark's maintainer) ran all four on the same 50 tasks with
 4 trials each, and each submission is a model plus everything that differed in its run (evaluation date,
@@ -487,7 +479,8 @@ provider-side state, reasoning settings). These are comparisons of submissions o
 models. The question, the pairs and the analysis were fixed in
 [`PROTOCOL.md`](https://github.com/althea-yuquan-chen/realdelta/blob/main/examples/tau2_leaderboard/PROTOCOL.md)
 before the data were fetched. The leaderboard's pass rates are public, and the protocol's Disclosure
-section lists what was read before it was fixed. Everything added later is a dated amendment there.
+section lists what was read before it was fixed. Everything added later is a dated amendment there. The
+link to it points to `main`, so it shows amendments made after this release.
 Amendment 6 maps the commit hashes recorded inside the output files to the published ones.
 
 Upstream issue [#540](https://github.com/sierra-research/tau2-bench/issues/540) (Amendment 10) computes, for
@@ -507,7 +500,7 @@ excludes 0. This study adds pre-registered paired comparisons between the leader
   may describe an evaluation in another domain (Amendment 3). If so, the reason for the choice is
   weaker. The pair stays as pre-registered.
 - **Which changes 50 tasks x 4 trials can detect** (post-hoc, Amendment 4,
-  [`posthoc_power.md`](https://github.com/althea-yuquan-chen/realdelta/blob/main/examples/tau2_leaderboard/posthoc_power.md)).
+  [`posthoc_power.md`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.2.0/examples/tau2_leaderboard/posthoc_power.md)).
   These are simulations of synthetic 50-task suites, not a statement about submissions A or C. Per-task
   pass rates are drawn from a Beta fitted to A's and C's per-task pass counts, and the arms are
   independent.
@@ -524,10 +517,10 @@ excludes 0. This study adds pre-registered paired comparisons between the leader
     interval is conservative here. The calibration grid has no row for this setting. The change sizes
     above are a property of this interval under these assumptions, not of the leaderboard.
 - **Descriptive pairs and D.** The five other pairs are descriptive and give no finding. They are in
-  [`run_20261123/summary.md`](https://github.com/althea-yuquan-chen/realdelta/blob/main/examples/tau2_leaderboard/run_20261123/summary.md)
+  [`run_20261123/summary.md`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.2.0/examples/tau2_leaderboard/run_20261123/summary.md)
   with the same caveats. D's rows use the bucket files of submission D, which do not reproduce its
   published scores
-  ([`posthoc_published_scores.md`](https://github.com/althea-yuquan-chen/realdelta/blob/main/examples/tau2_leaderboard/posthoc_published_scores.md),
+  ([`posthoc_published_scores.md`](https://github.com/althea-yuquan-chen/realdelta/blob/v0.2.0/examples/tau2_leaderboard/posthoc_published_scores.md),
   Amendment 2). Upstream records explain this (Amendment 5). Issue
   [#238](https://github.com/sierra-research/tau2-bench/issues/238) reported that D's published airline
   scores could not be reproduced with reasoning effort "none". A contributor replied that the run had
